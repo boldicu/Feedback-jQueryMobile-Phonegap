@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codecamp.Feedback", "Codecamp.Feedback\Codecamp.Feedback.csproj", "{F108A8A1-87C7-4D2A-944D-707F22BDA837}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codecamp.Feedback.Tests", "Codecamp.Feedback.Tests\Codecamp.Feedback.Tests.csproj", "{0696C30B-BEC7-4A0A-9D54-E8129C8B40D4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F108A8A1-87C7-4D2A-944D-707F22BDA837}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F108A8A1-87C7-4D2A-944D-707F22BDA837}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F108A8A1-87C7-4D2A-944D-707F22BDA837}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F108A8A1-87C7-4D2A-944D-707F22BDA837}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0696C30B-BEC7-4A0A-9D54-E8129C8B40D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0696C30B-BEC7-4A0A-9D54-E8129C8B40D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0696C30B-BEC7-4A0A-9D54-E8129C8B40D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0696C30B-BEC7-4A0A-9D54-E8129C8B40D4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

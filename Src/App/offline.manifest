@@ -1,0 +1,19 @@
+﻿CACHE MANIFEST
+
+#rev1
+
+NETWORK:
+*
+CACHE:
+css/libs/jQuery/mobile/jquery.mobile-1.2.0.min.css
+js/libs/jQuery/jquery-1.8.2.min.js
+js/libs/jQuery/mobile/jquery.mobile-1.2.0.min.js
+js/libs/i18N/i18NLocalization.js
+js/codecamp.js
+js/lang/en.js
+js/lang/ro-ro.js
+js/utils.js
+js/main.js
+index.html
+img/codecamp.png
+img/offline.png

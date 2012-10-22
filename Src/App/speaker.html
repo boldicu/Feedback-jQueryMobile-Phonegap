@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html xmanifest="cache.manifest">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Speaker | Code Camp</title>
+    <link href="css/libs/jQuery/mobile/jquery.mobile-1.2.0.min.css" rel="stylesheet" />
+    <link href="css/feedback.css" rel="stylesheet" />
+    <script src="js/libs/jQuery/jquery-1.8.2.js"></script>
+    <script src="js/libs/jQuery/tmpl/jquery.tmpl.js"></script>
+    <script src="js/libs/jQuery/mobile/jquery.mobile-1.2.0.js"></script>
+    <script src="js/libs/knockout/knockout-2.2.0rc.debug.js"></script>
+    <script src="js/libs/knockout/map/knockout.mapping-latest.debug.js"></script>
+    <script src="js/libs/knockout/deferred/knockout-deferred-updates.js"></script>
+    <script src="js/libs/date.format.js"></script>
+    <script src="js/libs/i18N/i18NLocalization.js"></script>
+    <script src="js/codecamp.js"></script>
+    <script src="js/lang/en.js"></script>
+    <script src="js/lang/ro-ro.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/MVVM/Sponsor.js"></script>
+    <script src="js/MVVM/Location.js"></script>
+    <script src="js/MVVM/Track.js"></script>
+    <script src="js/MVVM/Speaker.js"></script>
+    <script src="js/MVVM/Session.js"></script>
+    <script src="js/MVVM/Event.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/data.js?p=Codecamp.updateData"></script>
+</head>
+<body>
+    <div data-role="page" data-bind="with: selectedSpeaker">
+        <div data-role="header" class="title">
+            <h1 data-bind="html:Name">10 November 2012, &copy; Codecamp.ro</h1>
+        </div>
+
+        <div data-role="content" data-bind="attr: {class: 'display-block'}" style="display:none">
+            <div class="speaker">
+                <img data-bind="attr: {src: PortraitImageUrl}" />
+                <h3 data-bind="text: Title"></h3>
+                <span data-bind="visible: CompanyName">@ </span>
+                <a data-bind="text: CompanyName, attr: { href: CompanyUrl}" data-rel="external" target="_blank"></a>
+                <br />
+                <p data-bind="html: Bio"></p>
+            </div>
+            <div data-role="collapsible" data-mini="true" data-collapsed="false">
+                <h3 data-bind="template: $data">${Name}'s Presentations:</h3>
+                <ul data-role="listview" data-inset="true"
+                    data-bind="template: {foreach: sessions()}">
+                    <li><a href="session.html?sessionId=${Id}">
+                        <h3 data-bind="text: Title"></h3>
+                        <p data-bind="text: duration"></p>
+                        <p data-bind="text: track().Name"></p>
+                    </a></li>
+                </ul>
+            </div>
+
+        </div>
+        <div data-role="footer" data-position="fixed" data-id="footer">
+            <div data-role="navbar" data-icon-pos="top">
+                <ul>
+                    <li><a href="index.html" data-icon="grid" data-prefecth="true" data-transition="slideup" data-theme="a">Home</a></li>
+                    <li><a href="tracks.html" data-icon="gear" data-prefecth="true" data-transition="slidedown">Favorites</a></li>
+                    <li><a href="feedback.html" data-icon="star" data-prefecth="true" data-bind="jqmTheme: $parent.feedbackTheme">Feedback</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

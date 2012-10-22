@@ -1,0 +1,8 @@
+syntax: glob
+Src/Codecamp.Feedback.Tests/obj/*
+Src/Codecamp.Feedback.v11.suo
+Src/Codecamp.Feedback/obj/*
+Src/Codecamp.Feedback.Tests/bin/Debug/Codecamp.Feedback.dll
+Src/Codecamp.Feedback.Tests/bin/Debug/Codecamp.Feedback.Tests.dll.config
+Src/Codecamp.Feedback.Tests/bin/Debug/Codecamp.Feedback.Tests.dll
+Src/Codecamp.Feedback/App/*
