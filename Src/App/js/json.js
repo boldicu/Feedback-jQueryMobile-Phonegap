@@ -1,4 +1,4 @@
-﻿Codecamp.updateData({
+﻿{
 	"Id": 1,
 	"Title": "CodeCamp de toamna la Iasi",
 	"Description": "CodeCamp is your local IT community & conference, here in Iasi. It started in 2008 and aims for better communication among the IT people.",
@@ -822,4 +822,4 @@
 		"Title": "HTTP authentication in automated testing - problems and solutions",
 		"TrackRefId": 3
 	}]
-});
+}
