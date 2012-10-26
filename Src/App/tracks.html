@@ -24,7 +24,6 @@
     <script src="js/MVVM/Session.js"></script>
     <script src="js/MVVM/Event.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/data.js?p=Codecamp.updateData"></script>
 </head>
 <body>
     <div data-role="page">
@@ -36,10 +35,10 @@
                 <li data-role="list-divider" data-theme="b" data-bind="text: Name"><span
                     class="ui-li-count"
                     data-bind="text: sessions().length"></span></li>
-                <!-- ko template: {name: 'tplSession', foreach: $data.sessions} -->
+                <!-- ko template: {name: 'tplTrackSession', foreach: $data.sessions} -->
                 <!-- /ko -->
             </script>
-            <script id="tplSession" type="text/html">
+            <script id="tplTrackSession" type="text/html">
                 <li class="session"><a href="session.html?sessionId=${Id}">
                     <h4 data-bind="text: Title"></h4>
                     <p data-bind="text: duration"></p>
@@ -56,12 +55,9 @@
         <div data-role="footer" data-position="fixed" data-id="footer">
             <div data-role="navbar" data-icon-pos="top">
                 <ul>
-                    <li><a href="index.html" data-icon="grid" data-prefecth="true" data-transition="slideup">Home</a>
-                    </li>
-                    <li><a href="tracks.html" data-icon="gear" data-prefecth="true" data-transition="slidedown">Favorites</a>
-                    </li>
-                    <li><a href="feedback.html" data-icon="star" data-prefecth="true" data-bind="jqmTheme: feedbackTheme">
-                        Feedback</a></li>
+                    <li><a href="index.html" data-icon="grid" data-prefecth="true" data-direction="reverse">Home</a></li>
+                    <li><a href="tracks.html" data-icon="gear" data-prefecth="true">Favorites</a></li>
+                    <li><a href="feedback.html" data-icon="star" data-prefecth="true" data-bind="jqmTheme: feedbackTheme">Feedback</a></li>
                 </ul>
             </div>
         </div>

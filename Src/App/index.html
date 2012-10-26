@@ -24,7 +24,6 @@
     <script src="js/MVVM/Session.js"></script>
     <script src="js/MVVM/Event.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/data.js?p=Codecamp.updateData"></script>
 </head>
 <body>
     <div data-role="page" id="home">
@@ -37,12 +36,14 @@
                 <li><a href="session.html?sessionId=${Id}" data-bind="text: trackAndTitle"></a><span
                     class="ui-li-count" data-bind="text: speakersNames"></span></li>
             </script>
-            ​​​​
-            <ul data-role="listview" data-inset="true">
+            ​​​​<ul data-role="listview" data-inset="true" data-bind="visible: false">
+                <li data-role="listdivider" data-theme="b">Loading data...</li>
+            </ul>
+            <ul data-role="listview" data-inset="true" style="display: none" data-bind="visible: true">
                 <li data-role="listdivider" data-bind="visible:sessionsNow().length" data-theme="b">Now<span
                     class="ui-li-count"
                     data-bind="text: sessionsNow().length"></span></li>
-                <!-- ko jqmRefreshList: {name: 'tplSession', foreach: sessionsNow, 'theme':'c'} -->
+                <!-- ko template: {name: 'tplSession', foreach: sessionsNow, 'theme':'c'} -->
                 <!-- /ko -->
                 <li data-role="listdivider" data-bind="visible:sessionsNext().length" data-theme="b">Next...<span
                     class="ui-li-count"
@@ -53,23 +54,22 @@
                 <li><a href="tracks.html">Conference Rooms</a><span
                     class="ui-li-count" data-bind="text: Tracks().length"></span></li>
                 <li><a href="technologies.html">Technologies</a></li>
-                <li><a href="speakers.html">All Speakers</a><span
+                <li><a href="speakers.html">Speakers</a><span
                     class="ui-li-count" data-bind="text: Speakers().length"></span></li>
-                <li><a href="sessions.html">All Sessions</a><span
+                <li><a href="sessions.html">Sessions</a><span
                     class="ui-li-count" data-bind="text: Sessions().length"></span></li>
-                <li data-theme="b"><a href="feedback.html">Feedback</a></li>
+                <li data-theme="e"><a href="feedback.html">Feedback</a></li>
             </ul>
         </div>
 
-        <div data-role="footer" data-position="fixed" data-id="footer">
+        <div data-role="footer" data-position="fixed" data-id="mainFooter">
             <h2>&copy; 2012 Codecamp.ro</h2>
             <div data-role="navbar" data-icon-pos="top">
                 <ul class="home">
-                    <li><a href="tracks.html" data-icon="tracks" data-prefecth="true" data-transition="slidedown">Tracks</a></li>
-                    <li><a href="technologies.html" data-icon="techs" data-prefecth="true" data-transition="slidedown">Technologies</a></li>
-                    <li><a href="speakers.html" data-icon="speakers" data-prefecth="true" data-transition="slidedown">Speakers</a></li>
-                    <li><a href="feedback.html" data-icon="feedback" data-prefecth="true" data-bind="jqmTheme: feedbackTheme">
-                        Feedback</a></li>
+                    <li><a href="tracks.html" data-icon="tracks" data-transition="slide">Tracks</a></li>
+                    <li><a href="technologies.html" data-icon="techs">Technologies</a></li>
+                    <li><a href="speakers.html" data-icon="speakers">Speakers</a></li>
+                    <li><a href="feedback.html" data-icon="feedback" data-bind="jqmTheme: feedbackTheme">Feedback</a></li>
                 </ul>
             </div>
         </div>

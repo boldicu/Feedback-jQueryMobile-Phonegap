@@ -23,16 +23,16 @@
     <script src="js/MVVM/Speaker.js"></script>
     <script src="js/MVVM/Session.js"></script>
     <script src="js/MVVM/Event.js"></script>
-    <script src="js/data.js?p=Codecamp.updateData"></script>
     <script src="js/main.js"></script>
 </head>
 <body>
     <div data-role="page" data-bind="with: selectedSession">
         <div data-role="header" class="title">
-            <h1 data-bind="html:durationAndTitle"></h1>
+            <h1></h1>
         </div>
         <div data-role="content">
             <h3 data-bind="text: Title"></h3>
+            <h4 data-bind="text: duration"></h4>
             <p data-bind="html: Description"></p>
             <span data-bind="visible: speakers().length!=1">Speakers</span>
             <span data-bind="visible: speakers().length==1">Speaker</span>
@@ -48,11 +48,11 @@
                 </li>
             </ul>
         </div>
-        <div data-role="footer">
+        <div data-role="footer" data-position="fixed" data-id="footer">
             <div data-role="navbar" data-icon-pos="top">
                 <ul>
-                    <li><a href="index.html" data-icon="grid" data-prefecth="true" data-transition="slideup" data-theme="a">Home</a></li>
-                    <li><a href="tracks.html" data-icon="gear" data-prefecth="true" data-transition="slidedown">Favorites</a></li>
+                    <li><a href="index.html" data-icon="grid" data-prefecth="true"data-direction="reverse" data-theme="a">Home</a></li>
+                    <li><a href="tracks.html" data-icon="gear" data-prefecth="true">Favorites</a></li>
                     <li><a href="feedback.html" data-icon="star" data-prefecth="true" data-bind="jqmTheme: $parent.feedbackTheme">Feedback</a></li>
                 </ul>
             </div>

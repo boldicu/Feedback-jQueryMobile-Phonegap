@@ -7,16 +7,18 @@
 * http://jquery.org/license
 *
 */
-window.trace = function (msg) {
-	var trace = window.trace,
-		date = new Date(),
-		loaded = date - trace.loaded,
-		last = date - trace.last;
-	trace.last = date;
-	Array.prototype.splice.call(arguments, 0, 0, last, loaded);
-	window.log && log.apply(console, arguments);
+if (window.console) {
+	console.trace = function (msg) {
+		var trace = console.trace,
+			date = new Date(),
+			loaded = date - trace.loaded,
+			last = date - trace.last;
+		trace.last = date;
+		Array.prototype.splice.call(arguments, 0, 0, last, loaded);
+		console.log.apply(console, arguments);
+	}
+	console.trace.loaded = console.trace.last = new Date();
 }
-window.trace.loaded = window.trace.last = new Date();
 
 (function ( root, doc, factory ) {
 	if ( typeof define === "function" && define.amd ) {
@@ -9169,4 +9171,3 @@ $( document ).bind( "pagecreate create", function( e ) {
 }( jQuery, this ));
 
 }));
-trace('jqm');

@@ -11,7 +11,7 @@
 	padding-top: 0;
 }
 
-.home .ui-icon {
+.ui-icon-tracks, .ui-icon-speakers, .ui-icon-techs, .ui-icon-feedback {
 	background-image: url(../img/icons_16.png);
 	background-color: transparent;
 	background-repeat: no-repeat;
@@ -188,7 +188,7 @@ li.session .ui-li-aside {
 		padding-top: 46px;
 	}
 
-	.home .ui-icon {
+	.ui-icon-tracks, .ui-icon-speakers, .ui-icon-techs, .ui-icon-feedback {
 		background-image: url(../img/icons_32.png);
 		background-color: transparent;
 		background-repeat: no-repeat;
@@ -219,7 +219,7 @@ li.session .ui-li-aside {
 		padding-top: 62px;
 	}
 
-	.home .ui-icon {
+	.ui-icon-tracks, .ui-icon-speakers, .ui-icon-techs, .ui-icon-feedback {
 		background-image: url(../img/icons_48.png);
 		background-color: transparent;
 		background-repeat: no-repeat;

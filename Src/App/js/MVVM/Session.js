@@ -24,44 +24,71 @@
 			OverrideTracks: true
 		}, mappings);
 		ko.mapping.fromJS(data, mappings, viewModel);
+		var id = viewModel.Id();
 		$.extend(viewModel, {
-			'track': ko.computed(function () {
-				var track = viewModel.TrackRefId(),
-					result = track && parent.Tracks.byId(track);
-				return result;
+			'track': ko.computed({
+				read: function () {
+					trace5("computing session.track", id);
+					var track = viewModel.TrackRefId(),
+						result = track && parent.Tracks.byId(track);
+					return result;
+				},
+				deferEvaluation: true
 			}),
-			'speakers': ko.computed(function () {
-				var result = [];
-				$.each(viewModel.SpeakerRefIds(), function (index, id) {
-					result.push(parent.Speakers.byId(id));
-				});
-				return result;
+			'speakers': ko.computed({
+				read: function () {
+					trace5("computing session.speakers", id);
+					var result = [];
+					$.each(viewModel.SpeakerRefIds(), function (index, id) {
+						result.push(parent.Speakers.byId(id));
+					});
+					return result;
+				},
+				deferEvaluation: true
 			}),
-			'duration': ko.computed(function () {
-				return [viewModel.Start().format("HH:MM"), viewModel.End().format("HH:MM")].join(" -> ", true);
+			'duration': ko.computed({
+				read: function () {
+					trace5("computing session.duration", id);
+					return [viewModel.Start().format("HH:MM"), viewModel.End().format("HH:MM")].join(" -> ", true);
+				},
+				deferEvaluation: true
 			})
 		});
 		$.extend(viewModel, {
-			'speakersNames': ko.computed(function () {
-				speakers = $.map(viewModel.speakers(), function (speaker) {
-					return speaker.Name()
-				});
-				return speakers
-			}),
-			'durationAndTitle': ko.computed(function () {
-				var track = viewModel.track && viewModel.track();
-				return [viewModel.duration(), track && track.Name && track.Name()].join(", ", true);
+			'speakersNames': ko.computed({
+				read: function () {
+					trace5("computing session.speakersNames", id);
+					speakers = $.map(viewModel.speakers(), function (speaker) {
+						return speaker.Name()
+					});
+					return speakers.join(", ", true);
+				},
+				deferEvaluation: true
+			}), 'durationAndTitle': ko.computed({
+				read: function () {
+					trace5("computing session.durationAndTitle", id);
+					var track = viewModel.track && viewModel.track();
+					return [viewModel.duration(), track && track.Name && track.Name()].join(", ", true);
+				},
+				deferEvaluation: true
 			})
 		});
 		$.extend(viewModel, {
-			'trackAndTitle': ko.computed(function () {
-				var track = viewModel.track && viewModel.track();
-				var result = [track && track.Name && track.Name(), viewModel.Title()].join(": ", true);
-				return result;
-			}),
-			'timeAndTitle': ko.computed(function () {
-				var result = [viewModel.Title()].join(" ", true);
-				return result;
+			'trackAndTitle': ko.computed({
+				read: function () {
+					trace5("computing session.trackAndTitle", id);
+					var track = viewModel.track && viewModel.track();
+					var result = [track && track.Name && track.Name(), viewModel.Title()].join(": ", true);
+					return result;
+				},
+				deferEvaluation: true
+			}), 'timeAndTitle': ko.computed({
+				read: function () {
+					trace5("computing session.timeAndTitle", id);
+					var result = [viewModel.Title()].join(" ", true);
+					return result;
+				},
+				deferEvaluation: true
 			})
 		});
 		return viewModel;

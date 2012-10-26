@@ -7,7 +7,7 @@
 	//Technologies.html
 	'Technologies': "Tehnologii",
 	'Loading Technologies': "Tehnologiile se încarcă",
-	'Sessions': "Sesiuni",
+	'Sessions': "Prezentări",
 	'Tracks': "Săli",
 	'Speakers': "Prezentatori",
 	'Speaker': "Prezentator",
@@ -20,7 +20,7 @@
 	//traks
 	"All Tracks": "Toate sălile",
 	"Search sessions...": "Caută prezentări...",
-	"You can browse the sessions for all the tracks": "Lista prezentărilor după sala în care au loc",
+	"You can browse the sessions for all the tracks": "Lista prezentărilor pe săli",
 	//header
 	"10 November 2012": "10 Noiembrie 2012",
 	//footer
@@ -30,6 +30,6 @@
 	"© 2012 Codecamp.ro": "© 2012 Codecamp.ro",
 	"Now": "În acest moment",
 	"Next...": "Urmează...",
-	"Browse Sessions": "Explorează sesiunile",
+	"Browse Sessions": "Explorează prezentările",
 	"":""
 }

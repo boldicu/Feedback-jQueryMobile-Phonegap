@@ -45,23 +45,35 @@
 		return rv;
 	}
 	//logs a message with console.log if console is available on the browser
-	window.log = function (messages, optionalParams) {
-		window.console && (console.log.apply && console.log.apply(console, arguments)
-		|| arguments.length <= 1 && console.log(messages)
-		|| arguments.length == 2 && console.log(messages, arguments[1])
-		|| arguments.length == 3 && console.log(messages, arguments[1], arguments[2])
-		|| arguments.length == 4 && console.log(messages, arguments[1], arguments[2], arguments[3])
-		|| arguments.length == 5 && console.log(messages, arguments[1], arguments[2], arguments[3], arguments[4])
-		|| arguments.length >= 6 && console.log(messages, arguments[1], arguments[2], arguments[3], arguments[4], arguments[5])
-		);
+	window.warn = function () { }
+	var console = window.console;
+	function bind(func, level, logLevel) {
+		window[func + (level ? level : "")] = !console || !logLevel || (level > logLevel) ? $.noop :
+				(console[func] && $.isFunction(console[func].bind)
+				? console[func].bind(console)
+				: function (messages, optionalParams) {
+					var args = arguments;
+					window.console && (console.log.apply && (console.log.apply(console, args) || 1)
+					|| args.length <= 1 && console[func](messages)
+					|| args.length == 2 && console[func](messages, args[1])
+					|| args.length == 3 && console[func](messages, args[1], args[2])
+					|| args.length == 4 && console[func](messages, args[1], args[2], args[3])
+					|| args.length == 5 && console[func](messages, args[1], args[2], args[3], args[4])
+					|| args.length >= 6 && console[func](messages, args[1], args[2], args[3], args[4], args[5])
+					);
+				})
+	}
+	for (var i = 0; i < 6; i++) {
+		bind("log", i, Codecamp.logLevel);
+		bind("warn", i, Codecamp.logLevel);
+		bind("trace", i, Codecamp.logLevel);
 	}
 	//cache the searched keywords regexes to avoid cpu waste
 	var searchedKeywords = {};
 	//specify a custom filterCallback when searching on lists
 	$.mobile.listview.prototype.options.filterCallback = function (text, searchValue) {
 		var r;
-		if (searchValue.indexOf(' ') < 0)
-		{
+		if (searchValue.indexOf(' ') < 0) {
 			r = (searchedKeywords[searchValue] || (searchedKeywords[searchValue] = i18N.noAccentRegex(searchValue))).exec(text);
 		}
 		else {
@@ -74,7 +86,7 @@
 					return false;//stop any further processing
 				}
 			});
-			
+
 		}
 		return !r;//returns true to include those not filtered-out
 	};
@@ -90,9 +102,9 @@
 			element = $(element);
 			try {
 				$element.listview('refresh');
-				log("jqmRefreshList1");
+				log3("jqmRefreshList success");
 			} catch (e) {
-				log("jqmRefreshList2");
+				log3("jqmRefreshList building for the first time");
 				element.listview().listview('refresh');
 			}
 			element.find(".ui-li-has-count").each(function () {
@@ -119,7 +131,7 @@
 
 	var themes = [];
 	$.each(["a", "b", "c", "d", "e", "f"], function (i, theme) {
-		themes.push("ui-btn-up-"+theme,"ui-body-"+theme);
+		themes.push("ui-btn-up-" + theme, "ui-body-" + theme);
 	});
 	themes = themes.join(" ");
 	ko.bindingHandlers['jqmTheme'] = {

@@ -24,17 +24,12 @@
     <script src="js/MVVM/Session.js"></script>
     <script src="js/MVVM/Event.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/data.js?p=Codecamp.updateData"></script>
 </head>
 <body>
     <div data-role="page">
         <div data-role="header" class="title">
-            <h1>Sessions</h1>
+            <h1></h1>
         </div>
-        <script id="tplSession" type="text/html">
-                    <li><a href="session.html?sessionId=${Id}" data-bind="text: titleAndSpeakerName"></a><span
-                        class="ui-li-count" data-bind="text: speakersNames"></span></li>
-                </script>
         <div data-role="content">
             <ul data-role="listview" data-inset="true"
                 data-bind="jqmRefreshList: {foreach: sessionsByTrack()}">
@@ -44,8 +39,8 @@
         <div data-role="footer" data-position="fixed" data-id="footer">
             <div data-role="navbar" data-icon-pos="top">
                 <ul>
-                    <li><a href="index.html" data-icon="grid" data-prefecth="true" data-transition="slideup" data-theme="a">Home</a></li>
-                    <li><a href="tracks.html" data-icon="gear" data-prefecth="true" data-transition="slidedown">Favorites</a></li>
+                    <li><a href="index.html" data-icon="grid" data-prefecth="true"data-direction="reverse" data-theme="a">Home</a></li>
+                    <li><a href="tracks.html" data-icon="gear" data-prefecth="true">Favorites</a></li>
                     <li><a href="feedback.html" data-icon="star" data-prefecth="true" data-bind="jqmTheme: feedbackTheme">Feedback</a></li>
                 </ul>
             </div>

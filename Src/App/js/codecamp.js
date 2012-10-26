@@ -3,8 +3,10 @@
 //not to poluate the golbal window namespace
 window.Codecamp = {
 	version: 1.0,
+	logLevel: 0,//0 disables all the logs, 5 = most verbose
 	languages: {},
-	api: "http://codecamp.lau.dnw.ro/app/data.json",
+	api: //"http://codecamp.lau.dnw.ro"+
+		"/js/data.js?callback=Codecamp.updateData",
 	currentEventId: 1,
 	viewModels: {},
 	events: {},

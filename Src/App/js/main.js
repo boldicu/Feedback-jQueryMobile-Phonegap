@@ -12,7 +12,7 @@
 		loadingTimeout: 0,
 		displayLoadingMessage: function (timeout, message, options) {
 			Codecamp.hideLoadingMessage();
-			$.mobile.loading('show', $.extend({ text: message, textVisible: true}, options));
+			$.mobile.loading('show', $.extend({ text: message, textVisible: true }, options));
 			Codecamp.loadingTimeout = window.setTimeout(options && options.info ? Codecamp.hideLoadingMessage : Codecamp.displayLoadingTimeout, timeout);
 		},
 		changeLanguage: function (lang) {
@@ -25,8 +25,8 @@
 		},
 		onDataUpdated: function (data) {
 			var codecamp = window.Codecamp;
-			log("data", data, $.mobile.activePage);
 			if (data && $.mobile.activePage) {
+				trace2("onDataUpdated", data, $.mobile.activePage);
 				//make sure data is an array
 				$.isArray(data) || (data = [data]);
 				//reset the events
@@ -42,24 +42,53 @@
 				//apply bindings with the current event
 				$.mobile.activePage[0].applyBindings = true;
 				ko.applyBindings(codecamp.currentEvent, $.mobile.activePage[0]);
-				//trace("applyBindings... done", $.mobile.activePage[0]);
+				trace5("applyBindings... done", $.mobile.activePage[0]);
 				Codecamp.hideLoadingMessage();
 			}
 		},
 		onInit: function () {
+			trace2("onInit");
 
 			//display the loading data message
 			Codecamp.displayLoadingMessage(2000, Codecamp.translate("Loading data..."));
+
+			//try to load the data from the local storage cache first
+			var localStorageCachedData = localStorage.getItem("data");
+			if (!localStorageCachedData) {
+				warn("Loading JSON from the network");
+				//if not there yet, request it and cache it
+				$.ajax({
+					url: Codecamp.api,
+					//dataType: 'script',
+					error: Codecamp.displayLoadingTimeout,
+					success: function (data) {
+						//trimming out any jsonP syntax
+						var index = data.indexOf('{'), lastIndex = data.lastIndexOf('}');
+						data = data.substring(index, lastIndex + 1);
+						//store the json in the localStorage
+						localStorage.setItem("data", data);
+					}
+				});
+			}
+			else {
+				//parse the JSON data from the local storage to avoid network reload
+				Codecamp.data = $.parseJSON(localStorageCachedData);
+			}
 
 			//update the online offline flag
 			Codecamp.onlineChanged();
 			//default the theme to d (light-gray)
 			$.mobile.page.prototype.options.theme = "d";
-			trace("onInit");
 
 			//bind the already loaded data
 			Codecamp.onDataUpdated(Codecamp.data);
-
+			trace2("onInit completed");
+			var currentPage = location.pathname.substr(1);
+			var prefetchPages = ["index.html", "tracks.html"].filter(function(p) { return p != currentPage});
+			
+			$.each(prefetchPages, function (index, page) {
+				$.mobile.loadPage(page, { showLoadMsg: false });
+			});
 		}
 	});
 
@@ -68,7 +97,7 @@
 		url = url.substr(1);//get rid of '?'
 
 		var currentPage = location.pathname.substr(1).replace(".html", "");
-		trace("hashchange", currentPage, location.href);
+		log2("location changed", currentPage, location.href);
 		if (url) {
 			var queryParameters = $.deparam(url);
 			$.each(["track", "speakerId", "sessionId"], function (i, key) {
@@ -85,28 +114,28 @@
 			//default language to romanian
 			Codecamp.changeLanguage("ro");
 			$(this).find("[data-role='header'],[data-role='footer']").attr('data-theme', 'c');
-			trace('pagebeforecreate', e.target.className, data, location);
+			//trace('pagebeforecreate', e.target.className, data, location);
 		},
 		//'pagecreate': function (e, data) {
 		//	trace('pagecreate', e.target.className, data);
 		//},
 		'pagebeforeshow': function (e, data) {
-			trace('pagebeforeshow', e.target.className, data);
-		//},
-		//'pageshow': function (e, data) {
-		//	trace('pageshow', e.target.className, data);
-		//},
-		//'pageinit': function (e, data) {
+			//trace('pagebeforeshow', e.target.className, data);
+			//},
+			//'pageshow': function (e, data) {
+			//	trace('pageshow', e.target.className, data);
+			//},
+			//'pageinit': function (e, data) {
 			//	trace('pageinit', e.target.className, data);
 
 
 			if (Codecamp.currentEvent) {
-				
+
 				var newPageLocation = $.mobile.path.parseUrl(location.hash.substr(1));
 				trace(newPageLocation);
 				//update the location of the new opened page
 				updateLocation(newPageLocation);
-				
+
 
 				///setTimeout(function () {
 				//var selectedSpeaker=Codecamp.currentEvent.selectedSpeaker();
@@ -119,10 +148,10 @@
 				if (!e.target.applyBindings) {
 					e.target.applyBindings = true;
 					ko.applyBindings(Codecamp.currentEvent, e.target);
-					log("page created, applied bindings!", e.target);
+					log3("page created, applied bindings!", e.target);
 				}
 				else {
-					log("skipped bindings!");
+					log3("skipped bindings!");
 				}
 				///}, 0);
 			}
@@ -131,7 +160,7 @@
 
 	//automatically add the back button on any page
 	$.mobile.page.prototype.options.addBackBtn = true;
-
+	$.mobile.defaultPageTransition = "none";
 	//subscribe to HTML5 onine / offline events
 	$(window).bind("offline online", Codecamp.onlineChanged);
 	//subscribe to mobileinit event, fallback to ready if used in a desktop browser
