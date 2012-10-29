@@ -1,4 +1,9 @@
 ﻿(function () {
+	if (!String.prototype.trim) {
+		String.prototype.trim = function () {
+			return this.replace(/^\s+|\s+$/g, '');
+		}
+	}
 	var joinOriginal = Array.prototype.join;
 	Array.prototype.join = function (join, excludeNonEmpty) {
 		var result = excludeNonEmpty ? this.filter(function (el) { return el; }) : this;
@@ -100,21 +105,45 @@
 			//allow containerless-binding inside of the <UL
 			element = ulRegex.exec(element.tagName) ? element : element.parentNode;
 			element = $(element);
-			try {
-				$element.listview('refresh');
-				log3("jqmRefreshList success");
-			} catch (e) {
-				log3("jqmRefreshList building for the first time");
-				element.listview().listview('refresh');
+			if (element.attr("data-autodividers")) {
+				log2("Rebuilding autodividers");
+
+				// read all list items (without list-dividers) into an array
+				var lis = element.children("li").not('.ui-li-divider').get();
+				// sort the list items in the array
+				lis.sort(function (a, b) {
+					var valA = $(a).text(),
+						valB = $(b).text();
+					if (valA < valB) { return -1; }
+					if (valA > valB) { return 1; }
+					return 0;
+				});
+
+				// clear the listview before rebuild
+				element.empty();
+
+				// adding the ordered items to the listview
+				$.each(lis, function (i, li) {
+					element.append(li);
+				});
 			}
-			element.find(".ui-li-has-count").each(function () {
-				if ($(this).find(".ui-li-count").length > 1) {
-					var first = $(this).find(".ui-li-count:first");
-					var second = $(this).find(".ui-li-count:nth(1)");
-					var shiftFirst = (second.position().left - first.outerWidth() - 5);
-					first.css("left", shiftFirst).css("right", "auto");
+			//window.setTimeout(function () {
+				try {
+					element.listview('refresh');
+					log("jqmRefreshList success");
+				} catch (e) {
+					log("jqmRefreshList building for the first time");
+					element.listview().listview('refresh');
 				}
-			});
+				element.find(".ui-li-has-count").each(function () {
+					if ($(this).find(".ui-li-count").length > 1) {
+						var first = $(this).find(".ui-li-count:first");
+						var second = $(this).find(".ui-li-count:nth(1)");
+						var shiftFirst = (second.position().left - first.outerWidth() - 5);
+						first.css("left", shiftFirst).css("right", "auto");
+					}
+				});
+			//}, 0);
 		}
 	};
 	ko.virtualElements.allowedBindings['jqmRefreshList'] = true;
@@ -271,4 +300,138 @@
 
 		return this;
 	};
+	$.mobile.listview.prototype.options.autodividersSelector = function (elt) {
+		// look for the text in the given element
+		var text = elt.text() || null;
+
+		if (!text) {
+			return null;
+		}
+
+		// create the text for the divider (first uppercased letter)
+		text = text.trim().slice(0, 1).toUpperCase();
+
+		return text;
+	};
+
 })();
+
+///Diacritice
+// Copyright (c) 2010 Cristian Adam <cristian.adam@gmail.com>
+// License: MIT
+//
+// This script replaces s comma bellow and t comma bellow 
+// on operating systems which do not support them with 
+// s cedilla and t cedilla, which are more widespread but 
+// incorrect in Romanian language.
+//
+// Partial substitution mode is used for Android where the
+// s comma bellow character is present and t comma bellow
+// is missing, but t cedilla is implemented as t comma bellow
+// so we're replacing only t comma bellow
+(function (window) {
+	function DiacriticsCommaToCedilla(node, partialSubstitution) {
+		if (node.nodeName == "#text") {
+			if (!partialSubstitution) {
+				node.nodeValue = node.nodeValue.replace(/ș/g, "ş");
+				node.nodeValue = node.nodeValue.replace(/Ș/g, "Ş");
+			}
+			node.nodeValue = node.nodeValue.replace(/ț/g, "ţ");
+			node.nodeValue = node.nodeValue.replace(/Ț/g, "Ţ");
+			return;
+		}
+
+		var i;
+		for (i = 0; i < node.childNodes.length; ++i) {
+			DiacriticsCommaToCedilla(node.childNodes[i], partialSubstitution);
+		}
+	}
+
+	function DiacriticsCommaToCedillaInTitle(partialSubstitution) {
+		if (!partialSubstitution) {
+			document.title = document.title.replace(/ș/g, "ş");
+			document.title = document.title.replace(/Ș/g, "Ş");
+		}
+		document.title = document.title.replace(/ț/g, "ţ");
+		document.title = document.title.replace(/Ț/g, "Ţ");
+	}
+
+	function DiacriticsConfigureTextElement(element, text) {
+		element.innerHTML = text;
+		element.style.width = "auto";
+		element.style.visibility = "hidden";
+		element.style.position = "absolute";
+		element.style.fontSize = "96px";
+	}
+
+	// http://stackoverflow.com/questions/1955048
+	function DiacriticsGetStyle(element, property) {
+		var camelize = function (str) {
+			return str.replace(/\-(\w)/g, function (str, letter) {
+				return letter.toUpperCase();
+			});
+		};
+
+		if (element.currentStyle) {
+			return element.currentStyle[camelize(property)];
+		} else if (document.defaultView && document.defaultView.getComputedStyle) {
+			return document.defaultView.getComputedStyle(element, null)
+                                   .getPropertyValue(property);
+		} else {
+			return element.style[camelize(property)];
+		}
+	}
+
+	function DiacriticsOnOlderOperatingSystems() {
+		var userAgent = navigator.userAgent.toLowerCase();
+
+		if (userAgent.indexOf("bot") != -1 ||
+        userAgent.indexOf("crawl") != -1 ||
+        userAgent.indexOf("slurp") != -1 ||
+        userAgent.indexOf("archive") != -1) {
+			return;
+		}
+
+		var normalText = document.createElement("div");
+		DiacriticsConfigureTextElement(normalText, "sStT");
+
+		var diacriticsText = document.createElement("div");
+		DiacriticsConfigureTextElement(diacriticsText, "șȘțȚ");
+
+		var partialDiacriticsText = document.createElement("div");
+		DiacriticsConfigureTextElement(partialDiacriticsText, "șȘţŢ");
+
+		document.body.insertBefore(normalText, document.body.firstChild);
+		document.body.insertBefore(diacriticsText, document.body.firstChild);
+		document.body.insertBefore(partialDiacriticsText, document.body.firstChild);
+
+		// Sometimes at various zoom settings there is a +1 difference
+		var doChange = Math.abs(normalText.offsetWidth - diacriticsText.offsetWidth) > 1;
+		var havePartialDiacritics = Math.abs(normalText.offsetWidth - partialDiacriticsText.offsetWidth) <= 1;
+
+		// Pocket Internet Explorer on Windows Mobile 6.5 returns 0
+		if (normalText.offsetWidth == 0 &&
+        diacriticsText.offsetWidth == 0) {
+			doChange = true;
+			havePartialDiacritics = false;
+		}
+
+
+		document.body.removeChild(normalText);
+		document.body.removeChild(diacriticsText);
+		document.body.removeChild(partialDiacriticsText);
+
+		if (doChange) {
+			DiacriticsCommaToCedilla(document.body, havePartialDiacritics);
+			DiacriticsCommaToCedillaInTitle(havePartialDiacritics);
+		}
+	}
+
+	if (window.attachEvent) {
+		window.attachEvent("onload", DiacriticsOnOlderOperatingSystems);
+	}
+	else if (window.addEventListener) {
+		window.addEventListener("load", DiacriticsOnOlderOperatingSystems, false);
+	}
+
+})(window);

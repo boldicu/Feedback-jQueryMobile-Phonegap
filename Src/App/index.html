@@ -3,27 +3,28 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Code Camp</title>
-    <link href="css/libs/jQuery/mobile/jquery.mobile-1.2.0.min.css" rel="stylesheet" />
-    <link href="css/feedback.css" rel="stylesheet" />
-    <script src="js/libs/jQuery/jquery-1.8.2.js"></script>
-    <script src="js/libs/jQuery/tmpl/jquery.tmpl.js"></script>
-    <script src="js/libs/jQuery/mobile/jquery.mobile-1.2.0.js"></script>
-    <script src="js/libs/knockout/knockout-2.2.0rc.debug.js"></script>
-    <script src="js/libs/knockout/map/knockout.mapping-latest.debug.js"></script>
-    <script src="js/libs/knockout/deferred/knockout-deferred-updates.js"></script>
-    <script src="js/libs/date.format.js"></script>
-    <script src="js/libs/i18N/i18NLocalization.js"></script>
-    <script src="js/codecamp.js"></script>
-    <script src="js/lang/en.js"></script>
-    <script src="js/lang/ro-ro.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/MVVM/Sponsor.js"></script>
-    <script src="js/MVVM/Location.js"></script>
-    <script src="js/MVVM/Track.js"></script>
-    <script src="js/MVVM/Speaker.js"></script>
-    <script src="js/MVVM/Session.js"></script>
-    <script src="js/MVVM/Event.js"></script>
-    <script src="js/main.js"></script>
+    <link href="/css/libs/jQuery/mobile/codecamp.min.css" rel="stylesheet" />
+    <link href="/css/libs/jQuery/mobile/jquery.mobile.structure-1.2.0.css" rel="stylesheet" />
+    <link href="/css/feedback.css" rel="stylesheet" />
+    <script src="/js/libs/jQuery/jquery-1.8.2.js"></script>
+    <script src="/js/libs/jQuery/tmpl/jquery.tmpl.js"></script>
+    <script src="/js/libs/jQuery/mobile/jquery.mobile-1.2.0.js"></script>
+    <script src="/js/libs/knockout/knockout-2.2.0rc.debug.js"></script>
+    <script src="/js/libs/knockout/map/knockout.mapping-latest.debug.js"></script>
+    <script src="/js/libs/knockout/deferred/knockout-deferred-updates.js"></script>
+    <script src="/js/libs/date.format.js"></script>
+    <script src="/js/libs/i18N/i18NLocalization.js"></script>
+    <script src="/js/codecamp.js"></script>
+    <script src="/js/lang/en.js"></script>
+    <script src="/js/lang/ro-ro.js"></script>
+    <script src="/js/utils.js"></script>
+    <script src="/js/MVVM/Sponsor.js"></script>
+    <script src="/js/MVVM/Location.js"></script>
+    <script src="/js/MVVM/Track.js"></script>
+    <script src="/js/MVVM/Speaker.js"></script>
+    <script src="/js/MVVM/Session.js"></script>
+    <script src="/js/MVVM/Event.js"></script>
+    <script src="/js/main.js"></script>
 </head>
 <body>
     <div data-role="page" id="home">
@@ -31,34 +32,33 @@
             <h1></h1>
         </div>
         <div data-role="content">
-
+            ​​​​<ul data-role="listview" data-inset="true" data-bind="visible: false">
+                <li data-role="listdivider" data-theme="f">Loading data...</li>
+            </ul>
             <script id="tplSession" type="text/html">
                 <li><a href="session.html?sessionId=${Id}" data-bind="text: trackAndTitle"></a><span
                     class="ui-li-count" data-bind="text: speakersNames"></span></li>
             </script>
-            ​​​​<ul data-role="listview" data-inset="true" data-bind="visible: false">
-                <li data-role="listdivider" data-theme="b">Loading data...</li>
-            </ul>
             <ul data-role="listview" data-inset="true" style="display: none" data-bind="visible: true">
-                <li data-role="listdivider" data-bind="visible:sessionsNow().length" data-theme="b">Now<span
+                <li data-role="listdivider" data-bind="visible:sessionsNow().length" data-theme="f">Now<span
                     class="ui-li-count"
                     data-bind="text: sessionsNow().length"></span></li>
                 <!-- ko template: {name: 'tplSession', foreach: sessionsNow, 'theme':'c'} -->
                 <!-- /ko -->
-                <li data-role="listdivider" data-bind="visible:sessionsNext().length" data-theme="b">Next...<span
+                <li data-role="listdivider" data-bind="visible:sessionsNext().length" data-theme="f">Next...<span
                     class="ui-li-count"
                     data-bind="text: sessionsNow().length"></span></li>
                 <!-- ko jqmRefreshList: {name: 'tplSession', foreach: sessionsNext} -->
                 <!-- /ko -->
-                <li data-role="listdivider" data-theme="b">Browse Sessions</li>
+                <li data-role="listdivider" data-theme="f">Browse Sessions</li>
                 <li><a href="tracks.html">Conference Rooms</a><span
                     class="ui-li-count" data-bind="text: Tracks().length"></span></li>
-                <li><a href="technologies.html">Technologies</a></li>
+                <li><a href="Settings.html">Settings</a></li>
                 <li><a href="speakers.html">Speakers</a><span
                     class="ui-li-count" data-bind="text: Speakers().length"></span></li>
                 <li><a href="sessions.html">Sessions</a><span
                     class="ui-li-count" data-bind="text: Sessions().length"></span></li>
-                <li data-theme="e"><a href="feedback.html">Feedback</a></li>
+                <li data-theme="f"><a href="feedback.html">Feedback</a></li>
             </ul>
         </div>
 
@@ -67,7 +67,7 @@
             <div data-role="navbar" data-icon-pos="top">
                 <ul class="home">
                     <li><a href="tracks.html" data-icon="tracks" data-transition="slide">Tracks</a></li>
-                    <li><a href="technologies.html" data-icon="techs">Technologies</a></li>
+                    <li><a href="settings.html" data-icon="techs">Settings</a></li>
                     <li><a href="speakers.html" data-icon="speakers">Speakers</a></li>
                     <li><a href="feedback.html" data-icon="feedback" data-bind="jqmTheme: feedbackTheme">Feedback</a></li>
                 </ul>

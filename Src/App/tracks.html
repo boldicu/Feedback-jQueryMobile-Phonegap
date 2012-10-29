@@ -3,7 +3,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Code Camp</title>
-    <link href="css/libs/jQuery/mobile/jquery.mobile-1.2.0.min.css" rel="stylesheet" />
+    <link href="css/libs/jQuery/mobile/jquery.mobile.structure-1.2.0.min.css" rel="stylesheet" />
+    <link href="css/libs/jQuery/mobile/codecamp.min.css" rel="stylesheet" />
     <link href="css/feedback.css" rel="stylesheet" />
     <script src="js/libs/jQuery/jquery-1.8.2.js"></script>
     <script src="js/libs/jQuery/tmpl/jquery.tmpl.js"></script>
@@ -31,33 +32,47 @@
             <h1></h1>
         </div>
         <div data-role="content">
-            <script id="tplTrack" type="text/html">
-                <li data-role="list-divider" data-theme="b" data-bind="text: Name"><span
-                    class="ui-li-count"
-                    data-bind="text: sessions().length"></span></li>
-                <!-- ko template: {name: 'tplTrackSession', foreach: $data.sessions} -->
-                <!-- /ko -->
-            </script>
-            <script id="tplTrackSession" type="text/html">
-                <li class="session"><a href="session.html?sessionId=${Id}">
-                    <h4 data-bind="text: Title"></h4>
-                    <p data-bind="text: duration"></p>
-				    <p class="ui-li-aside" data-bind="text: speakersNames"></p>
-                    </a>
-                </li>
-            </script>
-            <h4>You can browse the sessions for all the tracks</h4>
-            <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Search sessions..."
-                data-translate="data-filter-placeholder"
-                data-bind="jqmRefreshList: {name: 'tplTrack', foreach: Tracks, 'theme':'c'}">
+            ​​​​<ul data-role="listview" data-inset="true" data-bind="visible: false">
+                <li data-role="list-divider">Loading data...</li>
             </ul>
+            <div style="display: none" data-bind="visible: true">
+                <h4>You can browse the sessions for all the tracks</h4>
+                <script id="tplTrack" type="text/html">
+                    <li data-role="list-divider" data-theme="c">
+                        <h4 data-bind="text: Name"></h4>
+                        <span class="ui-li-count" data-bind="text: sessions.length"></span></li>
+                    <!-- ko template: {name: 'tplTrackSession', foreach: $data.sessions} -->
+                    <!-- /ko -->
+                </script>
+                <script id="tplSessionImage" type="text/html">
+                    <img src="${img}" class="grayscale" />
+                </script>
+                <script id="tplTrackSession" type="text/html">
+                    <li class="session"><a href="session.html?sessionId=${Id}">
+                        <!-- ko template: { name: 'tplSessionImage', foreach: presentersImages} -->
+                        <!-- /ko -->
+                        <h4 data-bind="text: Title"></h4>
+                        <p data-bind="text: duration"></p>
+                        <p class="ui-li-aside" data-bind="text: speakersNames"></p>
+                        <p style="display:none" data-bind="text: Description"></p>
+                    </a>
+                    </li>
+                </script>
+                <ul id="tracks" data-role="listview" data-inset="true"
+                    data-filter="true" data-filter-placeholder="Search sessions..."
+                    data-translate="data-filter-placeholder"
+                    data-bind="jqmRefreshList: {name: 'tplTrack', foreach: Tracks}">
+                </ul>
+            </div>
         </div>
         <div data-role="footer" data-position="fixed" data-id="footer">
             <div data-role="navbar" data-icon-pos="top">
                 <ul>
-                    <li><a href="index.html" data-icon="grid" data-prefecth="true" data-direction="reverse">Home</a></li>
+                    <li><a href="index.html" data-icon="grid" data-prefecth="true" data-direction="reverse">Home</a>
+                    </li>
                     <li><a href="tracks.html" data-icon="gear" data-prefecth="true">Favorites</a></li>
-                    <li><a href="feedback.html" data-icon="star" data-prefecth="true" data-bind="jqmTheme: feedbackTheme">Feedback</a></li>
+                    <li><a href="feedback.html" data-icon="star" data-prefecth="true" data-bind="jqmTheme: feedbackTheme">
+                        Feedback</a></li>
                 </ul>
             </div>
         </div>

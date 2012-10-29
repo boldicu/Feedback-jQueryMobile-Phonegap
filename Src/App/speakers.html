@@ -2,7 +2,7 @@
 <html xmanifest="cache.manifest">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sessions | Code Camp</title>
+    <title>Code Camp</title>
     <link href="css/libs/jQuery/mobile/jquery.mobile.structure-1.2.0.min.css" rel="stylesheet" />
     <link href="css/libs/jQuery/mobile/codecamp.min.css" rel="stylesheet" />
     <link href="css/feedback.css" rel="stylesheet" />
@@ -32,20 +32,41 @@
             <h1></h1>
         </div>
         <div data-role="content">
-            <ul data-role="listview" data-inset="true"
-                data-bind="jqmRefreshList: {foreach: sessionsByTrack()}">
-                <li><a href="session.html?sessionId=${Id}" data-bind="html: Title"></a></li>
-            </u>
+            ​​​​<ul data-role="listview" data-inset="true" data-bind="visible: false">
+                <li data-role="list-divider">Loading data...</li>
+            </ul>
+            <div style="display: none" data-bind="visible: true">
+                <h4>Browse the speakers</h4>
+                <script id="tplSpeakers" type="text/html">
+                    <li>
+                        <a href="speaker.html?speakerId=${Id}">
+                            <img data-bind="attr: {src: PortraitImageUrl}" class="grayscale" />
+                            <h3 data-bind="text: Name"></h3>
+                            <span class="ui-li-count" data-bind="text: CompanyName, visible: CompanyName"></span>
+                            <p data-bind="text: Title"></p>
+                            <p data-bind="text: Bio"></p>
+                        </a>
+                    </li>
+                </script>
+
+                <ul id="speakers" data-role="listview" data-inset="true"
+                    xdata-filter="true" data-filter-placeholder="Search speakers..."
+                    xdata-translate="data-filter-placeholder"
+                    data-bind="jqmRefreshList: {name: 'tplSpeakers', foreach: Speakers}"
+                    data-autodividers="true">
+                </ul>
+            </div>
         </div>
         <div data-role="footer" data-position="fixed" data-id="footer">
             <div data-role="navbar" data-icon-pos="top">
                 <ul>
-                    <li><a href="index.html" data-icon="grid" data-prefecth="true"data-direction="reverse" data-theme="a">Home</a></li>
+                    <li><a href="index.html" data-icon="grid" data-prefecth="true" data-direction="reverse">Home</a>
+                    </li>
                     <li><a href="tracks.html" data-icon="gear" data-prefecth="true">Favorites</a></li>
-                    <li><a href="feedback.html" data-icon="star" data-prefecth="true" data-bind="jqmTheme: feedbackTheme">Feedback</a></li>
+                    <li><a href="feedback.html" data-icon="star" data-prefecth="true" data-bind="jqmTheme: feedbackTheme">
+                        Feedback</a></li>
                 </ul>
             </div>
         </div>
     </div>
-</body>
 </html>

@@ -5652,6 +5652,7 @@ $.widget( "mobile.listview", $.mobile.widget, {
 			item, itemClass, itemTheme,
 			a, last, splittheme, counter, startCount, newStartCount, countParent, icon, imgParents, img, linkIcon;
 
+
 		if ( ol && jsCount ) {
 			$list.find( ".ui-li-dec" ).remove();
 		}

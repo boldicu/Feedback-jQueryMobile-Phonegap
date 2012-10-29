@@ -64,7 +64,20 @@
 					return speakers.join(", ", true);
 				},
 				deferEvaluation: true
-			}), 'durationAndTitle': ko.computed({
+			}),
+			'presentersImages': ko.computed({
+				read: function () {
+					trace5("computing session.authorImage", id);
+					var top = 1, speakers = $.grep($.map(viewModel.speakers(), function (speaker) {
+						return { img: speaker.PortraitImageUrl() };
+					}), function (speaker) {
+						return speaker.img && top--;
+					});
+					return speakers;
+				},
+				deferEvaluation: true
+			}),
+			'durationAndTitle': ko.computed({
 				read: function () {
 					trace5("computing session.durationAndTitle", id);
 					var track = viewModel.track && viewModel.track();

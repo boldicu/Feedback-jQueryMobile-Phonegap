@@ -1,3 +1,10 @@
+.grayscale {
+	-webkit-filter: grayscale(100%);
+   -moz-filter: grayscale(100%);
+   -ms-filter: grayscale(100%);
+   -o-filter: grayscale(100%);
+	filter: grayscale(100%);
+}
 .title h1.ui-title {
 	background-image: url(../img/codecamp_online_offline.png);
 	background-repeat: no-repeat;
@@ -255,6 +262,26 @@ li.session .ui-li-aside {
 	}
 }
 
+@media (max-width: 280px) {
+	.ui-li .ui-link-inherit {
+		padding-left: 0px !important;
+		padding-right: 25px !important;
+	}
+	.ui-content {
+		padding: 1px !important;
+	}
+	.ui-li .ui-li-count, .ui-li-aside {
+		display: none;
+	}
+
+	.home .ui-btn-text {
+		display: none;
+	}
+	.ui-li-thumb {
+		display: none;
+	}
+}
+
 @media (max-width: 300px),(max-height: 400px) {
 	.home .ui-btn-text {
 		display: none;
@@ -278,3 +305,8 @@ li.session .ui-li-aside {
 		padding-top: 10px;
 	}
 }
+/*
+	#EF4D24 rosu
+	#25AE25 verde
+	#00C4FF albastru
+	*/

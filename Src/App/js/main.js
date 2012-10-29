@@ -54,19 +54,25 @@
 
 			//try to load the data from the local storage cache first
 			var localStorageCachedData = localStorage.getItem("data");
-			if (!localStorageCachedData) {
+			if (true || !localStorageCachedData) {
 				warn("Loading JSON from the network");
 				//if not there yet, request it and cache it
 				$.ajax({
 					url: Codecamp.api,
-					//dataType: 'script',
+					dataType: 'script',
 					error: Codecamp.displayLoadingTimeout,
 					success: function (data) {
 						//trimming out any jsonP syntax
-						var index = data.indexOf('{'), lastIndex = data.lastIndexOf('}');
-						data = data.substring(index, lastIndex + 1);
-						//store the json in the localStorage
-						localStorage.setItem("data", data);
+						//if (typeof data === "string") {
+						//	var index = data.indexOf('{'), lastIndex = data.lastIndexOf('}');
+						//	data = data.substring(index, lastIndex + 1);
+						//}
+						//else {
+						//	data = JSON.stringify(data);
+						//	alert(data);
+						//}
+						////store the json in the localStorage
+						//localStorage.setItem("data", data);
 					}
 				});
 			}
@@ -77,19 +83,34 @@
 
 			//update the online offline flag
 			Codecamp.onlineChanged();
-			//default the theme to d (light-gray)
-			$.mobile.page.prototype.options.theme = "d";
 
 			//bind the already loaded data
 			Codecamp.onDataUpdated(Codecamp.data);
 			trace2("onInit completed");
 			var currentPage = location.pathname.substr(1);
-			var prefetchPages = ["index.html", "tracks.html"].filter(function(p) { return p != currentPage});
-			
+			var prefetchPages = ["index.html", "tracks.html"].filter(function (p) { return p != currentPage });
+
 			$.each(prefetchPages, function (index, page) {
-				$.mobile.loadPage(page, { showLoadMsg: false });
+				$.mobile.loadPage(Codecamp.domain + "/" + page, { showLoadMsg: false });
 			});
 		}
+	});
+
+	//log1($.mobile.page.prototype.options);
+	var theme = Codecamp.theme;
+	//apply the jqm theme
+	$.extend($.mobile.page.prototype.options, {
+		theme: theme.page,
+		headerTheme: theme.header,  // Page header only
+		contentTheme: theme.content,
+		footerTheme: theme.footer,
+	});
+	//log1($.mobile.listview.prototype.options);
+	$.extend($.mobile.listview.prototype.options, {
+		headerTheme: theme.listHeader,
+		theme: theme.list,
+		dividerTheme: theme.listDivider,
+		filterTheme: theme.listFilter
 	});
 
 	function updateLocation(location) {
@@ -113,7 +134,7 @@
 		'pagebeforecreate': function (e, data) {
 			//default language to romanian
 			Codecamp.changeLanguage("ro");
-			$(this).find("[data-role='header'],[data-role='footer']").attr('data-theme', 'c');
+			$(this).find("[data-role='header'],[data-role='footer']").attr('data-theme', Codecamp.theme.header);
 			//trace('pagebeforecreate', e.target.className, data, location);
 		},
 		//'pagecreate': function (e, data) {

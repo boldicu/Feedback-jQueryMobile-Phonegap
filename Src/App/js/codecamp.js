@@ -3,10 +3,29 @@
 //not to poluate the golbal window namespace
 window.Codecamp = {
 	version: 1.0,
-	logLevel: 0,//0 disables all the logs, 5 = most verbose
+	logLevel: 1,//0 disables all the logs, 5 = most verbose
 	languages: {},
+	domain: "",//"http://codecamp.lau.dnw.ro",
 	api: //"http://codecamp.lau.dnw.ro"+
 		"/js/data.js?callback=Codecamp.updateData",
+	themes: {
+		a: {
+			header: "c",
+			page: "d",
+			content: "c",
+			footer: "c",
+			list: "c",
+			listHeader: "f",
+			listDivider: "f",
+			listFilter: "none",
+		},
+		b: {
+			header: "f",
+			page: "f",
+			content: "f",
+			footer: "f",
+		}
+	},
 	currentEventId: 1,
 	viewModels: {},
 	events: {},
@@ -26,3 +45,5 @@ window.Codecamp = {
 		this.data = data;
 	}
 };
+Codecamp.theme = Codecamp.themes.a;
+$("head").append($("<base/>").attr("href", Codecamp.domain));
