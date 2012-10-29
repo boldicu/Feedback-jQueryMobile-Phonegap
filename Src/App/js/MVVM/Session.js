@@ -1,14 +1,14 @@
 ﻿$.extend(Codecamp.viewModels, {
 	Session: function (data, parent) {
 		var debug = 1;
-		var debugToday = new Date(), debugHour = 16;
+		var debugToday = new Date(), debugHour = 0;
 		var dateMapping = {
 			'update': function (options) {
 				var date = Date.parseISO(options.data);
 				if ((debug && 'setDate' in date)) {
 					date.setDate(debugToday.getDate());
 					date.setMonth(debugToday.getMonth());
-					date.setHours(date.getHours() - 2/*gmt*/ - 9 + debugHour, date.getMinutes(), date.getSeconds(), date.getMilliseconds());
+					date.setHours(date.getHours() - 2/*gmt*/ + debugHour, date.getMinutes(), date.getSeconds(), date.getMilliseconds());
 				}
 				return date;
 			}
@@ -49,7 +49,9 @@
 			'duration': ko.computed({
 				read: function () {
 					trace5("computing session.duration", id);
-					return [viewModel.Start().format("HH:MM"), viewModel.End().format("HH:MM")].join(" -> ", true);
+					var start = viewModel.Start && viewModel.Start(),
+						end = viewModel.End && viewModel.End();
+					return [start && start.format("HH:MM"), end && end.format("HH:MM")].join(" -> ", true);
 				},
 				deferEvaluation: true
 			})
@@ -84,9 +86,28 @@
 					return [viewModel.duration(), track && track.Name && track.Name()].join(", ", true);
 				},
 				deferEvaluation: true
+			}),
+			'trackName': ko.computed({
+				read: function () {
+					var track = viewModel.track();
+					return track && track.Name();
+				},
+				deferEvaluation: true
 			})
 		});
 		$.extend(viewModel, {
+			'logoUrl': ko.computed({
+				read: function () {
+					trace5("computing session.logoUrl", id);
+					var logo = viewModel.Logo && viewModel.Logo();
+					if (!logo) {
+						logo = viewModel.presentersImages();
+						logo = logo && logo[0] && logo[0].img;
+					}
+					return logo;
+				},
+				deferEvaluation: true
+			}),
 			'trackAndTitle': ko.computed({
 				read: function () {
 					trace5("computing session.trackAndTitle", id);

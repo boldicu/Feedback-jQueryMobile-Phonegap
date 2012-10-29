@@ -3,7 +3,7 @@
 //not to poluate the golbal window namespace
 window.Codecamp = {
 	version: 1.0,
-	logLevel: 1,//0 disables all the logs, 5 = most verbose
+	logLevel: 2,//0 disables all the logs, 5 = most verbose
 	languages: {},
 	domain: "",//"http://codecamp.lau.dnw.ro",
 	api: //"http://codecamp.lau.dnw.ro"+

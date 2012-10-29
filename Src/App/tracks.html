@@ -44,12 +44,12 @@
                     <!-- ko template: {name: 'tplTrackSession', foreach: $data.sessions} -->
                     <!-- /ko -->
                 </script>
-                <script id="tplSessionImage" type="text/html">
+                <script id="tplTrackSessionImage" type="text/html">
                     <img src="${img}" class="grayscale" />
                 </script>
                 <script id="tplTrackSession" type="text/html">
                     <li class="session"><a href="session.html?sessionId=${Id}">
-                        <!-- ko template: { name: 'tplSessionImage', foreach: presentersImages} -->
+                        <!-- ko template: { name: 'tplTrackSessionImage', foreach: presentersImages()} -->
                         <!-- /ko -->
                         <h4 data-bind="text: Title"></h4>
                         <p data-bind="text: duration"></p>
@@ -60,8 +60,9 @@
                 </script>
                 <ul id="tracks" data-role="listview" data-inset="true"
                     data-filter="true" data-filter-placeholder="Search sessions..."
-                    data-translate="data-filter-placeholder"
-                    data-bind="jqmRefreshList: {name: 'tplTrack', foreach: Tracks}">
+                    data-translate="data-filter-placeholder">
+                    <!-- ko jqmRefreshList: { name: 'tplTrack', foreach: Tracks()} -->
+                    <!-- /ko -->
                 </ul>
             </div>
         </div>

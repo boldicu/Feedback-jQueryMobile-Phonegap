@@ -15,7 +15,7 @@ if (window.console) {
 			last = date - trace.last;
 		trace.last = date;
 		Array.prototype.splice.call(arguments, 0, 0, last, loaded);
-		console.log.apply(console, arguments);
+		window.log && log.apply(console, arguments);
 	}
 	console.trace.loaded = console.trace.last = new Date();
 }

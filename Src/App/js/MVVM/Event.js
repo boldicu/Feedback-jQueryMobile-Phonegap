@@ -36,6 +36,9 @@
 				});
 			trace3("Parsed Event!");
 
+			//add an empty track with Id null which will hold all the common presentations
+			viewModel.Tracks.push(new viewModels.Track({ Id: null, Name: "N/A" }));
+
 			//build "byId" keys i.e. viewModel.Speakers.byId(29) -- will return the item with Id 29
 			$.each(["Locations", "Sessions", "Tracks", "Speakers"], function (index, collection) {
 				viewModel[collection].withIndex("Id", true);
@@ -46,12 +49,14 @@
 			trace4("Indexed collections");
 
 			//sort tracks' sessions by time
+			viewModel.Sessions().sort(function (a, b) { return a.Start() - b.Start(); });
 			$.each(viewModel.Tracks(), function (index, track) {
 				track.sessions = viewModel.Sessions
 					.byTrackRefId(track.Id())
 					.sort(function (a, b) { return a.Start() - b.Start(); });
 			});
 
+			viewModel.Sessions.withIndex("Start", true, true);
 
 			trace4("Indexed tracks' sessions, ordered by start date");
 			//build nextSession for every session
@@ -69,7 +74,9 @@
 			$.extend(viewModel, {
 				//keep the current date-time
 				//used for colouring differently the feedback button
-				'now': ko.observable(new Date())
+				'now': ko.observable(new Date()),
+				//keep the current slider session
+				'sessionSliderIndex': ko.observable(0)
 			});
 			//extend the viewModel with our UI methods
 			$.extend(viewModel, {
@@ -109,7 +116,8 @@
 					read: function () {
 						var now = viewModel.now();
 						return $.grep(viewModel.Sessions(), function (session) {
-							return session.Id && session.Start() <= now && session.End() >= now;
+							return session.Id && session.Start() <= now 
+								&& (!session.End || session.End() >= now);
 						});
 					},
 					deferEvaluation: true
@@ -120,12 +128,40 @@
 				'sessionsNext': ko.computed({
 					read: function () {
 						var now = viewModel.sessionsNow();
+						log("now", now);
 						return $.grep($.map(now, function (session) {
 							return session.nextSession;
 						}), function (session) { return session; });
 					},
 					deferEvaluation: true
 				}),
+				'sliderMaxRange': ko.computed({
+					read: function () {
+						var result = viewModel.Sessions.byStart.index().length - 1;
+						return result;
+					},
+					deferEvaluation: true
+				}),
+				'sliderText': ko.computed({
+					read: function () {
+						var index = viewModel.Sessions.byStart.index(),
+							result = index[viewModel.sessionSliderIndex()];
+						result = result && result.value[0] && result.value[0].duration();
+						return result;
+					},
+					deferEvaluation: true
+				}),
+				'sessionsForSlider': ko.computed({
+					read: function () {
+						var index = viewModel.Sessions.byStart.index(),
+							sessionSliderIndex = viewModel.sessionSliderIndex(),
+							result = index[sessionSliderIndex];
+						log("sessionsForSlider", sessionSliderIndex);
+						result = result && result.value;
+						return result;
+					},
+					deferEvaluation: true
+				})
 			});
 			trace3('event initialized');
 			window.setInterval(function () {

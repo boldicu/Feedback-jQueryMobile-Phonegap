@@ -99,14 +99,22 @@
 	///<summary>a binding that can be applied on a &lt;ul&gt; element to refresh its &lt;li&gt; children</summmary>
 	ko.bindingHandlers['jqmRefreshList'] = {
 		'init': ko.bindingHandlers.template.init,
+
 		'update': function (element, valueAccessor, allBindingsAccessor, viewModel, context) {
-			ko.bindingHandlers.template.update(element, valueAccessor,
-					allBindingsAccessor, viewModel, context);
+			trace2("jqmRefreshList updating...", ulRegex.test(element.tagName), element.tagName, element);
+
+			ko.bindingHandlers.template.update.call(this, element, valueAccessor, allBindingsAccessor, viewModel, context);
+
 			//allow containerless-binding inside of the <UL
-			element = ulRegex.exec(element.tagName) ? element : element.parentNode;
+			var bindOnULTag = element.tagName == "UL";
+			if (!bindOnULTag)
+				element = element.parentNode;
+
+
+
 			element = $(element);
 			if (element.attr("data-autodividers")) {
-				log2("Rebuilding autodividers");
+				trace2("Rebuilding autodividers");
 
 				// read all list items (without list-dividers) into an array
 				var lis = element.children("li").not('.ui-li-divider').get();
@@ -128,21 +136,21 @@
 				});
 			}
 			//window.setTimeout(function () {
-				try {
-					element.listview('refresh');
-					log("jqmRefreshList success");
-				} catch (e) {
-					log("jqmRefreshList building for the first time");
-					element.listview().listview('refresh');
+			try {
+				element.listview('refresh');
+				trace3("jqmRefreshList success", element[0]);
+			} catch (e) {
+				trace3("jqmRefreshList building for the first time");
+				element.listview().listview('refresh');
+			}
+			element.find(".ui-li-has-count").each(function () {
+				if ($(this).find(".ui-li-count").length > 1) {
+					var first = $(this).find(".ui-li-count:first");
+					var second = $(this).find(".ui-li-count:nth(1)");
+					var shiftFirst = (second.position().left - first.outerWidth() - 5);
+					first.css("left", shiftFirst).css("right", "auto");
 				}
-				element.find(".ui-li-has-count").each(function () {
-					if ($(this).find(".ui-li-count").length > 1) {
-						var first = $(this).find(".ui-li-count:first");
-						var second = $(this).find(".ui-li-count:nth(1)");
-						var shiftFirst = (second.position().left - first.outerWidth() - 5);
-						first.css("left", shiftFirst).css("right", "auto");
-					}
-				});
+			});
 			//}, 0);
 		}
 	};
@@ -269,17 +277,21 @@
 		///            when true, the function is named based
 		///            on the name of the index property &
 		///            capitalized (like id becomes findById)
-		var index = ko.computed(function () {
-			var list = this() || [];    // the internal array
-			var keys = {};              // a place for key/value
-			ko.utils.arrayForEach(list, function (v) {
-				var key = keyName ? ko.utils.unwrapObservable(v[keyName]) : v;// if there is a key, use it, otherwise the key is the object itself
-				keys[key] = group ? (keys[key] || []) : v;    // use it
-				if (group) //if it is a grouping just add it to the result
-					keys[key].push(v);
-			});
-			return keys;
-		}, this);
+		var index = ko.computed({
+			read: function () {
+				var list = this() || [];    // the internal array
+				var keys = {};              // a place for key/value
+				ko.utils.arrayForEach(list, function (v) {
+					var key = keyName ? ko.utils.unwrapObservable(v[keyName]) : v;// if there is a key, use it, otherwise the key is the object itself
+					keys[key] = group ? (keys[key] || []) : v;    // use it
+					if (group) //if it is a grouping just add it to the result
+						keys[key].push(v);
+				});
+				return keys;
+			},
+			deferEvaluation: true,//only compute observable on first access
+			owner: this
+		});
 
 		var fnName = "";
 		if (useName && keyName) {
@@ -297,6 +309,17 @@
 		this[fnName] = function (key) {
 			return index()[key];
 		};
+		this[fnName].index = ko.computed({
+			read: function () {
+				var result = [];
+				$.each(index(), function (key, value) {
+					result.push({ key: key, value: value });
+				});
+				return result;
+			},
+			deferEvaluation: true,//only compute observable on first access
+			owner: this
+		});
 
 		return this;
 	};

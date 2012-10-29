@@ -1,10 +1,28 @@
+.sessions .ui-slider-input {
+	display: none;
+}
+
+.sessions .ui-slider {
+	margin: 0 !important;
+	width: 100% !important;
+}
+
+.sessions h4 {
+	display: inline;
+}
+
+.sessions .slider {
+	padding: 0 15px;
+}
+
 .grayscale {
 	-webkit-filter: grayscale(100%);
-   -moz-filter: grayscale(100%);
-   -ms-filter: grayscale(100%);
-   -o-filter: grayscale(100%);
+	-moz-filter: grayscale(100%);
+	-ms-filter: grayscale(100%);
+	-o-filter: grayscale(100%);
 	filter: grayscale(100%);
 }
+
 .title h1.ui-title {
 	background-image: url(../img/codecamp_online_offline.png);
 	background-repeat: no-repeat;
@@ -262,14 +280,16 @@ li.session .ui-li-aside {
 	}
 }
 
-@media (max-width: 280px) {
+@media (max-width: 310px) {
 	.ui-li .ui-link-inherit {
 		padding-left: 0px !important;
 		padding-right: 25px !important;
 	}
+
 	.ui-content {
 		padding: 1px !important;
 	}
+
 	.ui-li .ui-li-count, .ui-li-aside {
 		display: none;
 	}
@@ -277,6 +297,7 @@ li.session .ui-li-aside {
 	.home .ui-btn-text {
 		display: none;
 	}
+
 	.ui-li-thumb {
 		display: none;
 	}

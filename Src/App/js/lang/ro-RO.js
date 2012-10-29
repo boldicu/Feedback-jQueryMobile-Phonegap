@@ -21,6 +21,9 @@
 	"All Tracks": "Toate sălile",
 	"Search sessions...": "Caută prezentări...",
 	"You can browse the sessions for all the tracks": "Lista prezentărilor pe săli",
+	//sessions:
+	"Drag the slider to navigate": "Trageți de slider pentru a naviga",
+	"presentation time": "în timp",
 	//header
 	"10 November 2012": "10 Noiembrie 2012",
 	//footer
@@ -29,7 +32,7 @@
 	"Feedback": "Feedback",
 	"© 2012 Codecamp.ro": "© 2012 Codecamp.ro",
 	"Now": "În acest moment",
-	"Next...": "Urmează...",
+	"Next...": "Urmează la ora: ",
 	"Browse Sessions": "Explorează prezentările",
 	"":""
 }

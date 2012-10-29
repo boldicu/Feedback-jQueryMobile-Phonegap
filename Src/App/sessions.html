@@ -32,17 +32,44 @@
             <h1></h1>
         </div>
         <div data-role="content">
-            <ul data-role="listview" data-inset="true"
-                data-bind="jqmRefreshList: {foreach: sessionsByTrack()}">
-                <li><a href="session.html?sessionId=${Id}" data-bind="html: Title"></a></li>
-            </u>
+            ​​​​<ul data-role="listview" data-inset="true" data-bind="visible: false">
+                <li data-role="listdivider" data-theme="d">Loading data...</li>
+            </ul>
+            <script id="tplSessionImage" type="text/html">
+                <img src="${logoUrl}" />
+            </script>
+            <script id="tplSlideSessions" type="text/html">
+                <li class="session"><a href="session.html?sessionId=${Id}">
+                    <!-- ko template: { name: 'tplSessionImage', if: logoUrl()} -->
+                    <!-- /ko -->
+                    <h4 data-bind="text: Title"></h4>
+                    <p data-bind="text: trackName"></p>
+                    <span class="ui-li-aside ui-li-desc" data-bind="text: speakersNames"></span>
+                </a>
+                </li>
+            </script>
+            <br />
+            <div style="display: none" class="sessions" data-bind="visible: true">
+                <span>Drag the slider to navigate</span>
+                <h4 data-bind="text: sliderText">presentation time</h4>
+                <div class="slider">
+                    <input data-bind="value: sessionSliderIndex, attr: { max: sliderMaxRange}" type="range" data-type="range"
+                        min="0" max="1" data-theme="c" data-highlight="true" />
+                </div>
+                <ul data-role="listview" data-inset="true">
+                    <!-- ko jqmRefreshList: {name: 'tplSlideSessions', foreach: sessionsForSlider()} -->
+                    <!-- /ko -->
+                </ul>
+            </div>
         </div>
         <div data-role="footer" data-position="fixed" data-id="footer">
             <div data-role="navbar" data-icon-pos="top">
                 <ul>
-                    <li><a href="index.html" data-icon="grid" data-prefecth="true"data-direction="reverse" data-theme="a">Home</a></li>
+                    <li><a href="index.html" data-icon="grid" data-prefecth="true" data-direction="reverse" data-theme="a">
+                        Home</a></li>
                     <li><a href="tracks.html" data-icon="gear" data-prefecth="true">Favorites</a></li>
-                    <li><a href="feedback.html" data-icon="star" data-prefecth="true" data-bind="jqmTheme: feedbackTheme">Feedback</a></li>
+                    <li><a href="feedback.html" data-icon="star" data-prefecth="true" data-bind="jqmTheme: feedbackTheme">
+                        Feedback</a></li>
                 </ul>
             </div>
         </div>

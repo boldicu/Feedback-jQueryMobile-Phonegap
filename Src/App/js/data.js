@@ -453,6 +453,65 @@
 		"LastName": "Iliescu"
 	}],
 	"Sessions": [{
+		"Description": "",
+		"Start": "2012-11-10T08:15:00",
+		"End": "2012-11-10T09:00:00",
+		"Id": "register",
+		"OverrideTracks": true,
+		"SpeakerRefIds": [],
+		"Title": "REGISTRATION & WELCOME COFFEE IN THE LOBBY & INTRO",
+		"TrackRefId": null,
+		"Logo": "/img/logos/Registration.jpg"
+	}, {
+		"Description": "",
+		"Start": "2012-11-10T09:55:00",
+		"End": "2012-11-10T10:00:00",
+		"Id": "register1",
+		"OverrideTracks": true,
+		"SpeakerRefIds": [],
+		"Title": "SHORT BREAK - GO TO YOUR SESSION",
+		"TrackRefId": null,
+		"Logo": "/img/logos/goToYourSession.jpg"
+	}, {
+		"Description": "",
+		"Start": "2012-11-10T11:30:00",
+		"End": "2012-11-10T12:00:00",
+		"Id": "coffee1",
+		"OverrideTracks": true,
+		"SpeakerRefIds": [],
+		"Title": "COFFEE BREAK",
+		"TrackRefId": null,
+		"Logo": "/img/logos/SimonsCat.CoffeeBreak.png"
+	}, {
+		"Description": "",
+		"Start": "2012-11-10T13:00:00",
+		"End": "2012-11-10T14:00:00",
+		"Id": "lunch",
+		"OverrideTracks": true,
+		"SpeakerRefIds": [],
+		"Title": "LUNCH BREAK IN THE RESTAURANT",
+		"TrackRefId": null,
+		"Logo": "/img/logos/LunchBreak.jpg"
+	}, {
+		"Description": "",
+		"Start": "2012-11-10T16:00:00",
+		"End": "2012-11-10T16:30:00",
+		"Id": "coffee2",
+		"OverrideTracks": true,
+		"SpeakerRefIds": [],
+		"Title": "COFFEE BREAK IN THE LOBBY",
+		"TrackRefId": null,
+		"Logo": "/img/logos/SimonsCat.CoffeeBreak.png"
+	}, {
+		"Description": "",
+		"Start": "2012-11-10T18:00:00",
+		"Id": "feedback",
+		"OverrideTracks": true,
+		"SpeakerRefIds": [],
+		"Title": "FEEDBACK & CLOSING OF THE DAY",
+		"TrackRefId": null,
+		"Logo": "/img/logos/Feedback.jpg"
+	}, {
 		"Description": "We all have ideas. A few hundreds of them every week. Some are good, some are not, some of them are easily done, others require years to implement. But they all have in common one thing: to be worth anything, they have to be put in practice. And the question is HOW? How do you convince your colleagues, your boss, your friends that your idea is the best one?",
 		"End": "2012-11-10T09:20:00",
 		"Id": 1,
@@ -463,13 +522,14 @@
 		"TrackRefId": null
 	}, {
 		"Description": "A series of 5-minutes-each remarkable presentations",
-		"End": "2012-11-10T09:20:00",
+		"End": "2012-11-10T09:55:00",
 		"Id": 2,
 		"OverrideTracks": true,
 		"SpeakerRefIds": [],
-		"Start": "2012-11-10T09:55:00",
+		"Start": "2012-11-10T09:20:00",
 		"Title": "Meet the Sponsors",
-		"TrackRefId": null
+		"TrackRefId": null,
+		"Logo": "/img/logos/Sponsors.gif"
 	}, {
 		"Description": "Proposed software engineering methodology focused on strong asset re-usage.",
 		"End": "2012-11-10T10:30:00",

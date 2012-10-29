@@ -33,22 +33,33 @@
         </div>
         <div data-role="content">
             ​​​​<ul data-role="listview" data-inset="true" data-bind="visible: false">
-                <li data-role="listdivider" data-theme="f">Loading data...</li>
+                <li data-role="listdivider" data-theme="d">Loading data...</li>
             </ul>
+            <script id="tplHomeSessionImage" type="text/html">
+                <img src="${logoUrl}" />
+            </script>
             <script id="tplSession" type="text/html">
-                <li><a href="session.html?sessionId=${Id}" data-bind="text: trackAndTitle"></a><span
-                    class="ui-li-count" data-bind="text: speakersNames"></span></li>
+                <li class="session"><a href="session.html?sessionId=${Id}">
+                    <!-- ko template: { name: 'tplHomeSessionImage', if: logoUrl()} -->
+                    <!-- /ko -->
+                    <h4 data-bind="text: Title"></h4>
+                    <p data-bind="text: trackName"></p>
+                    <span class="ui-li-aside ui-li-desc" data-bind="text: speakersNames"></span>
+                </a>
+                </li>
             </script>
             <ul data-role="listview" data-inset="true" style="display: none" data-bind="visible: true">
                 <li data-role="listdivider" data-bind="visible:sessionsNow().length" data-theme="f">Now<span
                     class="ui-li-count"
                     data-bind="text: sessionsNow().length"></span></li>
-                <!-- ko template: {name: 'tplSession', foreach: sessionsNow, 'theme':'c'} -->
+                <!-- ko template: {name: 'tplSession', foreach: sessionsNow(), 'theme':'c'} -->
                 <!-- /ko -->
-                <li data-role="listdivider" data-bind="visible:sessionsNext().length" data-theme="f">Next...<span
+                <li data-role="listdivider" data-bind="visible:sessionsNext().length" data-theme="f">Next...<span data-bind="text:sessionsNext() && sessionsNext()[0] && sessionsNext()[0].Start().format('HH:MM')">
+
+                                                                                                            </span><span
                     class="ui-li-count"
                     data-bind="text: sessionsNow().length"></span></li>
-                <!-- ko jqmRefreshList: {name: 'tplSession', foreach: sessionsNext} -->
+                <!-- ko jqmRefreshList: {name: 'tplSession', foreach: sessionsNext()} -->
                 <!-- /ko -->
                 <li data-role="listdivider" data-theme="f">Browse Sessions</li>
                 <li><a href="tracks.html">Conference Rooms</a><span
@@ -69,7 +80,8 @@
                     <li><a href="tracks.html" data-icon="tracks" data-transition="slide">Tracks</a></li>
                     <li><a href="settings.html" data-icon="techs">Settings</a></li>
                     <li><a href="speakers.html" data-icon="speakers">Speakers</a></li>
-                    <li><a href="feedback.html" data-icon="feedback" data-bind="jqmTheme: feedbackTheme">Feedback</a></li>
+                    <li><a href="feedback.html" data-icon="feedback" data-bind="jqmTheme: feedbackTheme">Feedback</a>
+                    </li>
                 </ul>
             </div>
         </div>

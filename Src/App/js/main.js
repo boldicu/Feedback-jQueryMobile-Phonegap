@@ -39,11 +39,14 @@
 				//update the current event
 				codecamp.currentEvent = codecamp.events[codecamp.currentEventId];
 
-				//apply bindings with the current event
-				$.mobile.activePage[0].applyBindings = true;
-				ko.applyBindings(codecamp.currentEvent, $.mobile.activePage[0]);
-				trace5("applyBindings... done", $.mobile.activePage[0]);
-				Codecamp.hideLoadingMessage();
+				//async apply bindings, so any errors will not be trapped by jQuery ajax load event
+				window.setTimeout(function () {
+					//apply bindings with the current event
+					$.mobile.activePage[0].applyBindings = true;
+					ko.applyBindings(codecamp.currentEvent, $.mobile.activePage[0]);
+					trace2("applyBindings... done", $.mobile.activePage[0]);
+					Codecamp.hideLoadingMessage();
+				}, 0);
 			}
 		},
 		onInit: function () {
@@ -126,7 +129,7 @@
 					Codecamp[key](key in queryParameters ? queryParameters[key] : Codecamp[key]());
 			});
 		}
-		ko.processAllDeferredBindingUpdates();
+		ko.processAllDeferredBindingUpdates && ko.processAllDeferredBindingUpdates();
 	}
 	updateLocation(window.location);
 	//default the header and footer themes to c (dark gray)

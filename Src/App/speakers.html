@@ -50,10 +50,11 @@
                 </script>
 
                 <ul id="speakers" data-role="listview" data-inset="true"
-                    xdata-filter="true" data-filter-placeholder="Search speakers..."
-                    xdata-translate="data-filter-placeholder"
-                    data-bind="jqmRefreshList: {name: 'tplSpeakers', foreach: Speakers}"
+                    data-filter="true" data-filter-placeholder="Search speakers..."
+                    data-translate="data-filter-placeholder"
                     data-autodividers="true">
+                    <!-- ko jqmRefreshList: {name: 'tplSpeakers', foreach: Speakers()} -->
+                    <!-- /ko -->
                 </ul>
             </div>
         </div>
