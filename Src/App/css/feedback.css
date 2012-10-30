@@ -143,7 +143,7 @@ li.session p {
 
 li.session h4 {
 	margin-top: 0;
-	margin-bottom: 0.5em;
+	margin-bottom: 0.1em;
 	white-space: normal;
 	overflow: visible;
 }
@@ -155,6 +155,9 @@ li.session .ui-li-aside {
 /*By default don't show h1 or h2 on the footer, but only for tall resolutions*/
 .ui-footer h2.ui-title, .ui-footer h1.ui-title {
 	display: none;
+}
+.ui-li-desc {
+	margin-top: 0;
 }
 
 @media (min-height: 480px) {
@@ -186,14 +189,14 @@ li.session .ui-li-aside {
 	}
 }
 
-@media only screen and (max-width: 320px) {
+@media (max-width: 320px) {
 	.ui-footer h1.ui-title, .title h1.ui-title {
 		background-image: none;
 		padding-right: 2px;
 	}
 }
 
-@media only screen and (max-width: 300px) {
+@media (max-width: 300px) {
 	.speakers li img {
 		display: none;
 	}

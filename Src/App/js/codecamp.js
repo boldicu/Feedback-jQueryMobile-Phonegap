@@ -6,8 +6,8 @@ window.Codecamp = {
 	logLevel: 2,//0 disables all the logs, 5 = most verbose
 	languages: {},
 	domain: "",//"http://codecamp.lau.dnw.ro",
-	api: //"http://codecamp.lau.dnw.ro"+
-		"/js/data.js?callback=Codecamp.updateData",
+	api: //"http://codecamp.lau.dnw.ro/"+
+		"js/data.js?callback=Codecamp.updateData",
 	themes: {
 		a: {
 			header: "c",

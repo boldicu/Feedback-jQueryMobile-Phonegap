@@ -461,7 +461,7 @@
 		"SpeakerRefIds": [],
 		"Title": "REGISTRATION & WELCOME COFFEE IN THE LOBBY & INTRO",
 		"TrackRefId": null,
-		"Logo": "/img/logos/Registration.jpg"
+		"Logo": "img/logos/Registration.jpg"
 	}, {
 		"Description": "",
 		"Start": "2012-11-10T09:55:00",
@@ -471,7 +471,7 @@
 		"SpeakerRefIds": [],
 		"Title": "SHORT BREAK - GO TO YOUR SESSION",
 		"TrackRefId": null,
-		"Logo": "/img/logos/goToYourSession.jpg"
+		"Logo": "img/logos/goToYourSession.jpg"
 	}, {
 		"Description": "",
 		"Start": "2012-11-10T11:30:00",
@@ -481,7 +481,7 @@
 		"SpeakerRefIds": [],
 		"Title": "COFFEE BREAK",
 		"TrackRefId": null,
-		"Logo": "/img/logos/SimonsCat.CoffeeBreak.png"
+		"Logo": "img/logos/SimonsCat.CoffeeBreak.png"
 	}, {
 		"Description": "",
 		"Start": "2012-11-10T13:00:00",
@@ -491,7 +491,7 @@
 		"SpeakerRefIds": [],
 		"Title": "LUNCH BREAK IN THE RESTAURANT",
 		"TrackRefId": null,
-		"Logo": "/img/logos/LunchBreak.jpg"
+		"Logo": "img/logos/LunchBreak.jpg"
 	}, {
 		"Description": "",
 		"Start": "2012-11-10T16:00:00",
@@ -501,7 +501,7 @@
 		"SpeakerRefIds": [],
 		"Title": "COFFEE BREAK IN THE LOBBY",
 		"TrackRefId": null,
-		"Logo": "/img/logos/SimonsCat.CoffeeBreak.png"
+		"Logo": "img/logos/SimonsCat.CoffeeBreak.png"
 	}, {
 		"Description": "",
 		"Start": "2012-11-10T18:00:00",
@@ -510,7 +510,7 @@
 		"SpeakerRefIds": [],
 		"Title": "FEEDBACK & CLOSING OF THE DAY",
 		"TrackRefId": null,
-		"Logo": "/img/logos/Feedback.jpg"
+		"Logo": "img/logos/Feedback.jpg"
 	}, {
 		"Description": "We all have ideas. A few hundreds of them every week. Some are good, some are not, some of them are easily done, others require years to implement. But they all have in common one thing: to be worth anything, they have to be put in practice. And the question is HOW? How do you convince your colleagues, your boss, your friends that your idea is the best one?",
 		"End": "2012-11-10T09:20:00",
@@ -529,7 +529,7 @@
 		"Start": "2012-11-10T09:20:00",
 		"Title": "Meet the Sponsors",
 		"TrackRefId": null,
-		"Logo": "/img/logos/Sponsors.gif"
+		"Logo": "img/logos/Sponsors.gif"
 	}, {
 		"Description": "Proposed software engineering methodology focused on strong asset re-usage.",
 		"End": "2012-11-10T10:30:00",

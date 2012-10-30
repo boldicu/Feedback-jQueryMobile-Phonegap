@@ -116,22 +116,35 @@
 					read: function () {
 						var now = viewModel.now();
 						return $.grep(viewModel.Sessions(), function (session) {
-							return session.Id && session.Start() <= now 
-								&& (!session.End || session.End() >= now);
+							return session.Id && session.Start() <= now
+								&& (!session.End || session.End() > now);
 						});
 					},
 					deferEvaluation: true
-				}),
+				})
 			});
 			window.viewModel = viewModel;
 			$.extend(viewModel, {
 				'sessionsNext': ko.computed({
 					read: function () {
-						var now = viewModel.sessionsNow();
-						log("now", now);
-						return $.grep($.map(now, function (session) {
-							return session.nextSession;
-						}), function (session) { return session; });
+						var startTime = new Date(1900, 1, 1);
+						$.each(viewModel.sessionsNow(), function (index, session) {
+							index = session.Start();
+							startTime = startTime > index ? startTime : index;
+						});
+						var timeIndexedSessions = viewModel.Sessions.byStart.index();
+						var currentStartTime = $.grep(timeIndexedSessions, function (item, index) {
+							return item.key == startTime;
+						});
+						currentStartTime = currentStartTime && currentStartTime[0];
+						currentStartTime = currentStartTime ? currentStartTime.index : -2;
+						var next = timeIndexedSessions[currentStartTime + 1];
+						var result = next && next.value || [];
+						return result;
+						//log("now", now);
+						//return $.grep($.map(now, function (session) {
+						//	return session.nextSession;
+						//}), function (session) { return session; });
 					},
 					deferEvaluation: true
 				}),
@@ -146,7 +159,11 @@
 					read: function () {
 						var index = viewModel.Sessions.byStart.index(),
 							result = index[viewModel.sessionSliderIndex()];
-						result = result && result.value[0] && result.value[0].duration();
+						result = result && result.value[0];
+						log(result.Start());
+						if (result && result.Start)
+							viewModel.now(result.Start());
+						result = result && result.duration();
 						return result;
 					},
 					deferEvaluation: true
@@ -161,13 +178,13 @@
 						return result;
 					},
 					deferEvaluation: true
-				})
+				}),
 			});
 			trace3('event initialized');
-			window.setInterval(function () {
-				log3('Refreshing every 30 seconds:', new Date());
-				viewModel.now(new Date());
-			}, 30000);
+			//window.setInterval(function () {
+			//	log3('Refreshing every 30 seconds:', new Date());
+			//	viewModel.now(new Date());
+			//}, 10000);
 
 			return viewModel;
 		}

@@ -94,7 +94,7 @@
 			var prefetchPages = ["index.html", "tracks.html"].filter(function (p) { return p != currentPage });
 
 			$.each(prefetchPages, function (index, page) {
-				$.mobile.loadPage(Codecamp.domain + "/" + page, { showLoadMsg: false });
+				$.mobile.loadPage(Codecamp.domain + Codecamp.domain && "/" + page, { showLoadMsg: false });
 			});
 		}
 	});

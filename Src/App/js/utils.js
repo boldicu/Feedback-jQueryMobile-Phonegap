@@ -101,7 +101,7 @@
 		'init': ko.bindingHandlers.template.init,
 
 		'update': function (element, valueAccessor, allBindingsAccessor, viewModel, context) {
-			trace2("jqmRefreshList updating...", ulRegex.test(element.tagName), element.tagName, element);
+			trace4("jqmRefreshList updating...", ulRegex.test(element.tagName), element.tagName, element);
 
 			ko.bindingHandlers.template.update.call(this, element, valueAccessor, allBindingsAccessor, viewModel, context);
 
@@ -114,7 +114,7 @@
 
 			element = $(element);
 			if (element.attr("data-autodividers")) {
-				trace2("Rebuilding autodividers");
+				trace3("Rebuilding autodividers");
 
 				// read all list items (without list-dividers) into an array
 				var lis = element.children("li").not('.ui-li-divider').get();
@@ -311,9 +311,9 @@
 		};
 		this[fnName].index = ko.computed({
 			read: function () {
-				var result = [];
-				$.each(index(), function (key, value) {
-					result.push({ key: key, value: value });
+				var result = [], indexes = index(), i = 0;
+				$.each(indexes, function (key, value) {
+					result.push({ key: key, value: value, index: i++ });
 				});
 				return result;
 			},

@@ -3,28 +3,28 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Code Camp</title>
-    <link href="/css/libs/jQuery/mobile/codecamp.min.css" rel="stylesheet" />
-    <link href="/css/libs/jQuery/mobile/jquery.mobile.structure-1.2.0.css" rel="stylesheet" />
-    <link href="/css/feedback.css" rel="stylesheet" />
-    <script src="/js/libs/jQuery/jquery-1.8.2.js"></script>
-    <script src="/js/libs/jQuery/tmpl/jquery.tmpl.js"></script>
-    <script src="/js/libs/jQuery/mobile/jquery.mobile-1.2.0.js"></script>
-    <script src="/js/libs/knockout/knockout-2.2.0rc.debug.js"></script>
-    <script src="/js/libs/knockout/map/knockout.mapping-latest.debug.js"></script>
-    <script src="/js/libs/knockout/deferred/knockout-deferred-updates.js"></script>
-    <script src="/js/libs/date.format.js"></script>
-    <script src="/js/libs/i18N/i18NLocalization.js"></script>
-    <script src="/js/codecamp.js"></script>
-    <script src="/js/lang/en.js"></script>
-    <script src="/js/lang/ro-ro.js"></script>
-    <script src="/js/utils.js"></script>
-    <script src="/js/MVVM/Sponsor.js"></script>
-    <script src="/js/MVVM/Location.js"></script>
-    <script src="/js/MVVM/Track.js"></script>
-    <script src="/js/MVVM/Speaker.js"></script>
-    <script src="/js/MVVM/Session.js"></script>
-    <script src="/js/MVVM/Event.js"></script>
-    <script src="/js/main.js"></script>
+    <link href="css/libs/jQuery/mobile/codecamp.min.css" rel="stylesheet" />
+    <link href="css/libs/jQuery/mobile/jquery.mobile.structure-1.2.0.css" rel="stylesheet" />
+    <link href="css/feedback.css" rel="stylesheet" />
+    <script src="js/libs/jQuery/jquery-1.8.2.js"></script>
+    <script src="js/libs/jQuery/tmpl/jquery.tmpl.js"></script>
+    <script src="js/libs/jQuery/mobile/jquery.mobile-1.2.0.js"></script>
+    <script src="js/libs/knockout/knockout-2.2.0rc.debug.js"></script>
+    <script src="js/libs/knockout/map/knockout.mapping-latest.debug.js"></script>
+    <script src="js/libs/knockout/deferred/knockout-deferred-updates.js"></script>
+    <script src="js/libs/date.format.js"></script>
+    <script src="js/libs/i18N/i18NLocalization.js"></script>
+    <script src="js/codecamp.js"></script>
+    <script src="js/lang/en.js"></script>
+    <script src="js/lang/ro-ro.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/MVVM/Sponsor.js"></script>
+    <script src="js/MVVM/Location.js"></script>
+    <script src="js/MVVM/Track.js"></script>
+    <script src="js/MVVM/Speaker.js"></script>
+    <script src="js/MVVM/Session.js"></script>
+    <script src="js/MVVM/Event.js"></script>
+    <script src="js/main.js"></script>
 </head>
 <body>
     <div data-role="page" id="home">
@@ -33,44 +33,50 @@
         </div>
         <div data-role="content">
             ​​​​<ul data-role="listview" data-inset="true" data-bind="visible: false">
-                <li data-role="listdivider" data-theme="d">Loading data...</li>
+                <li data-role="list-divider" data-theme="d">Loading data...</li>
             </ul>
-            <script id="tplHomeSessionImage" type="text/html">
-                <img src="${logoUrl}" />
-            </script>
-            <script id="tplSession" type="text/html">
-                <li class="session"><a href="session.html?sessionId=${Id}">
-                    <!-- ko template: { name: 'tplHomeSessionImage', if: logoUrl()} -->
-                    <!-- /ko -->
-                    <h4 data-bind="text: Title"></h4>
-                    <p data-bind="text: trackName"></p>
-                    <span class="ui-li-aside ui-li-desc" data-bind="text: speakersNames"></span>
-                </a>
-                </li>
-            </script>
-            <ul data-role="listview" data-inset="true" style="display: none" data-bind="visible: true">
-                <li data-role="listdivider" data-bind="visible:sessionsNow().length" data-theme="f">Now<span
-                    class="ui-li-count"
-                    data-bind="text: sessionsNow().length"></span></li>
-                <!-- ko template: {name: 'tplSession', foreach: sessionsNow(), 'theme':'c'} -->
-                <!-- /ko -->
-                <li data-role="listdivider" data-bind="visible:sessionsNext().length" data-theme="f">Next...<span data-bind="text:sessionsNext() && sessionsNext()[0] && sessionsNext()[0].Start().format('HH:MM')">
+            <div style="display: none" class="sessions" data-bind="visible: true">
 
-                                                                                                            </span><span
-                    class="ui-li-count"
-                    data-bind="text: sessionsNow().length"></span></li>
-                <!-- ko jqmRefreshList: {name: 'tplSession', foreach: sessionsNext()} -->
-                <!-- /ko -->
-                <li data-role="listdivider" data-theme="f">Browse Sessions</li>
-                <li><a href="tracks.html">Conference Rooms</a><span
-                    class="ui-li-count" data-bind="text: Tracks().length"></span></li>
-                <li><a href="Settings.html">Settings</a></li>
-                <li><a href="speakers.html">Speakers</a><span
-                    class="ui-li-count" data-bind="text: Speakers().length"></span></li>
-                <li><a href="sessions.html">Sessions</a><span
-                    class="ui-li-count" data-bind="text: Sessions().length"></span></li>
-                <li data-theme="f"><a href="feedback.html">Feedback</a></li>
-            </ul>
+                <span>Drag the slider to simulate time passing</span>
+                <h4 data-bind="text: sliderText">presentation time</h4>
+                <div class="slider">
+                    <input data-bind="value: sessionSliderIndex, attr: { max: sliderMaxRange}" type="range" data-type="range"
+                        min="0" max="40" data-theme="c" data-highlight="true" />
+                </div>
+                <script id="tplHomeSessionImage" type="text/html">
+                    <img src="${logoUrl}" />
+                </script>
+                <script id="tplHomeSession" type="text/html">
+                    <li class="session"><a href="session.html?sessionId=${Id}">
+                        <!-- ko template: { name: 'tplHomeSessionImage', if: logoUrl()} -->
+                        <!-- /ko -->
+                        <h4 data-bind="text: Title"></h4>
+                        <p data-bind="text: trackName"></p>
+                        <p data-bind="text: duration"></p>
+                        <span class="ui-li-aside ui-li-desc" data-bind="text: speakersNames"></span>
+                    </a>
+                    </li>
+                </script>
+                <ul data-role="listview" data-inset="true">
+                    <li data-role="list-divider" data-bind="visible:sessionsNow().length">Now<span
+                        class="ui-li-count" data-bind="text: sessionsNow().length"></span></li>
+                    <!-- ko template: {name: 'tplHomeSession', foreach: sessionsNow(), 'theme':'c'} -->
+                    <!-- /ko -->
+                    <li data-role="list-divider" data-bind="visible:sessionsNext().length">Next...<span data-bind="text:sessionsNext() && sessionsNext()[0] && sessionsNext()[0].Start().format('HH:MM')">
+                    </span><span class="ui-li-count" data-bind="text: sessionsNow().length"></span></li>
+                    <!-- ko jqmRefreshList: {name: 'tplHomeSession', foreach: sessionsNext()} -->
+                    <!-- /ko -->
+                    <li data-role="list-divider" data-theme="a">Browse Sessions</li>
+                    <li><a href="tracks.html">Conference Rooms</a><span
+                        class="ui-li-count" data-bind="text: Tracks().length"></span></li>
+                    <li><a href="Settings.html">Settings</a></li>
+                    <li><a href="speakers.html">Speakers</a><span
+                        class="ui-li-count" data-bind="text: Speakers().length"></span></li>
+                    <li><a href="sessions.html">Sessions</a><span
+                        class="ui-li-count" data-bind="text: Sessions().length"></span></li>
+                    <li data-theme="f"><a href="feedback.html">Feedback</a></li>
+                </ul>
+            </div>
         </div>
 
         <div data-role="footer" data-position="fixed" data-id="mainFooter">
