@@ -3,6 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Code Camp</title>
+    <link rel="shortcut icon" href="favicon.ico" />
     <link href="css/libs/jQuery/mobile/codecamp.min.css" rel="stylesheet" />
     <link href="css/libs/jQuery/mobile/jquery.mobile.structure-1.2.0.css" rel="stylesheet" />
     <link href="css/feedback.css" rel="stylesheet" />
@@ -40,7 +41,7 @@
                 <script id="tplSpeakers" type="text/html">
                     <li>
                         <a href="speaker.html?speakerId=${Id}">
-                            <img data-bind="attr: {src: PortraitImageUrl}" class="grayscale" />
+                            <img class="grayscale rotate" data-bind="attr: {src: PortraitImageUrl}" class="grayscale" />
                             <h3 data-bind="text: Name"></h3>
                             <span class="ui-li-count" data-bind="text: CompanyName, visible: CompanyName"></span>
                             <p data-bind="text: Title"></p>
@@ -52,7 +53,7 @@
                 <ul id="speakers" data-role="listview" data-inset="true"
                     data-filter="true" data-filter-placeholder="Search speakers..."
                     data-translate="data-filter-placeholder"
-                    data-autodividers="true">
+                    data-autodividers="true" class="speakers">
                     <!-- ko jqmRefreshList: {name: 'tplSpeakers', foreach: Speakers()} -->
                     <!-- /ko -->
                 </ul>

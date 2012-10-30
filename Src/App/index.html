@@ -3,6 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Code Camp</title>
+    <link rel="shortcut icon" href="favicon.ico" />
     <link href="css/libs/jQuery/mobile/codecamp.min.css" rel="stylesheet" />
     <link href="css/libs/jQuery/mobile/jquery.mobile.structure-1.2.0.css" rel="stylesheet" />
     <link href="css/feedback.css" rel="stylesheet" />
@@ -44,7 +45,7 @@
                         min="0" max="40" data-theme="c" data-highlight="true" />
                 </div>
                 <script id="tplHomeSessionImage" type="text/html">
-                    <img src="${logoUrl}" />
+                    <img class="grayscale rotate" src="${logoUrl}" />
                 </script>
                 <script id="tplHomeSession" type="text/html">
                     <li class="session"><a href="session.html?sessionId=${Id}">
@@ -57,10 +58,10 @@
                     </a>
                     </li>
                 </script>
-                <ul data-role="listview" data-inset="true">
+                <ul data-role="listview" data-inset="true" class="sessions">
                     <li data-role="list-divider" data-bind="visible:sessionsNow().length">Now<span
                         class="ui-li-count" data-bind="text: sessionsNow().length"></span></li>
-                    <!-- ko template: {name: 'tplHomeSession', foreach: sessionsNow(), 'theme':'c'} -->
+                    <!-- ko jqmRefreshList: {name: 'tplHomeSession', foreach: sessionsNow(), 'theme':'c'} -->
                     <!-- /ko -->
                     <li data-role="list-divider" data-bind="visible:sessionsNext().length">Next...<span data-bind="text:sessionsNext() && sessionsNext()[0] && sessionsNext()[0].Start().format('HH:MM')">
                     </span><span class="ui-li-count" data-bind="text: sessionsNow().length"></span></li>

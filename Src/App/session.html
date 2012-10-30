@@ -3,6 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Session | Code Camp</title>
+    <link rel="shortcut icon" href="favicon.ico" />
     <link href="css/libs/jQuery/mobile/jquery.mobile.structure-1.2.0.min.css" rel="stylesheet" />
     <link href="css/libs/jQuery/mobile/codecamp.min.css" rel="stylesheet" />
     <link href="css/feedback.css" rel="stylesheet" />
@@ -41,7 +42,7 @@
                 data-bind="template: {foreach: speakers()}">
                 <li>
                     <a href="speaker.html?speakerId=${Id}">
-                        <img data-bind="attr: {src: PortraitImageUrl}" />
+                        <img class="rotate" data-bind="attr: {src: PortraitImageUrl}" />
                         <h3 data-bind="text: nameAndCompany"></h3>
                         <p data-bind="text: Title"></p>
                         <p data-bind="text: Bio"></p>

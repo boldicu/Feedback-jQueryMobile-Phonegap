@@ -3,6 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Speaker | Code Camp</title>
+    <link rel="shortcut icon" href="favicon.ico" />
     <link href="css/libs/jQuery/mobile/codecamp.min.css" rel="stylesheet" />
     <link href="css/libs/jQuery/mobile/jquery.mobile.structure-1.2.0.css" rel="stylesheet" />
     <link href="css/feedback.css" rel="stylesheet" />
@@ -33,7 +34,7 @@
         </div>
         <div data-role="content" data-bind="attr: {class: 'display-block'}" style="display: none">
             <div class="speaker">
-                <img data-bind="attr: {src: PortraitImageUrl}" />
+                <img class="rotate" data-bind="attr: {src: PortraitImageUrl}" />
                 <h3 data-bind="text: Title"></h3>
                 <span data-bind="visible: CompanyName">@ </span>
                 <a data-bind="text: CompanyName, attr: { href: CompanyUrl}" data-rel="external" target="_blank">

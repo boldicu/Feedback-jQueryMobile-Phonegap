@@ -21,6 +21,9 @@
 	"All Tracks": "Toate sălile",
 	"Search sessions...": "Caută prezentări...",
 	"You can browse the sessions for all the tracks": "Lista prezentărilor pe săli",
+	//speakers:
+	"Browse the speakers": "Lista prezentatorilor",
+	"Search speakers": "Caută prezentatori...",
 	//sessions:
 	"Drag the slider to navigate": "Trageți de slider pentru a naviga",
 	"presentation time": "în timp",

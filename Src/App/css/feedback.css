@@ -102,7 +102,7 @@ h1.ui-title.offline {
 		margin: 0 1px 0 5px;
 	}
 
-.speakers li {
+.speakers li.ui-li-has-thumb, .sessions li.ui-li-has-thumb {
 	padding-top: 2px;
 	padding-bottom: 15px;
 }
@@ -111,7 +111,7 @@ h1.ui-title.offline {
 		margin-left: 10px;
 	}
 
-	.speakers li img.ui-li-thumb, .speaker img {
+	.rotate {
 		float: left;
 		padding: 4px;
 		background: transparent;
@@ -129,7 +129,7 @@ h1.ui-title.offline {
 		-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=-0.017)"; /* IE8 */
 	}
 
-.speaker img {
+.speaker img, .session img {
 	margin: 0 10px 3px 0;
 }
 
@@ -142,10 +142,12 @@ li.session p {
 }
 
 li.session h4 {
-	margin-top: 0;
-	margin-bottom: 0.1em;
 	white-space: normal;
 	overflow: visible;
+}
+li.session h4, .ui-li h3.ui-li-heading {
+	margin-top: 0;
+	margin-bottom: 0.1em;
 }
 
 li.session .ui-li-aside {
