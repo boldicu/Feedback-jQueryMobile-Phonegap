@@ -132,9 +132,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\Track.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\css\rating.css" />
+    <Content Include="App\feedback.html" />
     <Content Include="App\speakers.html" />
     <Content Include="App\speaker.html" />
     <Content Include="App\session.html" />

@@ -7,6 +7,7 @@
     <link href="css/libs/jQuery/mobile/jquery.mobile.structure-1.2.0.min.css" rel="stylesheet" />
     <link href="css/libs/jQuery/mobile/codecamp.min.css" rel="stylesheet" />
     <link href="css/feedback.css" rel="stylesheet" />
+    <link href="css/rating.css" rel="stylesheet" />
     <script src="js/libs/jQuery/jquery-1.8.2.js"></script>
     <script src="js/libs/jQuery/tmpl/jquery.tmpl.js"></script>
     <script src="js/libs/jQuery/mobile/jquery.mobile-1.2.0.js"></script>
@@ -51,6 +52,39 @@
             </ul>
             <div style="margin: auto" data-bind="visible:$data.Logo && Logo()">
                 <img data-bind="attr:{src:$data.Logo && Logo()}" />
+            </div>
+            <div class="rating" style="display: none" data-bind="visible:!($data.Logo && Logo())">
+                <div class="rating-content">
+                    <h3>Content</h3>
+                    <ul class="star">
+                        <li class="rating" style="width: 72%;">Currently 3.5/5 Stars.</li>
+                        <li><a href="#" data-translate="title" class="s1" title="Hate it">1</a></li>
+                        <li><a href="#" data-translate="title" class="s2" title="Don't like it">2</a></li>
+                        <li><a href="#" data-translate="title" class="s3" title="It's ok">3</a></li>
+                        <li><a href="#" data-translate="title" class="s4" title="Like it">4</a></li>
+                        <li><a href="#" data-translate="title" class="s5" title="Love it">5</a></li>
+                    </ul>
+                </div>
+                <div class="rating-presentation">
+                    <h3>Presentation</h3>
+                    <ul class="star">
+                        <li class="rating" style="width: 70%;"></li>
+                        <li><a href="#" data-translate="title" class="s1" title="Hate it"></a></li>
+                        <li><a href="#" data-translate="title" class="s2" title="Don't like it"></a></li>
+                        <li><a href="#" data-translate="title" class="s3" title="It's ok"></a></li>
+                        <li><a href="#" data-translate="title" class="s4" title="Like it"></a></li>
+                        <li><a href="#" data-translate="title" class="s5" title="Love it"></a></li>
+                    </ul>
+                </div>
+                <ul data-role="listview">
+                    <li data-role="fieldcontain">
+                        <label for="comments">Comments and suggestions</label>
+                        <textarea cols="40" rows="10" name="comments" id="comments"></textarea>
+                    </li>
+                    <li>
+                        <button type="submit" data-theme="b">Save</button>
+                    </li
+                </ul>
             </div>
         </div>
         <div data-role="footer" data-position="fixed" data-id="footer">

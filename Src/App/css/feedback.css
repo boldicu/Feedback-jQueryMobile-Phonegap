@@ -93,41 +93,41 @@ h1.ui-title.offline {
 	min-height: 115px;
 }
 
-	.speaker h3, .speaker a, .speaker span {
-		margin: 0;
-		float: left;
-	}
+.speaker h3, .speaker a, .speaker span {
+	margin: 0;
+	float: left;
+}
 
-	.speaker span {
-		margin: 0 1px 0 5px;
-	}
+.speaker span {
+	margin: 0 1px 0 5px;
+}
 
 .speakers li.ui-li-has-thumb, .sessions li.ui-li-has-thumb {
 	padding-top: 2px;
 	padding-bottom: 15px;
 }
 
-	.speakers li h3, .speakers li p {
-		margin-left: 10px;
-	}
+.speakers li h3, .speakers li p {
+	margin-left: 10px;
+}
 
-	.rotate {
-		float: left;
-		padding: 4px;
-		background: transparent;
-		border: solid 1px #ccc;
-		margin: 0px;
-		left: 5px;
-		top: 1px;
-		-webkit-box-shadow: rgba(0,0,0,0.4) 2px 2px 4px;
-		-moz-box-shadow: rgba(0,0,0,0.4) 2px 2px 4px;
-		box-shadow: rgba(0,0,0,0.4) 2px 2px 4px;
-		-moz-transform: rotate(-1.5deg); /* FF3.5+ */
-		-o-transform: rotate(-1.5deg); /* Opera 10.5 */
-		-webkit-transform: rotate(-1.5deg); /* Saf3.1+, Chrome */
-		filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=-0.017); /* IE6,IE7 */
-		-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=-0.017)"; /* IE8 */
-	}
+.rotate {
+	float: left;
+	padding: 4px;
+	background: transparent;
+	border: solid 1px #ccc;
+	margin: 0px;
+	left: 5px;
+	top: 1px;
+	-webkit-box-shadow: rgba(0,0,0,0.4) 2px 2px 4px;
+	-moz-box-shadow: rgba(0,0,0,0.4) 2px 2px 4px;
+	box-shadow: rgba(0,0,0,0.4) 2px 2px 4px;
+	-moz-transform: rotate(-1.5deg); /* FF3.5+ */
+	-o-transform: rotate(-1.5deg); /* Opera 10.5 */
+	-webkit-transform: rotate(-1.5deg); /* Saf3.1+, Chrome */
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=-0.017); /* IE6,IE7 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=-0.017)"; /* IE8 */
+}
 
 .speaker img, .session img {
 	margin: 0 10px 3px 0;
@@ -145,6 +145,7 @@ li.session h4 {
 	white-space: normal;
 	overflow: visible;
 }
+
 li.session h4, .ui-li h3.ui-li-heading {
 	margin-top: 0;
 	margin-bottom: 0.1em;
@@ -158,6 +159,7 @@ li.session .ui-li-aside {
 .ui-footer h2.ui-title, .ui-footer h1.ui-title {
 	display: none;
 }
+
 .ui-li-desc {
 	margin-top: 0;
 }
@@ -205,7 +207,6 @@ li.session .ui-li-aside {
 
 	.speakers li h3, .speakers li p {
 		width: 100%;
-		background: yellow;
 	}
 
 	.speakers li a {
@@ -336,3 +337,5 @@ li.session .ui-li-aside {
 	#25AE25 verde
 	#00C4FF albastru
 	*/
+
+

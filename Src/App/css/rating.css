@@ -1,0 +1,360 @@
+﻿/*             styles for the star rater                */
+.star {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	position: relative;
+}
+
+.star, .star li a:hover, .star li.rating {
+	background: url(../img/star16.png) center left repeat-x;
+}
+
+.star li {
+	padding: 0px;
+	margin: 0px;
+	/*\*/
+	float: left;
+	/* */
+}
+
+.star li a {
+	display: block;
+	text-decoration: none;
+	text-indent: -9000px;
+	z-index: 20;
+	position: absolute;
+	padding: 0px;
+	overflow: hidden;
+}
+
+.star li a:hover {
+	background-position: left top;
+	z-index: 2;
+	left: 0px;
+	border: none;
+}
+
+
+
+.star li.rating {
+	background-position: left bottom;
+	position: absolute;
+	display: block;
+	text-indent: -9000px;
+	z-index: 1;
+}
+
+.star:hover li.rating {
+	display: none;
+}
+/* remove halo effect in firefox   */
+.star a:active {
+	outline: none;
+}
+
+/*
+.star, .star li, .star li a, .star li.rating, .star a.s1:hover {
+	height: 16px;
+	width: 16px;
+	line-height: 16px;
+}
+
+.star a.s1 {
+	left: 0px;
+}
+
+.star a.s2 {
+	left: 16px;
+}
+
+.star a.s2:hover {
+	width: 32px;
+}
+
+.star a.s3 {
+	left: 32px;
+}
+
+.star a.s3:hover {
+	width: 48px;
+}
+
+.star a.s4 {
+	left: 48px;
+}
+
+.star a.s4:hover {
+	width: 64px;
+}
+
+.star a.s5 {
+	left: 64px;
+}
+
+.star, .star a.s5:hover {
+	width: 80px;
+}
+
+@media (min-width:360px) {
+	*/
+	.star, .star li a:hover, .star li.rating {
+		background-image: url(../img/star32.png);
+	}
+
+	.star, .star li, .star li a, .star li.rating, .star a.s1:hover {
+		height: 32px;
+		width: 32px;
+		line-height: 32px;
+	}
+
+	.star a.s1 {
+		left: 0px;
+	}
+
+	.star a.s2 {
+		left: 32px;
+	}
+
+	.star a.s2:hover {
+		width: 64px;
+	}
+
+	.star a.s3 {
+		left: 64px;
+	}
+
+	.star a.s3:hover {
+		width: 96px;
+	}
+
+	.star a.s4 {
+		left: 96px;
+	}
+
+	.star a.s4:hover {
+		width: 128px;
+	}
+
+	.star a.s5 {
+		left: 128px;
+	}
+
+	.star, .star a.s5:hover {
+		width: 160px;
+	}
+/*}*/
+@media (min-width:500px) {
+	.star, .star li a:hover, .star li.rating {
+		background-image: url(../img/star48.png);
+	}
+
+	.star, .star li, .star li a, .star li.rating, .star a.s1:hover {
+		height: 48px;
+		width: 48px;
+		line-height: 48px;
+	}
+
+	.star a.s1 {
+		left: 0px;
+	}
+
+	.star a.s2 {
+		left: 48px;
+	}
+
+	.star a.s2:hover {
+		width: 96px;
+	}
+
+	.star a.s3 {
+		left: 96px;
+	}
+
+	.star a.s3:hover {
+		width: 144px;
+	}
+
+	.star a.s4 {
+		left: 144px;
+	}
+
+	.star a.s4:hover {
+		width: 192px;
+	}
+
+	.star a.s5 {
+		left: 192px;
+	}
+
+	.star, .star a.s5:hover {
+		width: 240px;
+	}
+}
+
+
+@media (min-width:680px) {
+	.rating-content {
+	float:left;
+	display: block;
+	text-align: center;
+	border-right: 1px solid #eee;
+}
+.rating-presentation {
+	display: block;
+	float: right;
+	clear: right;
+	text-align: center;
+	border-left: 1px solid #eee;
+}
+	.star, .star li a:hover, .star li.rating {
+		background-image: url(../img/star64.png);
+	}
+
+	.star, .star li, .star li a, .star li.rating, .star a.s1:hover {
+		height: 64px;
+		width: 64px;
+		line-height: 64px;
+	}
+
+	.star a.s1 {
+		left: 0px;
+	}
+
+	.star a.s2 {
+		left: 64px;
+	}
+
+	.star a.s2:hover {
+		width: 128px;
+	}
+
+	.star a.s3 {
+		left: 128px;
+	}
+
+	.star a.s3:hover {
+		width: 192px;
+	}
+
+	.star a.s4 {
+		left: 192px;
+	}
+
+	.star a.s4:hover {
+		width: 256px;
+	}
+
+	.star a.s5 {
+		left: 256px;
+	}
+
+	.star, .star a.s5:hover {
+		width: 320px;
+	}
+}
+
+
+@media (min-width:1000px) {
+	.star, .star li a:hover, .star li.rating {
+		background-image: url(../img/star96.png);
+	}
+
+	.star, .star li, .star li a, .star li.rating, .star a.s1:hover {
+		height: 96px;
+		width: 96px;
+		line-height: 96px;
+	}
+
+	.star a.s1 {
+		left: 0px;
+	}
+
+	.star a.s2 {
+		left: 96px;
+	}
+
+	.star a.s2:hover {
+		width: 192px;
+	}
+
+	.star a.s3 {
+		left: 192px;
+	}
+
+	.star a.s3:hover {
+		width: 288px;
+	}
+
+	.star a.s4 {
+		left: 288px;
+	}
+
+	.star a.s4:hover {
+		width: 384px;
+	}
+
+	.star a.s5 {
+		left: 384px;
+	}
+
+	.star, .star a.s5:hover {
+		width: 480px;
+	}
+}
+
+@media (min-width:1300px) {
+	.star, .star li a:hover, .star li.rating {
+		background-image: url(../img/star128.png);
+	}
+
+	.star, .star li, .star li a, .star li.rating, .star a.s1:hover {
+		height: 128px;
+		width: 128px;
+		line-height: 128px;
+	}
+
+	.star a.s1 {
+		left: 0px;
+	}
+
+	.star a.s2 {
+		left: 128px;
+	}
+
+	.star a.s2:hover {
+		width: 256px;
+	}
+
+	.star a.s3 {
+		left: 256px;
+	}
+
+	.star a.s3:hover {
+		width: 384px;
+	}
+
+	.star a.s4 {
+		left: 384px;
+	}
+
+	.star a.s4:hover {
+		width: 512px;
+	}
+
+	.star a.s5 {
+		left: 512px;
+	}
+
+	.star, .star a.s5:hover {
+		width: 640px;
+	}
+}
+
+div.rating, div.feedback {
+	clear: both;
+	width: 100%;
+}
+.rating-stars {
+	float: right;
+}

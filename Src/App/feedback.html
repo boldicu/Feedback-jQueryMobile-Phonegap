@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html xmanifest="cache.manifest">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sessions | Code Camp</title>
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link href="css/libs/jQuery/mobile/jquery.mobile.structure-1.2.0.min.css" rel="stylesheet" />
+    <link href="css/libs/jQuery/mobile/codecamp.min.css" rel="stylesheet" />
+    <link href="css/feedback.css" rel="stylesheet" />
+    <link href="css/rating.css" rel="stylesheet" />
+    <script src="js/libs/jQuery/jquery-1.8.2.js"></script>
+    <script src="js/libs/jQuery/tmpl/jquery.tmpl.js"></script>
+    <script src="js/libs/jQuery/mobile/jquery.mobile-1.2.0.js"></script>
+    <script src="js/libs/knockout/knockout-2.2.0rc.debug.js"></script>
+    <script src="js/libs/knockout/map/knockout.mapping-latest.debug.js"></script>
+    <script src="js/libs/knockout/deferred/knockout-deferred-updates.js"></script>
+    <script src="js/libs/date.format.js"></script>
+    <script src="js/libs/i18N/i18NLocalization.js"></script>
+    <script src="js/codecamp.js"></script>
+    <script src="js/lang/en.js"></script>
+    <script src="js/lang/ro-ro.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/MVVM/Sponsor.js"></script>
+    <script src="js/MVVM/Location.js"></script>
+    <script src="js/MVVM/Track.js"></script>
+    <script src="js/MVVM/Speaker.js"></script>
+    <script src="js/MVVM/Session.js"></script>
+    <script src="js/MVVM/Event.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body>
+    <div data-role="page">
+        <div data-role="header" class="title">
+            <h1></h1>
+        </div>
+        <div data-role="content">
+            <br />
+            <div class="feedback">
+                ​​​​<ul data-role="listview" data-inset="true" data-bind="visible: false">
+                    <li data-role="list-divider" data-theme="d">Loading data...</li>
+                </ul>
+                <ul data-role="listview" data-theme="a">
+                    <li data-role="fieldcontain">
+                        <label class="ui-input-text">
+                            Overall event organization
+                        </label>
+                        <div class="ui-input-search">
+                            <ul class="star">
+                                <li class="rating" style="width: 70%;">Currently 3.5/5 Stars.</li>
+                                <li><a href="#" data-translate="title" class="s1" title="Hate it">1</a></li>
+                                <li><a href="#" data-translate="title" class="s2" title="Don't like it">2</a></li>
+                                <li><a href="#" data-translate="title" class="s3" title="It's ok">3</a></li>
+                                <li><a href="#" data-translate="title" class="s4" title="Like it">4</a></li>
+                                <li><a href="#" data-translate="title" class="s5" title="Love it">5</a></li>
+                            </ul>
+                        </div>
+
+                        </fieldset>
+                    </li>
+                    <li data-role="fieldcontain">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" id="email" value="" />
+                    </li>
+                    <li data-role="fieldcontain">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" value="" />
+                    </li>
+                    <li data-role="fieldcontain">
+                        <fieldset data-role="controlgroup">
+                            <legend>What is your primary technology?</legend>
+                            <input type="radio" name="technology" id="dotnet" />
+                            <label for="dotnet">.NET</label>
+
+                            <input type="radio" name="technology" id="java" />
+                            <label for="java">JAVA</label>
+
+                            <input type="radio" name="technology" id="php" />
+                            <label for="php">PHP</label>
+
+                            <input type="radio" name="technology" id="mobile" />
+                            <label for="mobile">Mobile</label>
+
+                            <input type="radio" name="technology" id="javascript" />
+                            <label for="javascript">Javascript</label>
+
+                            <input type="radio" name="technology" id="others" />
+                            <label for="others">Others</label>
+                            <br />
+                            <input type="text" name="other" id="other" />
+                        </fieldset>
+                    </li>
+                    <li data-role="fieldcontain">
+                        <label for="comments">Comments and suggestions</label>
+                        <textarea cols="40" rows="8" name="comments" id="comments"></textarea>
+                    </li>
+                    <li data-role="fieldcontain">
+                        <label for="techs">What technologies would you like next time?</label>
+                        <textarea cols="40" rows="8" name="techs" id="techs"></textarea>
+                    </li>
+                    <li data-role="fieldcontain">
+                        <label for="techs">What did you like most?</label>
+                        <textarea cols="40" rows="8" name="techs" id="techs"></textarea>
+                    </li>
+                    <li>
+                        <button type="submit" data-theme="b">Save</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div data-role="footer" data-position="fixed" data-id="footer">
+            <div data-role="navbar" data-icon-pos="top">
+                <ul>
+                    <li><a href="index.html" data-icon="grid" data-prefecth="true" data-direction="reverse" data-theme="a">
+                        Home</a></li>
+                    <li><a href="tracks.html" data-icon="gear" data-prefecth="true">Favorites</a></li>
+                    <li><a href="feedback.html" data-icon="star" data-prefecth="true" data-bind="jqmTheme: feedbackTheme">
+                        Feedback</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
