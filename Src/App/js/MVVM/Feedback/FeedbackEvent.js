@@ -1,11 +1,25 @@
 ﻿(function (Codecamp) {
-	function displayLoadingTimeout() {
+	function displaySuccess() {
 		var args = arguments, length = args.length || 1;
 		--length;
-		args[length] = $.extend(args[length] || {}, {
+		args[length] = $.extend({
 			theme: "e"
+		}, args[length]);
+		return Codecamp.displayLoadingTimeout.apply(this, args);
+	}
+	function displayError() {
+		var args = arguments, length = args.length || 1;
+		--length;
+		args[length] = $.extend({
+			theme: "b"
+		}, args[length]);
+		return Codecamp.displayLoadingTimeout.apply(this, args);
+	}
+	function displayLoading(timeout) {
+		return displaySuccess(timeout, {
+			textVisible: false,
+			textonly: false
 		});
-		Codecamp.displayLoadingTimeout.apply(this, args);
 	}
 	$.extend(Codecamp.viewModels, {
 		FeedbackEvent: function (data) {
@@ -24,13 +38,10 @@
 				}
 			});
 			ko.mapping.fromJS(data, {}, viewModel)
-			log("saved", data && data.saved, viewModel.saved());
+			//log1("saved", data && data.saved, viewModel.saved());
 			$.extend(viewModel, {
 				'vote': function (vote) {
-					displayLoadingTimeout(10000, {
-						textVisible: false,
-						textonly: false
-					});
+					displayLoading(10000);
 					var eventId = Codecamp.currentEventId;
 					$.ajax({
 						url: Codecamp.api.feedback + "VoteEvent?EventId=" + eventId,
@@ -40,21 +51,18 @@
 						data: { vote: vote },
 						timeout: 10000,
 						success: function (data) {
-							displayLoadingTimeout(data.Message || "Thank you", 2000);
+							displaySuccess(data.Message || "Thank you", 2000);
 							viewModel.Rating(data.Rating);
 							$.cookie("event-" + eventId, data.Rating, { expires: new Date(2020, 1, 1) });
 						},
 						error: function () {
-							displayLoadingTimeout("Rating data could not be saved. Are you connected to the internet?", 3000);
+							displayError("Rating data could not be saved. Are you connected to the internet?", 3000, { theme: "b" });
 						}
 					});
 					return false;
 				},
 				'save': function () {
-					displayLoadingTimeout(10000, {
-						textVisible: false,
-						textonly: false
-					});
+					displayLoading(10000);
 					var eventId = Codecamp.currentEventId;
 					function saveToCookie(model) {
 						$.cookie("eventFB-" + eventId, $.stringify(model), { expires: new Date(2020, 1, 1) });
@@ -73,14 +81,14 @@
 						data: data,
 						timeout: 10000,
 						success: function (data) {
-							displayLoadingTimeout(data.Message || "Thank you", 2000);
+							displaySuccess(data.Message || "Thank you", 2000);
 							viewModel.saved(true);
 							model.saved = true;
 							saveToCookie(model);
 						},
 						error: function () {
 							viewModel.saved(false);
-							displayLoadingTimeout("Feedback data could not be saved. Please try again later! Are you connected to the internet?", 3000);
+							displayError("Feedback data could not be saved. Please try again later! Are you connected to the internet?", 3000, { theme: "b" });
 						}
 					});
 					return false;

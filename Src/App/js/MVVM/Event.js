@@ -4,7 +4,7 @@
 	}
 	$.extend(Codecamp.viewModels, {
 		Event: function (data) {
-			trace3("Parsing Event...", data);
+			trace3("Parsing Event...");
 			var viewModels = Codecamp.viewModels,
 				viewModel = ko.mapping.fromJS(data, {
 					//define custom key mappings for each collection
@@ -80,7 +80,7 @@
 				'screenSize': ko.observable(document.body.offsetWidth)
 			});
 			$(window).on("resize", function (e) {
-				log("resize", document.body.offsetWidth);
+				//log("resize", document.body.offsetWidth);
 				viewModel.screenSize(document.body.offsetWidth);
 			});
 			//extend the viewModel with our UI methods
@@ -183,7 +183,7 @@
 						var index = viewModel.Sessions.byStart.index(),
 							result = index[viewModel.sessionSliderIndex()];
 						result = result && result.value[0];
-						log(result.Start());
+						//log3("sliderText", result.Start());
 						if (result && result.Start)
 							viewModel.now(result.Start());
 						result = result && result.duration();
@@ -196,7 +196,7 @@
 						var index = viewModel.Sessions.byStart.index(),
 							sessionSliderIndex = viewModel.sessionSliderIndex(),
 							result = index[sessionSliderIndex];
-						log("sessionsForSlider", sessionSliderIndex);
+						//log3("sessionsForSlider", sessionSliderIndex);
 						result = result && result.value;
 						return result;
 					},
