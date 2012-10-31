@@ -525,7 +525,7 @@ ko.bindingHandlers['jqmRadio'] = {
 			$element.prop("checked", "true");
 		else
 			$element.removeProp("checked");
-
+		$element.checkboxradio("refresh");
 	}
 };
 

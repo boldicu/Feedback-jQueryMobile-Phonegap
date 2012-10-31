@@ -4,6 +4,9 @@
 window.Codecamp = {
 	version: 1.0,
 	logLevel: 3,//0 disables all the logs, 5 = most verbose
+	loadingTimeout: 10000,//how much to wait for ajax calls (ms)
+	successMessageTimeout: 2000,//how much to display a success message
+	errorMessageTimeout: 4000,//how much to dipslay an error message
 	languages: {},
 	domain: "",//"http://codecamp.lau.dnw.ro",
 	api: {
@@ -21,6 +24,9 @@ window.Codecamp = {
 			listHeader: "f",
 			listDivider: "f",
 			listFilter: "none",
+			successMessage: "e",
+			errorMessage: "b",
+			loadingMessage: "e",
 			//footer buttons
 			//footerButton: "a",
 			//home: "d",
