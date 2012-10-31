@@ -1,4 +1,7 @@
 ﻿Codecamp.languages.ro = {
+	//online-offline
+	"You have disconnected from the internet. You can continue using the application in offline mode. All the feedbacks will be automatically posted when you get back online.":
+		"V-ați deconectat de la internet. Puteți folosi aplicația în mod deconectat (offline). Feedback-ul oferit se va posta în mod automat când vă reconectați la internet.",
 	'Conference Rooms': "Săli de conferințe",
 	'All Presentations': "Toate prezentările",
 	//Presentations.html
