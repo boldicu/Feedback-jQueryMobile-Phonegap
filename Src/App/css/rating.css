@@ -48,8 +48,8 @@
 .star:hover li.rating {
 	display: none;
 }
-/* remove halo effect in firefox   */
-.star a:active {
+/* remove halo effect in firefox & ie  */
+.star a,.star a:active, .star a:visited {
 	outline: none;
 }
 
@@ -357,4 +357,8 @@ div.rating, div.feedback {
 }
 .rating-stars {
 	float: right;
+}
+.star li.rating {
+	/*Default to no selected stars*/
+	width: 0;
 }
