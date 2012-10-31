@@ -1,8 +1,22 @@
 ﻿(function (Codecamp, $) {
 	$.extend(Codecamp, {
-		displayLoadingTimeout: function () {
-			$.mobile.loading('show', { theme: "a", text: Codecamp.translate("Timeout while loading data. Are you connected to the internet?"), textVisible: true, textonly: true });
-			window.setTimeout(Codecamp.hideLoadingMessage, 5000);
+		displayLoadingTimeout: function (msg, timeout, options) {
+			if (typeof msg === "object") {
+				options = msg;
+				msg = "";
+			}
+			else
+				if (typeof msg === "number") {
+					options = timeout;
+					timeout = msg;
+					msg = "";
+				}
+			if (typeof timeout === "object") {
+				options = timeout;
+				timeout = 0;
+			}
+			$.mobile.loading('show', $.extend({ theme: "a", text: Codecamp.translate(msg || "Timeout while loading data. Are you connected to the internet?"), textVisible: true, textonly: true }, options));
+			window.setTimeout(Codecamp.hideLoadingMessage, timeout || 5000);
 		},
 		hideLoadingMessage: function () {
 			window.clearTimeout(Codecamp.loadingTimeout);
@@ -24,30 +38,48 @@
 				Codecamp.displayLoadingMessage(4000, "You have disconnected from the internet. You can continue using the application in offline mode.", { info: true, textonly: true, theme: "e" });
 		},
 		downloadFeedback: function () {
-			$.ajax({
-				url: Codecamp.api.feedback + "Mine/" + Codecamp.currentEventId,
-				dataType: 'jsonp',
-				method: 'get',
-				success: function (data) {
-					data = data || {};
-					data.Event = data.Event || {};
-					data.Event.Rating = data.Rating || 20;
-					Codecamp.feedback({
-						Event: new Codecamp.viewModels.FeedbackEvent(data.Event),
-						Sessions: $.map(data.Sessions || [], function (session) {
-							return new Codecamp.viewModels.FeedbackSession(session);
-						})
-					});
-				},
-				error: function () {
-					$.mobile.loading('show', { theme: "a", text: Codecamp.translate("Feedback data could not be downloaded. Are you connected to the internet?"), textVisible: true, textonly: true });
-					window.setTimeout(Codecamp.hideLoadingMessage, 5000);
-				}
+			var eventId = Codecamp.currentEventId;
+			//$.ajax({
+			//	url: Codecamp.api.feedback + "Mine/" + Codecamp.currentEventId,
+			//	dataType: 'jsonp',
+			//	method: 'get',
+			//	success: function (data) {
+			//		data = data || {};
+			//		data.Event = data.Event || {};
+			//		data.Event.Rating = data.Rating || 20;
+			//		Codecamp.feedback({
+			//			Event: new Codecamp.viewModels.FeedbackEvent(data.Event),
+			//			Sessions: $.map(data.Sessions || [], function (session) {
+			//				return new Codecamp.viewModels.FeedbackSession(session);
+			//			})
+			//		});
+			//	},
+			//	error: function () {
+			//		$.mobile.loading('show', { theme: "a", text: Codecamp.translate("Feedback data could not be downloaded. Are you connected to the internet?"), textVisible: true, textonly: true });
+			//		window.setTimeout(Codecamp.hideLoadingMessage, 5000);
+			//	}
+			//});
+			var eventRating = $.cookie("event-" + eventId) || 0;
+			var eventFB = $.cookie("eventFB-" + eventId);
+			var sessions = $.cookie("eventSessions-" + eventId);
+			try {
+				eventFB = eventFB && $.parseJSON(eventFB);
+			}
+			catch (e) {
+				eventFB = null;
+			}
+			eventFB = eventFB || {};
+			eventFB.Rating = eventRating;
+			Codecamp.feedback({
+				Event: new Codecamp.viewModels.FeedbackEvent(eventFB),
+				Sessions: $.map(sessions || [], function (session) {
+					return new Codecamp.viewModels.FeedbackSession(session);
+				})
 			});
 		},
 		onDataUpdated: function (data) {
 			if (data && $.mobile.activePage) {
-				trace2("onDataUpdated", data, $.mobile.activePage);
+				trace("onDataUpdated");
 				Codecamp.downloadFeedback();
 				//make sure data is an array
 				$.isArray(data) || (data = [data]);
@@ -66,9 +98,9 @@
 					//apply bindings with the current event
 					$.mobile.activePage[0].applyBindings = true;
 					ko.applyBindings(Codecamp.currentEvent, $.mobile.activePage[0]);
-					trace2("applyBindings... done", $.mobile.activePage[0]);
+					trace("applyBindings... done");
 					Codecamp.hideLoadingMessage();
-				}, 0);
+				}, 100);
 			}
 		},
 		onInit: function () {
@@ -146,7 +178,13 @@
 		'pagebeforecreate': function (e, data) {
 			//default language to romanian
 			Codecamp.changeLanguage("ro");
-			$(this).find("[data-role='header'],[data-role='footer']").attr('data-theme', Codecamp.theme.header);
+			//default the data-theme for all the headers and footers that don't have one explicitly set
+			$(this).find("[data-role='header'],[data-role='footer']")
+				.each(function (elem) {
+					elem = $(this);
+					//if (!elem.attr('data-theme'))
+					//	elem.attr('data-theme', Codecamp.theme.header);
+				});
 			//trace('pagebeforecreate', e.target.className, data, location);
 		},
 		//'pagecreate': function (e, data) {

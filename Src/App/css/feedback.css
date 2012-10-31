@@ -1,6 +1,3 @@
-.feedback .ui-listview {
-	margin-top: -20px;
-}
 .radio .ui-btn-text .ui-btn-inner .ui-icon.ui-icon-shadow{
 	display: none;
 }
@@ -21,6 +18,9 @@
 	padding: 0 15px;
 }
 
+.ui-input-search.rating {
+	padding: 0;
+}
 .grayscale {
 	-webkit-filter: grayscale(100%);
 	-moz-filter: grayscale(100%);
@@ -28,13 +28,14 @@
 	-o-filter: grayscale(100%);
 	filter: grayscale(100%);
 }
-
-.title h1.ui-title {
+.ui-header h1 {
+	margin: .6em auto .8em;
+	height: 24px;
+}
+h1.codecamp {
 	background-image: url(../img/codecamp_online_offline.png);
 	background-repeat: no-repeat;
 	background-position: right top;
-	margin: .6em auto .8em;
-	height: 24px;
 }
 
 /*Remove the top-padding gap for the content*/
@@ -52,7 +53,7 @@
 }
 
 .home li:hover .ui-icon {
-	background-position-y: 0;
+	background-position-y: -2px;
 }
 
 .ui-icon-tracks {
@@ -72,17 +73,22 @@
 	background-position-x: -48px;
 }
 
+.otherTechnology {
+	margin-top: 20px;
+	clear: both;
+	float:left;
+	width: 100%;
+}
 
-
-#home .title h1.ui-title {
+#home h1.codecamp {
 	background-position: center top;
 }
 
-h1.ui-title.offline {
+h1.codecamp.offline {
 	background-position: right bottom;
 }
 
-#home .title h1.ui-title.offline {
+#home h1.codecamp.offline {
 	background-position: center bottom;
 }
 
@@ -180,7 +186,8 @@ li.session .ui-li-aside {
 	#home .ui-footer h2.ui-title {
 		color: #aaa;
 		margin: 0;
-		border-bottom: 1px solid #B3B3B3;
+		/*border-bottom: 1px solid #B3B3B3;*/
+		border-top: 2px outset #777;
 	}
 
 	#home .ui-footer {
@@ -229,7 +236,7 @@ li.session .ui-li-aside {
 		background-image: url(../img/icons_32.png);
 		background-color: transparent;
 		background-repeat: no-repeat;
-		background-position-y: -32px;
+		background-position-y: 0px;
 		height: 32px;
 		width: 32px;
 	}
@@ -257,10 +264,7 @@ li.session .ui-li-aside {
 	}
 
 	.ui-icon-tracks, .ui-icon-speakers, .ui-icon-techs, .ui-icon-feedback {
-		background-image: url(../img/icons_48.png);
-		background-color: transparent;
-		background-repeat: no-repeat;
-		background-position-y: -48px;
+		background: url(../img/icons_48.png) no-repeat 0 -49px;
 		height: 48px;
 		width: 48px;
 	}
@@ -299,7 +303,7 @@ li.session .ui-li-aside {
 	}
 
 	.ui-content {
-		padding: 1px !important;
+		xpadding: 1px !important;
 	}
 
 	.ui-li .ui-li-count, .ui-li-aside {

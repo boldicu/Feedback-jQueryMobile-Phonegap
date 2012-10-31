@@ -76,10 +76,19 @@
 				//used for colouring differently the feedback button
 				'now': ko.observable(new Date()),
 				//keep the current slider session
-				'sessionSliderIndex': ko.observable(0)
+				'sessionSliderIndex': ko.observable($.cookie("home-slider") || 0),
+				'screenSize': ko.observable(document.body.offsetWidth)
+			});
+			$(window).on("resize", function (e) {
+				log("resize", document.body.offsetWidth);
+				viewModel.screenSize(document.body.offsetWidth);
 			});
 			//extend the viewModel with our UI methods
 			$.extend(viewModel, {
+				'cacheSessionSliderIndexInCookie': ko.computed(function () {
+					//home slider, force the computing now - not delayed
+					$.cookie("home-slider", viewModel.sessionSliderIndex());
+				}),
 				'sessionsByTrack': ko.computed({
 					read: function () {
 						var track = Codecamp.track(),
@@ -105,13 +114,13 @@
 					},
 					deferEvaluation: true
 				}),
-				'feedbackTheme': ko.computed({
-					read: function () {
-						//when a presentation timeslot almost completes, make the feedback button yellow
-						return viewModel.now().getMinutes() < 30 ? "e" : "c";
-					},
-					deferEvaluation: true
-				}),
+				//'feedbackTheme': ko.computed({
+				//	read: function () {
+				//		//when a presentation timeslot almost completes, make the feedback button yellow
+				//		return viewModel.now().getMinutes() < 30 ? "e" : "c";
+				//	},
+				//	deferEvaluation: true
+				//}),
 				'sessionsNow': ko.computed({
 					read: function () {
 						var now = viewModel.now();
@@ -123,8 +132,22 @@
 					deferEvaluation: true
 				})
 			});
-			window.viewModel = viewModel;
+			function theme(alias) {
+				return ko.computed({
+					read: function () {
+						return Codecamp.theme[alias] || Codecamp.theme['footerButton'];
+					},
+					deferEvaluation: true
+				});
+			}
 			$.extend(viewModel, {
+				'homeTheme': theme("home"),
+				'settingsTheme': theme("settings"),
+				'speakersTheme': theme("speakers"),
+				'tracksTheme': theme("tracks"),
+				'sessionsTheme': theme("sessions"),
+				'favsTheme': theme("favs"),
+				'feedbackTheme': theme("feedback"),
 				'sessionsNext': ko.computed({
 					read: function () {
 						var startTime = new Date(1900, 1, 1);

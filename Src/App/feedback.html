@@ -31,95 +31,155 @@
     <script src="js/main.js"></script>
 </head>
 <body>
-    <div data-role="page">
+    <div data-role="page" data-theme="a">
         <div data-role="header" class="title">
-            <h1></h1>
+            <h1 data-bind="html:'', class: 'codecamp'">Loading data...</h1>
         </div>
-        <div data-role="content">
+
+        <div data-role="content" data-theme="b">
             <form data-bind="event: { submit: feedbackEvent().save}">
             <div class="feedback">
-                ​​​​<ul data-role="listview" data-bind="slideVisible: false">
-                    <li data-role="list-divider" data-theme="a">Loading data...</li>
-                </ul>
-                <ul data-role="listview" data-theme="a" style="display:none" data-bind="visible: true">
+                <ul data-role="listview" data-theme="a" data-inset="true">
                     <li data-role="fieldcontain">
                         <label class="ui-input-text">
                             Overall event organization
                         </label>
-                        <div class="ui-input-search">
+                        <div class="ui-input-search rating">
                             <ul class="star">
                                 <li class="rating" data-bind="style: { width: feedbackEvent().Rating()+'%' }"></li>
-                                <li><a data-bind="click: function() { return feedbackEvent().vote(1)}" href="#" data-translate="title" class="s1" title="Hate it"></a></li>
-                                <li><a data-bind="click: function() { return feedbackEvent().vote(2)}" href="#" data-translate="title" class="s2" title="Don't like it"></a></li>
-                                <li><a data-bind="click: function() { return feedbackEvent().vote(3)}" href="#" data-translate="title" class="s3" title="It's ok"></a></li>
-                                <li><a data-bind="click: function() { return feedbackEvent().vote(4)}" href="#" data-translate="title" class="s4" title="Like it"></a></li>
-                                <li><a data-bind="click: function() { return feedbackEvent().vote(5)}" href="#" data-translate="title" class="s5" title="Love it"></a></li>
+                                <li><a data-bind="click: function() { return feedbackEvent().vote(1)}" href="#" data-translate="title"
+                                    class="s1" title="Hate it"></a></li>
+                                <li><a data-bind="click: function() { return feedbackEvent().vote(2)}" href="#" data-translate="title"
+                                    class="s2" title="Don't like it"></a></li>
+                                <li><a data-bind="click: function() { return feedbackEvent().vote(3)}" href="#" data-translate="title"
+                                    class="s3" title="It's ok"></a></li>
+                                <li><a data-bind="click: function() { return feedbackEvent().vote(4)}" href="#" data-translate="title"
+                                    class="s4" title="Like it"></a></li>
+                                <li><a data-bind="click: function() { return feedbackEvent().vote(5)}" href="#" data-translate="title"
+                                    class="s5" title="Love it"></a></li>
                             </ul>
                         </div>
-
-                        </fieldset>
                     </li>
                     <!-- ko with: feedbackEvent().FeedbackUser -->
                     <li data-role="fieldcontain">
-                        <label for="email">Email</label>
+                        <label for="email">Name / Email</label>
                         <input data-bind="value: Email" type="text" name="email" id="email" value="" />
                     </li>
-                    <li data-role="fieldcontain">
+                    <!--<li data-role="fieldcontain">
                         <label for="name">Name</label>
-                        <input  data-bind="value: Name" type="text" name="name" id="name" value="" />
-                    </li>
+                        <input data-bind="value: Name" type="text" name="name" id="name" value="" />
+                    </li>-->
                     <!-- /ko -->
                     <li data-role="fieldcontain">
-                        <fieldset data-role="controlgroup" class="radio">
+                        <fieldset data-role="controlgroup" data-type="horizontal" class="radio" data-bind="visible: screenSize()> 770" id="ab">
                             <legend>What is your primary technology?</legend>
-                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology" type="radio" name="technology" value=".net" id="dotnet" />
+                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology"
+                                type="radio" name="technology" value=".net" id="dotnet" data-theme="c" />
                             <label for="dotnet">.NET</label>
 
-                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology" type="radio" name="technology" value="java" id="java"/>
+                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology"
+                                type="radio" name="technology" value="java" id="java" data-theme="c"/>
                             <label for="java">JAVA</label>
 
-                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology" type="radio" name="technology" value="php" id="php" />
+                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology"
+                                type="radio" name="technology" value="php" id="php" data-theme="c"/>
                             <label for="php">PHP</label>
 
-                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology" type="radio" name="technology" value="mobile" id="mobile"/>
+                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology"
+                                type="radio" name="technology" value="mobile" id="mobile" data-theme="c"/>
                             <label for="mobile">Mobile</label>
 
-                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology" type="radio" name="technology" value="javascript" id="js"/>
+                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology"
+                                type="radio" name="technology" value="javascript" id="js" data-theme="c"/>
                             <label for="js">Javascript</label>
 
-                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology" type="radio" name="technology" value="others" id="others"/>
+                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology"
+                                type="radio" name="technology" value="others" id="others" data-theme="c"/>
                             <label for="others">Others</label>
-                            <br />
-                            <input data-bind="value: feedbackEvent().PrimaryTechnologyOther, visible: feedbackEvent().PrimaryTechnology() == 'others'" type="text" name="other" id="other"/>
+                            <div class="otherTechnology" data-bind="visible: feedbackEvent().PrimaryTechnology() == 'others'">
+                                <input data-bind="value: feedbackEvent().PrimaryTechnologyOther"
+                                    type="text" name="other" id="other" />
+                            </div>
+                        </fieldset>
+
+                        <fieldset data-role="controlgroup" data-type="vertical" class="radio" data-bind="visible: screenSize()<= 770">
+                            <legend>What is your primary technology?</legend>
+                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology"
+                                type="radio" name="technology" value=".net" id="dotnet1" data-theme="c" />
+                            <label for="dotnet1">.NET</label>
+
+                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology"
+                                type="radio" name="technology" value="java" id="java1" data-theme="c"/>
+                            <label for="java1">JAVA</label>
+
+                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology"
+                                type="radio" name="technology" value="php" id="php1" data-theme="c"/>
+                            <label for="php1">PHP</label>
+
+                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology"
+                                type="radio" name="technology" value="mobile" id="mobile1" data-theme="c"/>
+                            <label for="mobile1">Mobile</label>
+
+                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology"
+                                type="radio" name="technology" value="javascript" id="js1" data-theme="c"/>
+                            <label for="js1">Javascript</label>
+
+                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology"
+                                type="radio" name="technology" value="others" id="others1" data-theme="c"/>
+                            <label for="others1">Others</label>
+                            <div class="otherTechnology" data-bind="visible: feedbackEvent().PrimaryTechnology() == 'others'">
+                                <input data-bind="value: feedbackEvent().PrimaryTechnologyOther"
+                                    type="text" name="other" id="other1" />
+                            </div>
                         </fieldset>
                     </li>
                     <li data-role="fieldcontain">
                         <label for="comments">Comments and suggestions</label>
-                        <textarea data-bind="value: feedbackEvent().Suggestions" cols="40" rows="8" name="comments" id="comments"></textarea>
+                        <textarea data-bind="value: feedbackEvent().Suggestions" cols="40" rows="8" name="comments"
+                            id="comments"></textarea>
                     </li>
                     <li data-role="fieldcontain">
                         <label for="techs">What technologies would you like next time?</label>
-                        <textarea data-bind="value: feedbackEvent().WantedTechnologies" cols="40" rows="8" name="techs" id="techs"></textarea>
+                        <textarea data-bind="value: feedbackEvent().WantedTechnologies" cols="40" rows="8" name="techs"
+                            id="techs"></textarea>
                     </li>
                     <li data-role="fieldcontain">
-                        <label for="techs">What did you like most?</label>
-                        <textarea data-bind="value: feedbackEvent().LikedMost" cols="40" rows="8" name="techs" id="techs"></textarea>
+                        <label for="likedMost">What did you like most?</label>
+                        <textarea data-bind="value: feedbackEvent().LikedMost" cols="40" rows="8" name="likedMost" id="likedMost"></textarea>
                     </li>
                     <li>
-                        <button data-bind="click:feedbackEvent().save"  type="submit" data-theme="b">Save</button>
+                        <button data-bind="click:feedbackEvent().save" type="submit" data-theme="f">Save</button>
                     </li>
                 </ul>
             </div>
-                </form>
+            </form>
         </div>
+
         <div data-role="footer" data-position="fixed" data-id="footer">
             <div data-role="navbar" data-icon-pos="top">
-                <ul>
-                    <li><a href="index.html" data-icon="grid" data-prefecth="true" data-direction="reverse" data-theme="a">
-                        Home</a></li>
-                    <li><a href="tracks.html" data-icon="gear" data-prefecth="true">Favorites</a></li>
-                    <li><a href="feedback.html" data-icon="star" data-prefecth="true" data-bind="jqmTheme: feedbackTheme">
-                        Feedback</a></li>
+                <div id="warnTip" class="ui-bar ui-bar-e" style="display: none" data-bind="visible: !feedbackEvent().saved()">
+                    <h3 style="float: left; width: 92%;">
+                        The feedback is not yet saved on the server. When you are online please make sure you press save again.
+                    </h3>
+                    <div style="margin-top: -10px;">
+                        <button data-bind="click: function() { $('#warnTip').hide();}"
+                            data-role="button" data-icon="delete" data-mini="true" data-inline="true" data-iconpos="notext">
+                            Dissmiss</button>
+                    </div>
+                </div>
+
+                <ul class="home">
+                    <li><a href="index.html" data-icon="home" data-direction="reverse" data-transition="slide"
+                        data-bind="jqmTheme: Codecamp.currentEvent.homeTheme"
+                        data-iconshadow="false">Home</a></li>
+                    <li><a href="tracks.html" data-icon="tracks" data-transition="slide" data-bind="jqmTheme: Codecamp.currentEvent.tracksTheme"
+                        data-iconshadow="false">Tracks</a></li>
+                    <li><a href="sessions.html" data-icon="sessions" data-transition="slide" data-bind="jqmTheme: Codecamp.currentEvent.sessionsTheme"
+                        data-iconshadow="false">Sessions</a></li>
+                    <li><a href="speakers.html" data-icon="speakers" data-transition="slide" data-bind="jqmTheme: Codecamp.currentEvent.speakersTheme"
+                        data-iconshadow="false">Speakers</a></li>
+                    <li><a href="favourites.html" data-icon="favs" data-transition="slide" data-bind="jqmTheme: Codecamp.currentEvent.favsTheme"
+                        data-iconshadow="false">Favourites</a></li>
                 </ul>
             </div>
         </div>

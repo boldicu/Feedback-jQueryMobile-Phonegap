@@ -166,20 +166,39 @@
 		}
 	};
 
+	ko.bindingHandlers['jqmSliderValue'] = {
+		'init': ko.bindingHandlers['value'].init,
+		'update': function (element, valueAccessor, allBindingsAccessor, viewModel, context) {
+			ko.bindingHandlers['value'].update.apply(this, arguments);
+			element = $(element);
+			var value = ko.utils.unwrapObservable(valueAccessor());
+			//window.setTimeout(function () {
+			try {
+				element.slider('refresh');
+				trace2("jqmSliderValue success");
+			} catch (e) {
+				trace3("jqmSliderValue building for the first time");
+				element.slider().slider('refresh');
+			}
+		}
+	};
+
 	var themes = [];
 	$.each(["a", "b", "c", "d", "e", "f"], function (i, theme) {
 		themes.push("ui-btn-up-" + theme, "ui-body-" + theme);
 	});
 	themes = themes.join(" ");
-	ko.bindingHandlers['jqmTheme'] = {
-		'update': function (element, valueAccessor) {
-			var $element = $(element),
-				value = ko.utils.unwrapObservable(valueAccessor());
-			$element.attr("data-theme", value).removeClass(themes).addClass("ui-btn-up-" + value);
+	function jqmTheme(element, valueAccessor) {
+		var value = ko.utils.unwrapObservable(valueAccessor());
+		if (value) {
+			$(element).attr("data-theme", value).removeClass(themes).addClass("ui-btn-up-" + value);
 			element['__ko__previousClassValue__'] = value;
 		}
+	}
+	ko.bindingHandlers['jqmTheme'] = {
+		'init': jqmTheme,
+		'update': jqmTheme
 	};
-	ko.bindingHandlers['jqmTheme'].init = ko.bindingHandlers['jqmTheme'].update;
 
 	// Here's a custom Knockout binding that makes elements shown/hidden via jQuery's fadeIn()/fadeOut() methods
 	// Could be stored in a separate utility library
@@ -195,6 +214,7 @@
 			ko.utils.unwrapObservable(value) ? $(element).fadeIn() : $(element).fadeOut();
 		}
 	};
+
 	ko.bindingHandlers['slideVisible'] = {
 		update: function (element, valueAccessor, allBindingsAccessor) {
 			// First get the latest data that we're bound to
@@ -501,10 +521,145 @@ ko.bindingHandlers['jqmRadio'] = {
 		var value = valueAccessor();
 		var valueUnwrapped = ko.utils.unwrapObservable(value);
 		var $element = $(element);
-		if (valueUnwrapped == $element.val()) 
+		if (valueUnwrapped == $element.val())
 			$element.prop("checked", "true");
-		 else 
+		else
 			$element.removeProp("checked");
-		
+
 	}
 };
+
+ko.bindingHandlers['jqmControlGroup'] = {
+	init: function (element, valueAccessor) {
+		$(element).controlgroup();
+	},
+	update: function (element, valueAccessor) {
+		//var value = valueAccessor();
+		//var valueUnwrapped = ko.utils.unwrapObservable(value);
+		//var $element = $(element);
+		//var type = value > 400 ? "horizontal" : "vertical";
+		//var currentType = $element.attr("data-type");
+		//if (type != currentType)
+		//	$element.jqmData("type", type)
+		// .controlgroup()
+		//	.trigger("create")
+		//	.find("label, label .ui-btn-inner")
+		//	  .removeClass("ui-btn-corner-all ui-corner-top ui-corner-bottom ui-corner-left ui-corner-right ui-controlgroup-last ui-shadow")
+		//	.end()
+		//	.find("label:first, label:first .ui-btn-inner")
+		//	  .addClass("ui-corner-top ui-controlgroup-first ui-shadow")
+		//	.end()
+		//	.find("label:last, label:last .ui-btn-inner")
+		//	  .addClass("ui-corner-bottom ui-controlgroup-last ui-shadow");
+
+
+	}
+};
+
+/*!
+ * jQuery Cookie Plugin v1.3
+ * https://github.com/carhartl/jquery-cookie
+ *
+ * Copyright 2011, Klaus Hartl
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://www.opensource.org/licenses/mit-license.php
+ * http://www.opensource.org/licenses/GPL-2.0
+ */
+(function ($, document, undefined) {
+
+	var pluses = /\+/g;
+
+	function raw(s) {
+		return s;
+	}
+
+	function decoded(s) {
+		return decodeURIComponent(s.replace(pluses, ' '));
+	}
+
+	var config = $.cookie = function (key, value, options) {
+
+		// write
+		if (value !== undefined) {
+			options = $.extend({}, config.defaults, options);
+
+			if (value === null) {
+				options.expires = -1;
+			}
+
+			if (typeof options.expires === 'number') {
+				var days = options.expires, t = options.expires = new Date();
+				t.setDate(t.getDate() + days);
+			}
+
+			value = config.json ? JSON.stringify(value) : String(value);
+
+			return (document.cookie = [
+				encodeURIComponent(key), '=', config.raw ? value : encodeURIComponent(value),
+				options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
+				options.path ? '; path=' + options.path : '',
+				options.domain ? '; domain=' + options.domain : '',
+				options.secure ? '; secure' : ''
+			].join(''));
+		}
+
+		// read
+		var decode = config.raw ? raw : decoded;
+		var cookies = document.cookie.split('; ');
+		for (var i = 0, l = cookies.length; i < l; i++) {
+			var parts = cookies[i].split('=');
+			if (decode(parts.shift()) === key) {
+				var cookie = decode(parts.join('='));
+				return config.json ? JSON.parse(cookie) : cookie;
+			}
+		}
+
+		return null;
+	};
+
+	config.defaults = {};
+
+	$.removeCookie = function (key, options) {
+		if ($.cookie(key) !== null) {
+			$.cookie(key, null, options);
+			return true;
+		}
+		return false;
+	};
+
+})(jQuery, document);
+
+jQuery.extend({
+	stringify: function stringify(obj) {
+		if ("JSON" in window && $.isFunction(JSON.stringify)) {
+			return JSON.stringify(obj);
+		}
+
+		var t = typeof (obj);
+		if (t != "object" || obj === null) {
+			// simple data type
+			if (t == "string") obj = '"' + obj + '"';
+
+			return String(obj);
+		} else {
+			// recurse array or object
+			var n, v, json = [], arr = (obj && obj.constructor == Array);
+
+			for (n in obj) {
+				v = obj[n];
+				t = typeof (v);
+				if (obj.hasOwnProperty(n)) {
+					if (t == "string") {
+						v = '"' + v + '"';
+					} else if (t == "object" && v !== null) {
+						v = jQuery.stringify(v);
+					}
+
+					json.push((arr ? "" : '"' + n + '":') + String(v));
+				}
+			}
+
+			return (arr ? "[" : "{") + String(json) + (arr ? "]" : "}");
+		}
+	}
+});

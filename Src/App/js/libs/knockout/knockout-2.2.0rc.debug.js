@@ -2687,7 +2687,6 @@ ko.bindingHandlers['value'] = {
         if (valueHasChanged) {
             var applyValueAction = function () { ko.selectExtensions.writeValue(element, newValue); };
             applyValueAction();
-
             // Workaround for IE6 bug: It won't reliably apply values to SELECT nodes during the same execution thread
             // right after you've changed the set of OPTION nodes on it. So for that node type, we'll schedule a second thread
             // to apply the value as well.

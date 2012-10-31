@@ -3,7 +3,7 @@
 //not to poluate the golbal window namespace
 window.Codecamp = {
 	version: 1.0,
-	logLevel: 2,//0 disables all the logs, 5 = most verbose
+	logLevel: 1,//0 disables all the logs, 5 = most verbose
 	languages: {},
 	domain: "",//"http://codecamp.lau.dnw.ro",
 	api: {
@@ -16,11 +16,19 @@ window.Codecamp = {
 			header: "c",
 			page: "d",
 			content: "c",
-			footer: "c",
+			footer: "a",
 			list: "c",
 			listHeader: "f",
 			listDivider: "f",
 			listFilter: "none",
+			//footer buttons
+			//footerButton: "a",
+			//home: "d",
+			//feedback: "d",
+			//favs: "d",
+			//speakers: "c",
+			//settings: "c",
+			//presentations: "c",
 		},
 		b: {
 			header: "f",

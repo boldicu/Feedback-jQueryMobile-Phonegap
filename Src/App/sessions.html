@@ -33,18 +33,16 @@
 <body>
     <div data-role="page">
         <div data-role="header" class="title">
-            <h1></h1>
+            <h1 data-bind="html:'', class: 'codecamp'">Loading data...</h1>
         </div>
+
         <div data-role="content">
-            ​​​​<ul data-role="listview" data-inset="true" data-bind="visible: false">
-                <li data-role="list-divider" data-theme="d">Loading data...</li>
-            </ul>
             <script id="tplSessionImage" type="text/html">
-                <img src="${logoUrl}" />
+                <img src="${$data}" />
             </script>
             <script id="tplSlideSessions" type="text/html">
                 <li class="session"><a href="session.html?sessionId=${Id}">
-                    <!-- ko template: { name: 'tplSessionImage', if: logoUrl()} -->
+                    <!-- ko template: { name: 'tplSessionImage', foreach: logoUrl} -->
                     <!-- /ko -->
                     <h4 data-bind="text: Title"></h4>
                     <p data-bind="text: trackName"></p>
@@ -57,7 +55,7 @@
                 <span>Drag the slider to navigate</span>
                 <h4 data-bind="text: sliderText">presentation time</h4>
                 <div class="slider">
-                    <input data-bind="value: sessionSliderIndex, attr: { max: sliderMaxRange}" type="range" data-type="range"
+                    <input data-bind="attr: { max: sliderMaxRange}, jqmSliderValue: sessionSliderIndex" type="range" data-type="range"
                         min="0" max="1" data-theme="c" data-highlight="true" />
                 </div>
                 <ul data-role="listview" data-inset="true">
@@ -68,12 +66,18 @@
         </div>
         <div data-role="footer" data-position="fixed" data-id="footer">
             <div data-role="navbar" data-icon-pos="top">
-                <ul>
-                    <li><a href="index.html" data-icon="grid" data-prefecth="true" data-direction="reverse" data-theme="a">
-                        Home</a></li>
-                    <li><a href="tracks.html" data-icon="gear" data-prefecth="true">Favorites</a></li>
-                    <li><a href="feedback.html" data-icon="star" data-prefecth="true" data-bind="jqmTheme: feedbackTheme">
-                        Feedback</a></li>
+                <ul class="home">
+                    <li><a href="index.html" data-icon="home" data-direction="reverse" data-transition="slide"
+                        data-bind="jqmTheme: Codecamp.currentEvent.homeTheme"
+                        data-iconshadow="false">Home</a></li>
+                    <li><a href="tracks.html" data-icon="tracks" data-transition="slide" data-bind="jqmTheme: Codecamp.currentEvent.tracksTheme"
+                        data-iconshadow="false">Tracks</a></li>
+                    <li><a href="speakers.html" data-icon="speakers" data-transition="slide" data-bind="jqmTheme: Codecamp.currentEvent.speakersTheme"
+                        data-iconshadow="false">Speakers</a></li>
+                    <li><a href="favourites.html" data-icon="favs" data-transition="slide" data-bind="jqmTheme: Codecamp.currentEvent.favsTheme"
+                        data-iconshadow="false">Favourites</a></li>
+                    <li><a href="feedback.html" data-icon="feedback" data-transition="slidedown" data-bind="jqmTheme: Codecamp.currentEvent.feedbackTheme"
+                        data-iconshadow="false">Feedback</a></li>
                 </ul>
             </div>
         </div>

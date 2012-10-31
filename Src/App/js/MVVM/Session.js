@@ -104,7 +104,7 @@
 						logo = viewModel.presentersImages();
 						logo = logo && logo[0] && logo[0].img;
 					}
-					return logo;
+					return logo ? [logo] : [];
 				},
 				deferEvaluation: true
 			}),

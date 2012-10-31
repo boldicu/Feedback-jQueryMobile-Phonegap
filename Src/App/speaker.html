@@ -33,8 +33,9 @@
 <body>
     <div data-role="page" data-bind="with: selectedSpeaker">
         <div data-role="header" class="title">
-            <h1></h1>
+            <h1 data-bind="html:'', class: 'codecamp'">Loading data...</h1>
         </div>
+
         <div data-role="content" data-bind="attr: {class: 'display-block'}" style="display: none">
             <div class="speaker">
                 <img class="rotate" data-bind="attr: {src: PortraitImageUrl}" />
@@ -59,12 +60,17 @@
         </div>
         <div data-role="footer" data-position="fixed" data-id="footer">
             <div data-role="navbar" data-icon-pos="top">
-                <ul>
-                    <li><a href="index.html" data-icon="grid" data-prefecth="true" data-direction="reverse" data-theme="a">
-                        Home</a></li>
-                    <li><a href="tracks.html" data-icon="gear" data-prefecth="true">Favorites</a></li>
-                    <li><a href="feedback.html" data-icon="star" data-prefecth="true" data-bind="jqmTheme: $parent.feedbackTheme">
-                        Feedback</a></li>
+                <ul class="home">
+                    <li><a href="index.html" data-icon="home" data-direction="reverse" data-transition="slide" data-bind="jqmTheme: Codecamp.currentEvent.homeTheme"
+                        data-iconshadow="false">Home</a></li>
+                    <li><a href="speakers.html" data-icon="speakers" data-transition="slide" data-bind="jqmTheme: Codecamp.currentEvent.speakersTheme"
+                        data-iconshadow="false">Speakers</a></li>
+                    <li><a href="sessions.html" data-icon="sessions" data-transition="slide" data-bind="jqmTheme: Codecamp.currentEvent.sessionsTheme"
+                        data-iconshadow="false">Sessions</a></li>
+                    <li><a href="favourites.html" data-icon="favs" data-transition="slide" data-bind="jqmTheme: Codecamp.currentEvent.favsTheme"
+                        data-iconshadow="false">Favourites</a></li>
+                    <li><a href="feedback.html" data-icon="feedback" data-transition="slidedown" data-bind="jqmTheme: Codecamp.currentEvent.feedbackTheme"
+                        data-iconshadow="false">Feedback</a></li>
                 </ul>
             </div>
         </div>

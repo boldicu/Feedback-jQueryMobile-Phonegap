@@ -34,7 +34,8 @@ namespace Codecamp.Feedback.Controllers
 
 			}
 		}
-		public JsonResult Event(FeedbackEvent model)
+		[HttpGet, ActionName("Event")]
+		public JsonResult EventFeedback(FeedbackEvent model)
 		{
 			try
 			{
@@ -63,7 +64,7 @@ namespace Codecamp.Feedback.Controllers
 							{
 								user = new FeedbackUser { Id = userId };
 								context.FeedbackUsers.Add(user);
-							}
+							} 
 							if (model.FeedbackUser != null)
 							{
 								user.Name = model.FeedbackUser.Name ?? user.Name;
@@ -77,7 +78,7 @@ namespace Codecamp.Feedback.Controllers
 							data.WantedTechnologies = model.WantedTechnologies ?? data.WantedTechnologies;
 							context.SaveChanges();
 						}
-					}
+					} 
 				}
 			}
 			catch (Exception ex)
@@ -90,7 +91,8 @@ namespace Codecamp.Feedback.Controllers
 		}
 		public JsonResult VoteEvent(int eventId, int vote)
 		{
-			decimal? rating = null;
+			int? rating = null;
+			var enableRealTimeVotingResult = false;
 			try
 			{
 				if (ModelState.IsValid)
@@ -104,7 +106,7 @@ namespace Codecamp.Feedback.Controllers
 						if (ev == null)
 							ModelState.AddModelError("Validation", "Invalid event!");
 						else if (!ev.Active)
-							ModelState.AddModelError("Validation", "Event has been closed! Feedback is no more allowed!");
+							ModelState.AddModelError("Validation", "Event has been closed! Rating is no more allowed!");
 						if (ModelState.IsValid)
 						{
 							var data = context.FeedbackEvents.FirstOrDefault(f => f.EventId == eventId && f.FeedbackUserId == userId);
@@ -123,7 +125,9 @@ namespace Codecamp.Feedback.Controllers
 							data.FeedbackUser = user;
 							data.Rating = vote;
 							context.SaveChanges();
-							rating = Rating(context, eventId);
+							if (enableRealTimeVotingResult)
+								rating = Rating(context, eventId);
+							else rating = vote * 100 / 5;
 						}
 					}
 				}
@@ -134,9 +138,10 @@ namespace Codecamp.Feedback.Controllers
 			}
 			if (!ModelState.IsValid)
 				return Json(new { Success = false, Message = "There was an error while posting your vote!", Errors = ModelState.ToJson() }, JsonRequestBehavior.AllowGet);
-			else return Json(new { Success = true, Message = "Thanks for your vote!", Rating = rating }, JsonRequestBehavior.AllowGet);
+			else return Json(new { Success = true, Message = "Thanks for your vote!", Rating = rating  }, JsonRequestBehavior.AllowGet);
 		}
-		public JsonResult Session(FeedbackSession model)
+		[HttpGet, ActionName("Session")]
+		public JsonResult SessionFeedback(FeedbackSession model)
 		{
 			try
 			{
