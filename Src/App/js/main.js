@@ -23,27 +23,49 @@
 			if (!navigator.onLine && Codecamp.data)
 				Codecamp.displayLoadingMessage(4000, "You have disconnected from the internet. You can continue using the application in offline mode.", { info: true, textonly: true, theme: "e" });
 		},
+		downloadFeedback: function () {
+			$.ajax({
+				url: Codecamp.api.feedback + "Mine/" + Codecamp.currentEventId,
+				dataType: 'jsonp',
+				method: 'get',
+				success: function (data) {
+					data = data || {};
+					data.Event = data.Event || {};
+					data.Event.Rating = data.Rating || 20;
+					Codecamp.feedback({
+						Event: new Codecamp.viewModels.FeedbackEvent(data.Event),
+						Sessions: $.map(data.Sessions || [], function (session) {
+							return new Codecamp.viewModels.FeedbackSession(session);
+						})
+					});
+				},
+				error: function () {
+					$.mobile.loading('show', { theme: "a", text: Codecamp.translate("Feedback data could not be downloaded. Are you connected to the internet?"), textVisible: true, textonly: true });
+					window.setTimeout(Codecamp.hideLoadingMessage, 5000);
+				}
+			});
+		},
 		onDataUpdated: function (data) {
-			var codecamp = window.Codecamp;
 			if (data && $.mobile.activePage) {
 				trace2("onDataUpdated", data, $.mobile.activePage);
+				Codecamp.downloadFeedback();
 				//make sure data is an array
 				$.isArray(data) || (data = [data]);
 				//reset the events
-				codecamp.events = {};
+				Codecamp.events = {};
 				//build the new events as ViewModels
 				$.each(data, function (index, event) {
 					event.Id = event.Id || index;//default to index, if we don't get an Id
-					codecamp.events[event.Id] = new codecamp.viewModels.Event(event);
+					Codecamp.events[event.Id] = new Codecamp.viewModels.Event(event);
 				});
 				//update the current event
-				codecamp.currentEvent = codecamp.events[codecamp.currentEventId];
+				Codecamp.currentEvent = Codecamp.events[Codecamp.currentEventId];
 
 				//async apply bindings, so any errors will not be trapped by jQuery ajax load event
 				window.setTimeout(function () {
 					//apply bindings with the current event
 					$.mobile.activePage[0].applyBindings = true;
-					ko.applyBindings(codecamp.currentEvent, $.mobile.activePage[0]);
+					ko.applyBindings(Codecamp.currentEvent, $.mobile.activePage[0]);
 					trace2("applyBindings... done", $.mobile.activePage[0]);
 					Codecamp.hideLoadingMessage();
 				}, 0);
@@ -61,22 +83,9 @@
 				warn("Loading JSON from the network");
 				//if not there yet, request it and cache it
 				$.ajax({
-					url: Codecamp.api,
+					url: Codecamp.api.json,
 					dataType: 'script',
-					error: Codecamp.displayLoadingTimeout,
-					success: function (data) {
-						//trimming out any jsonP syntax
-						//if (typeof data === "string") {
-						//	var index = data.indexOf('{'), lastIndex = data.lastIndexOf('}');
-						//	data = data.substring(index, lastIndex + 1);
-						//}
-						//else {
-						//	data = JSON.stringify(data);
-						//	alert(data);
-						//}
-						////store the json in the localStorage
-						//localStorage.setItem("data", data);
-					}
+					error: Codecamp.displayLoadingTimeout
 				});
 			}
 			else {

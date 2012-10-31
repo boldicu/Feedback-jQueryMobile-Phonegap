@@ -20,6 +20,8 @@
     <script src="js/lang/en.js"></script>
     <script src="js/lang/ro-ro.js"></script>
     <script src="js/utils.js"></script>
+    <script src="js/MVVM/Feedback/FeedbackEvent.js"></script>
+    <script src="js/MVVM/Feedback/FeedbackSession.js"></script>
     <script src="js/MVVM/Sponsor.js"></script>
     <script src="js/MVVM/Location.js"></script>
     <script src="js/MVVM/Track.js"></script>
@@ -34,78 +36,81 @@
             <h1></h1>
         </div>
         <div data-role="content">
-            <br />
+            <form data-bind="event: { submit: feedbackEvent().save}">
             <div class="feedback">
-                ​​​​<ul data-role="listview" data-inset="true" data-bind="visible: false">
-                    <li data-role="list-divider" data-theme="d">Loading data...</li>
+                ​​​​<ul data-role="listview" data-bind="slideVisible: false">
+                    <li data-role="list-divider" data-theme="a">Loading data...</li>
                 </ul>
-                <ul data-role="listview" data-theme="a">
+                <ul data-role="listview" data-theme="a" style="display:none" data-bind="visible: true">
                     <li data-role="fieldcontain">
                         <label class="ui-input-text">
                             Overall event organization
                         </label>
                         <div class="ui-input-search">
                             <ul class="star">
-                                <li class="rating" style="width: 70%;">Currently 3.5/5 Stars.</li>
-                                <li><a href="#" data-translate="title" class="s1" title="Hate it">1</a></li>
-                                <li><a href="#" data-translate="title" class="s2" title="Don't like it">2</a></li>
-                                <li><a href="#" data-translate="title" class="s3" title="It's ok">3</a></li>
-                                <li><a href="#" data-translate="title" class="s4" title="Like it">4</a></li>
-                                <li><a href="#" data-translate="title" class="s5" title="Love it">5</a></li>
+                                <li class="rating" data-bind="style: { width: feedbackEvent().Rating()+'%' }"></li>
+                                <li><a data-bind="click: function() { return feedbackEvent().vote(1)}" href="#" data-translate="title" class="s1" title="Hate it"></a></li>
+                                <li><a data-bind="click: function() { return feedbackEvent().vote(2)}" href="#" data-translate="title" class="s2" title="Don't like it"></a></li>
+                                <li><a data-bind="click: function() { return feedbackEvent().vote(3)}" href="#" data-translate="title" class="s3" title="It's ok"></a></li>
+                                <li><a data-bind="click: function() { return feedbackEvent().vote(4)}" href="#" data-translate="title" class="s4" title="Like it"></a></li>
+                                <li><a data-bind="click: function() { return feedbackEvent().vote(5)}" href="#" data-translate="title" class="s5" title="Love it"></a></li>
                             </ul>
                         </div>
 
                         </fieldset>
                     </li>
+                    <!-- ko with: feedbackEvent().FeedbackUser -->
                     <li data-role="fieldcontain">
                         <label for="email">Email</label>
-                        <input type="text" name="email" id="email" value="" />
+                        <input data-bind="value: Email" type="text" name="email" id="email" value="" />
                     </li>
                     <li data-role="fieldcontain">
                         <label for="name">Name</label>
-                        <input type="text" name="name" id="name" value="" />
+                        <input  data-bind="value: Name" type="text" name="name" id="name" value="" />
                     </li>
+                    <!-- /ko -->
                     <li data-role="fieldcontain">
-                        <fieldset data-role="controlgroup">
+                        <fieldset data-role="controlgroup" class="radio">
                             <legend>What is your primary technology?</legend>
-                            <input type="radio" name="technology" id="dotnet" />
+                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology" type="radio" name="technology" value=".net" id="dotnet" />
                             <label for="dotnet">.NET</label>
 
-                            <input type="radio" name="technology" id="java" />
+                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology" type="radio" name="technology" value="java" id="java"/>
                             <label for="java">JAVA</label>
 
-                            <input type="radio" name="technology" id="php" />
+                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology" type="radio" name="technology" value="php" id="php" />
                             <label for="php">PHP</label>
 
-                            <input type="radio" name="technology" id="mobile" />
+                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology" type="radio" name="technology" value="mobile" id="mobile"/>
                             <label for="mobile">Mobile</label>
 
-                            <input type="radio" name="technology" id="javascript" />
-                            <label for="javascript">Javascript</label>
+                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology" type="radio" name="technology" value="javascript" id="js"/>
+                            <label for="js">Javascript</label>
 
-                            <input type="radio" name="technology" id="others" />
+                            <input data-bind="checked:feedbackEvent().PrimaryTechnology, jqmRadio: feedbackEvent().PrimaryTechnology" type="radio" name="technology" value="others" id="others"/>
                             <label for="others">Others</label>
                             <br />
-                            <input type="text" name="other" id="other" />
+                            <input data-bind="value: feedbackEvent().PrimaryTechnologyOther, visible: feedbackEvent().PrimaryTechnology() == 'others'" type="text" name="other" id="other"/>
                         </fieldset>
                     </li>
                     <li data-role="fieldcontain">
                         <label for="comments">Comments and suggestions</label>
-                        <textarea cols="40" rows="8" name="comments" id="comments"></textarea>
+                        <textarea data-bind="value: feedbackEvent().Suggestions" cols="40" rows="8" name="comments" id="comments"></textarea>
                     </li>
                     <li data-role="fieldcontain">
                         <label for="techs">What technologies would you like next time?</label>
-                        <textarea cols="40" rows="8" name="techs" id="techs"></textarea>
+                        <textarea data-bind="value: feedbackEvent().WantedTechnologies" cols="40" rows="8" name="techs" id="techs"></textarea>
                     </li>
                     <li data-role="fieldcontain">
                         <label for="techs">What did you like most?</label>
-                        <textarea cols="40" rows="8" name="techs" id="techs"></textarea>
+                        <textarea data-bind="value: feedbackEvent().LikedMost" cols="40" rows="8" name="techs" id="techs"></textarea>
                     </li>
                     <li>
-                        <button type="submit" data-theme="b">Save</button>
+                        <button data-bind="click:feedbackEvent().save"  type="submit" data-theme="b">Save</button>
                     </li>
                 </ul>
             </div>
+                </form>
         </div>
         <div data-role="footer" data-position="fixed" data-id="footer">
             <div data-role="navbar" data-icon-pos="top">

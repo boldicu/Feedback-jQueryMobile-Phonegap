@@ -179,7 +179,15 @@
 					},
 					deferEvaluation: true
 				}),
+				'feedbackEvent': ko.computed({
+					read: function () {
+						var fb = Codecamp.feedback();
+						return ko.utils.unwrapObservable(fb && fb.Event || emptyFeedbackEvent);
+					},
+					deferEvaluation: true
+				}),
 			});
+			var emptyFeedbackEvent = new viewModels.FeedbackEvent();
 			trace3('event initialized');
 			//window.setInterval(function () {
 			//	log3('Refreshing every 30 seconds:', new Date());

@@ -1,3 +1,9 @@
+.feedback .ui-listview {
+	margin-top: -20px;
+}
+.radio .ui-btn-text .ui-btn-inner .ui-icon.ui-icon-shadow{
+	display: none;
+}
 .sessions .ui-slider-input {
 	display: none;
 }

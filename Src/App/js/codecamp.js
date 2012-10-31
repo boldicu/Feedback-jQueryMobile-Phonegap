@@ -6,8 +6,11 @@ window.Codecamp = {
 	logLevel: 2,//0 disables all the logs, 5 = most verbose
 	languages: {},
 	domain: "",//"http://codecamp.lau.dnw.ro",
-	api: //"http://codecamp.lau.dnw.ro/"+
+	api: {
+		json://"http://codecamp.lau.dnw.ro/"+
 		"js/data.js?callback=Codecamp.updateData",
+		feedback: "http://c.lau.dnw.ro/Feedback/"
+	},
 	themes: {
 		a: {
 			header: "c",
@@ -27,6 +30,7 @@ window.Codecamp = {
 		}
 	},
 	currentEventId: 1,
+	feedback: ko.observable(),
 	viewModels: {},
 	events: {},
 	currentEvent: null,

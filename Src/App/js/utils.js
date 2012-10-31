@@ -181,6 +181,39 @@
 	};
 	ko.bindingHandlers['jqmTheme'].init = ko.bindingHandlers['jqmTheme'].update;
 
+	// Here's a custom Knockout binding that makes elements shown/hidden via jQuery's fadeIn()/fadeOut() methods
+	// Could be stored in a separate utility library
+	ko.bindingHandlers['fadeVisible'] = {
+		init: function (element, valueAccessor) {
+			// Initially set the element to be instantly visible/hidden depending on the value
+			var value = valueAccessor();
+			$(element).toggle(ko.utils.unwrapObservable(value)); // Use "unwrapObservable" so we can handle values that may or may not be observable
+		},
+		update: function (element, valueAccessor) {
+			// Whenever the value subsequently changes, slowly fade the element in or out
+			var value = valueAccessor();
+			ko.utils.unwrapObservable(value) ? $(element).fadeIn() : $(element).fadeOut();
+		}
+	};
+	ko.bindingHandlers['slideVisible'] = {
+		update: function (element, valueAccessor, allBindingsAccessor) {
+			// First get the latest data that we're bound to
+			var value = valueAccessor(), allBindings = allBindingsAccessor();
+
+			// Next, whether or not the supplied model property is observable, get its current value
+			var valueUnwrapped = ko.utils.unwrapObservable(value);
+
+			// Grab some more data from another binding property
+			var duration = allBindings.slideDuration || 400; // 400ms is default duration unless otherwise specified
+
+			// Now manipulate the DOM element
+			if (valueUnwrapped == true)
+				$(element).slideDown(duration); // Make the element visible
+			else
+				$(element).slideUp(duration);   // Make the element invisible
+		}
+	};
+
 
 	//parses the query string of a given url
 	/*
@@ -458,3 +491,20 @@
 	}
 
 })(window);
+
+
+ko.bindingHandlers['jqmRadio'] = {
+	init: function (element, valueAccessor) {
+		$(element).checkboxradio();
+	},
+	update: function (element, valueAccessor) {
+		var value = valueAccessor();
+		var valueUnwrapped = ko.utils.unwrapObservable(value);
+		var $element = $(element);
+		if (valueUnwrapped == $element.val()) 
+			$element.prop("checked", "true");
+		 else 
+			$element.removeProp("checked");
+		
+	}
+};
