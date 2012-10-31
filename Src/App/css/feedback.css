@@ -1,6 +1,7 @@
-.radio .ui-btn-text .ui-btn-inner .ui-icon.ui-icon-shadow{
+.radio .ui-btn-text .ui-btn-inner .ui-icon.ui-icon-shadow {
 	display: none;
 }
+
 .sessions .ui-slider-input {
 	display: none;
 }
@@ -21,6 +22,7 @@
 .ui-input-search.rating {
 	padding: 0;
 }
+
 .grayscale {
 	-webkit-filter: grayscale(100%);
 	-moz-filter: grayscale(100%);
@@ -28,10 +30,12 @@
 	-o-filter: grayscale(100%);
 	filter: grayscale(100%);
 }
+
 .ui-header h1 {
 	margin: .6em auto .8em;
 	height: 24px;
 }
+
 h1.codecamp {
 	background-image: url(../img/codecamp_online_offline.png);
 	background-repeat: no-repeat;
@@ -76,7 +80,7 @@ h1.codecamp {
 .otherTechnology {
 	margin-top: 20px;
 	clear: both;
-	float:left;
+	float: left;
 	width: 100%;
 }
 
@@ -176,6 +180,12 @@ li.session .ui-li-aside {
 	margin-top: 0;
 }
 
+@media (max-width: 220px) {
+	li.session h4, li.session p, li.session span {
+		/*Break works on very small screens*/
+		word-break: break-all;
+	}
+}
 @media (min-height: 480px) {
 	/*Only display copyright text in the footer for tall screen*/
 	.ui-footer h2.ui-title, .ui-footer h1.ui-title {
@@ -195,10 +205,17 @@ li.session .ui-li-aside {
 	}
 }
 
+
 @media only screen and (max-width: 600px) {
-	/*On small screens, break the words for a better wrapped text*/
-	li.session h4 {
-		word-break: break-all;
+	/*On small screens, put the author and the title on a dinstinct line*/
+	li.session h4, li.session p {
+		clear: both;
+		float: left;
+	}
+	li.session .ui-li-aside {
+		/*Fix aside i.e. speaker's name to be on a separate line for smaller screens*/
+		float: left;
+		clear: both;
 	}
 
 	.ui-footer h1.ui-title, .title h1.ui-title {
@@ -225,6 +242,7 @@ li.session .ui-li-aside {
 	.speakers li a {
 		padding-left: 0 !important;
 	}
+
 }
 
 @media (min-width: 300px) and (min-height: 400px) {
@@ -302,11 +320,7 @@ li.session .ui-li-aside {
 		padding-right: 25px !important;
 	}
 
-	.ui-content {
-		xpadding: 1px !important;
-	}
-
-	.ui-li .ui-li-count, .ui-li-aside {
+	.ui-li .ui-li-count, x.ui-li-aside {
 		display: none;
 	}
 
@@ -347,5 +361,6 @@ li.session .ui-li-aside {
 	#25AE25 verde
 	#00C4FF albastru
 	*/
+
 
 

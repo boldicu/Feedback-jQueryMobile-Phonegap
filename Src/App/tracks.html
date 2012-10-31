@@ -33,13 +33,13 @@
 <body>
     <div data-role="page">
         <div data-role="header" class="title">
-            <h1 data-bind="html:'', class: 'codecamp'">Loading data2...</h1>
+            <h1 data-bind="html:'', class: 'codecamp'">Loading data...</h1>
         </div>
         <div data-role="content" style="display: none" data-bind="visible: true">
             <div>
                 <h4>You can browse the sessions for all the tracks</h4>
                 <script id="tplTrack" type="text/html">
-                    <li data-role="list-divider" data-theme="c">
+                    <li data-role="list-divider">
                         <h4 data-bind="text: Name"></h4>
                         <span class="ui-li-count" data-bind="text: sessions.length"></span></li>
                     <!-- ko template: {name: 'tplTrackSession', foreach: $data.sessions} -->
