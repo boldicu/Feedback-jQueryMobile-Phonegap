@@ -26,7 +26,7 @@
 		loadingTimeout: 0,
 		displayLoadingMessage: function (timeout, message, options) {
 			Codecamp.hideLoadingMessage();
-			$.mobile.loading('show', $.extend({ text: message, textVisible: true }, options));
+			$.mobile.loading('show', $.extend({ text: Codecamp.translate(message), textVisible: true }, options));
 			Codecamp.loadingTimeout = window.setTimeout(options && options.info ? Codecamp.hideLoadingMessage : Codecamp.displayLoadingTimeout, timeout);
 		},
 		changeLanguage: function (lang) {
@@ -35,7 +35,10 @@
 		onlineChanged: function () {
 			$("h1").removeClass("online offline").addClass(navigator.onLine ? "online" : "offline");
 			if (!navigator.onLine && Codecamp.data)
-				Codecamp.displayLoadingMessage(4000, "You have disconnected from the internet. You can continue using the application in offline mode.", { info: true, textonly: true, theme: "e" });
+				Codecamp.displayLoadingMessage(8000, "You have disconnected from the internet. You can continue using the application in offline mode. All the feedbacks will be automatically posted when you get back online.", { info: true, textonly: true, theme: "e" });
+			if (navigator.onLine) {
+				Codecamp.saveFeedbackOnline();
+			}
 		},
 		downloadFeedback: function () {
 			var eventId = Codecamp.currentEventId;
@@ -59,7 +62,9 @@
 			//		window.setTimeout(Codecamp.hideLoadingMessage, 5000);
 			//	}
 			//});
-			var eventRating = $.cookie("event-" + eventId) || 0;
+			
+
+			//load the last saved feedback from the cookie, if any
 			var eventFB = $.cookie("eventFB-" + eventId);
 			var sessions = $.cookie("eventSessions-" + eventId);
 			try {
@@ -69,13 +74,28 @@
 				eventFB = null;
 			}
 			eventFB = eventFB || {};
-			eventFB.Rating = eventRating;
 			Codecamp.feedback({
 				Event: new Codecamp.viewModels.FeedbackEvent(eventFB),
 				Sessions: $.map(sessions || [], function (session) {
 					return new Codecamp.viewModels.FeedbackSession(session);
 				})
 			});
+			if (navigator.onLine) {
+				var fb = Codecamp.feedback();
+				fb = fb && fb.Event;
+				if (fb && !fb.saved()) {
+					Codecamp.saveFeedbackOnline();
+				}
+			}
+			
+		},
+		saveFeedbackOnline: function () {
+			var feedback = Codecamp.feedback();
+			//save event feedback
+			if (feedback && feedback.Event) {
+				feedback.Event.save(false, "You have just connected to the internet. We have automatically saved your feedback on the server. Thank you!", { timeout: 10000 });
+			}
+			//TODO: save sessions feedback
 		},
 		onDataUpdated: function (data) {
 			if (data && $.mobile.activePage) {

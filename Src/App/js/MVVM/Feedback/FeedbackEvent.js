@@ -1,11 +1,11 @@
 ﻿(function (Codecamp) {
-	function displayLoadingTimeout(theme, options) {
-		return function () {
+	function displayLoadingTimeout(theme, opts) {
+		return function (message, timeout, options) {
 			var args = arguments, length = args.length || 1;
 			--length;
 			args[length] = $.extend({
 				theme: theme
-			}, args[length], options);
+			}, args[length], opts, options);
 			return Codecamp.displayLoadingTimeout.apply(this, args);
 		}
 	}
@@ -25,7 +25,7 @@
 				Suggestions: null,
 				WantedTechnologies: null,
 				LikedMost: null,
-				Rating: 20,
+				Rating: 0,
 				FeedbackUser: {
 					Name: null,
 					Email: null
@@ -34,9 +34,18 @@
 			ko.mapping.fromJS(data, {}, viewModel)
 			//log1("saved", data && data.saved, viewModel.saved());
 			$.extend(viewModel, {
+				'saveToCookie': function (model) {
+					$.cookie("eventFB-" + Codecamp.currentEventId, $.stringify(model), { expires: new Date(2020, 1, 1) });
+				},
 				'vote': function (vote) {
 					displayLoading(Codecamp.loadingTimeout);
 					var eventId = Codecamp.currentEventId;
+					//save the rating locally
+					viewModel.Rating(vote * 20);
+					var model = ko.mapping.toJS(viewModel);
+					model.saved = false;
+					viewModel.saveToCookie(model);
+
 					$.ajax({
 						url: Codecamp.api.feedback + "VoteEvent?EventId=" + eventId,
 						dataType: 'jsonp',
@@ -46,26 +55,31 @@
 						timeout: Codecamp.loadingTimeout,
 						success: function (data) {
 							displaySuccess(data.Message || "Thank you", Codecamp.successMessageTimeout);
-							viewModel.Rating(data.Rating);
-							$.cookie("event-" + eventId, data.Rating, { expires: new Date(2020, 1, 1) });
+							viewModel.Rating(data.Rating); //update the rating from whatever the server says
+							//mark the model as saved
+							viewModel.saved(true);
+							//save the model to cookie
+							//deserialize it again, as it might have been changed in between
+							model = ko.mapping.toJS(viewModel)
+							viewModel.saveToCookie(model);
 						},
 						error: function () {
+							//mark the model as dirty (not saved)
+							viewModel.saved(false);//trigger the UI as the model could not be saved
 							displayError("Rating data could not be saved. Are you connected to the internet?", Codecamp.errorMessageTimeout);
 						}
 					});
 					return false;
 				},
-				'save': function () {
+				'save': function (doNotSaveCokie, successMessage, options) {
 					displayLoading(Codecamp.loadingTimeout);
 					var eventId = Codecamp.currentEventId;
-					function saveToCookie(model) {
-						$.cookie("eventFB-" + eventId, $.stringify(model), { expires: new Date(2020, 1, 1) });
-					}
+
 					var model = ko.mapping.toJS(viewModel);
 					var data = $.param(model).replace(/(FeedbackUser)(\[|\%5B)(.+?)(\]|\%5D)/gi, "$1.$3");
 					//save the cookie not to waste the data if the user is offline
 					model.saved = false;
-					saveToCookie(model);
+					!doNotSaveCokie && viewModel.saveToCookie(model);
 
 					$.ajax({
 						url: Codecamp.api.feedback + "Event?EventId=" + eventId,
@@ -75,13 +89,19 @@
 						data: data,
 						timeout: Codecamp.loadingTimeout,
 						success: function (data) {
-							displaySuccess(data.Message || "Thank you", Codecamp.successMessageTimeout);
+							displaySuccess(successMessage || data.Message || "Thank you", options && options.timeout || Codecamp.successMessageTimeout, options);
+							//mark the model as saved
 							viewModel.saved(true);
-							model.saved = true;
-							saveToCookie(model);
+							if (!doNotSaveCokie) {
+								//save the model to cookie
+								//deserialize it again, as it might have been changed in between
+								model = ko.mapping.toJS(viewModel)
+								viewModel.saveToCookie(model);
+							}
 						},
 						error: function () {
-							viewModel.saved(false);
+							//mark the model as not saved
+							viewModel.saved(false);//trigger the UI as the model could not be saved
 							displayError("Feedback data could not be saved. Please try again later! Are you connected to the internet?", Codecamp.errorMessageTimeout);
 						}
 					});

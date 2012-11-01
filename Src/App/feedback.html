@@ -45,17 +45,17 @@
                             Overall event organization
                         </label>
                         <div class="ui-input-search rating">
-                            <ul class="star">
-                                <li class="rating" data-bind="style: { width: feedbackEvent().Rating()+'%' }"></li>
-                                <li><a data-bind="click: function() { return feedbackEvent().vote(1)}" href="#" data-translate="title"
+                            <ul class="star" data-bind="with: feedbackEvent()">
+                                <li class="rating" data-bind="style: { width: Rating()+'%' }"></li>
+                                <li><a data-bind="click: function() { return vote(1)}" href="#" data-translate="title"
                                     class="s1" title="Hate it"></a></li>
-                                <li><a data-bind="click: function() { return feedbackEvent().vote(2)}" href="#" data-translate="title"
+                                <li><a data-bind="click: function() { return vote(2)}" href="#" data-translate="title"
                                     class="s2" title="Don't like it"></a></li>
-                                <li><a data-bind="click: function() { return feedbackEvent().vote(3)}" href="#" data-translate="title"
+                                <li><a data-bind="click: function() { return vote(3)}" href="#" data-translate="title"
                                     class="s3" title="It's ok"></a></li>
-                                <li><a data-bind="click: function() { return feedbackEvent().vote(4)}" href="#" data-translate="title"
+                                <li><a data-bind="click: function() { return vote(4)}" href="#" data-translate="title"
                                     class="s4" title="Like it"></a></li>
-                                <li><a data-bind="click: function() { return feedbackEvent().vote(5)}" href="#" data-translate="title"
+                                <li><a data-bind="click: function() { return vote(5)}" href="#" data-translate="title"
                                     class="s5" title="Love it"></a></li>
                             </ul>
                         </div>
@@ -159,7 +159,7 @@
             <div data-role="navbar" data-icon-pos="top">
                 <div id="warnTip" class="ui-bar ui-bar-e" style="display: none" data-bind="visible: !feedbackEvent().saved()">
                     <h3 style="float: left; width: 92%;">
-                        The feedback is not yet saved on the server. When you are online please make sure you press save again.
+                        The feedback is not yet saved on the server. When you will get back online we will save it automatically for you.
                     </h3>
                     <div style="margin-top: -10px;">
                         <button data-bind="click: function() { $('#warnTip').hide();}"
