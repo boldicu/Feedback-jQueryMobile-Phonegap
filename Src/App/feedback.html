@@ -73,27 +73,27 @@
                     <script type="text/html" id="tplTechnology">
                         <input data-bind="attr:{ value: name, id: id}, checked:$parent.PrimaryTechnology, jqmRadio: $parent.PrimaryTechnology"
                             type="radio" name="technology" data-theme="c" data-jqmRadio="1" />
-                        <label data-bind="attr: {for: id}, text: name"></label>
+                        <label data-bind="attr: {for: id}, text: Codecamp.translate(name)"></label>
                     </script>
                     <script type="text/html" id="tplPrimaryTechnology">
-                        <legend>What is your primary technology?</legend>
+                        <legend data-bind="text: Codecamp.translate($element.innerText)">What is your primary technology?</legend>
                         <!--ko template: { name: "tplTechnology", foreach: technologies()}-->
                         <!-- /ko -->
 
-                        <div class="otherTechnology" data-bind="visible: PrimaryTechnology() == 'others'">
-                            <input data-bind="value: PrimaryTechnologyOther"
-                                type="text" name="other" id="other" />
+                        <div class="otherTechnology" data-bind="visible: PrimaryTechnology() == 'Others'">
+                            <input data-bind="value: PrimaryTechnologyOther, attr: {placeholder: Codecamp.translate($element.placeholder)}"
+                                type="text" name="other" id="other" data-theme="e" placeholder="Please specify" />
                         </div>
                     </script>
                     <!--ko if: screenSize()> 770-->
-                    <li data-role="fieldcontain">
+                    <li data-role="fieldcontain" style="display: none" data-bind="visible: 1">
                         <fieldset data-type="horizontal" class="radio" data-bind="template: { name: 'tplPrimaryTechnology', foreach: [feedbackEvent()] }, jqmControlGroup: 1">
                         </fieldset>
                     </li>
                     <!-- /ko -->
 
                     <!--ko if: screenSize()<= 770-->
-                    <li data-role="fieldcontain">
+                    <li data-role="fieldcontain" style="display: none" data-bind="visible: 1">
                         <fieldset data-type="vertical" class="radio" data-bind="template: { name: 'tplPrimaryTechnology', foreach: [feedbackEvent()] }, jqmControlGroup: 1">
                         </fieldset>
                     </li>
