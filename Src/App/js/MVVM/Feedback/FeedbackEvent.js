@@ -34,6 +34,19 @@
 			ko.mapping.fromJS(data, {}, viewModel)
 			//log1("saved", data && data.saved, viewModel.saved());
 			$.extend(viewModel, {
+				'technologies': ko.computed({
+					read: function () {
+						return [
+							{ name: ".NET", id: "dotnet" },
+							{ name: "JAVA", id: "java" },
+							{ name: "PHP", id: "php" },
+							{ name: "Mobile", id: "mobile" },
+							{ name: "Javascript", id: "js" },
+							{ name: "Others", id: "others" },
+						];
+					},
+					deferEvaluation: true
+				}),
 				'saveToCookie': function (model) {
 					$.cookie("eventFB-" + Codecamp.currentEventId, $.stringify(model), { expires: new Date(2020, 1, 1) });
 				},
@@ -70,6 +83,9 @@
 						}
 					});
 					return false;
+				},
+				'saveClick': function () {
+					return viewModel.save();
 				},
 				'save': function (doNotSaveCokie, successMessage, options) {
 					displayLoading(Codecamp.loadingTimeout);

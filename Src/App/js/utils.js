@@ -512,28 +512,41 @@
 
 })(window);
 
-
 ko.bindingHandlers['jqmRadio'] = {
 	init: function (element, valueAccessor) {
-		$(element).checkboxradio();
+		if (!$(element).attr("data-jqmRadio")) {
+			$(element).checkboxradio();
+		}
 	},
 	update: function (element, valueAccessor) {
+		//log(element);
 		var value = valueAccessor();
 		var valueUnwrapped = ko.utils.unwrapObservable(value);
 		var $element = $(element);
+		log(valueUnwrapped, $element.val());
 		if (valueUnwrapped == $element.val())
 			$element.prop("checked", "true");
 		else
 			$element.removeProp("checked");
-		$element.checkboxradio("refresh");
+		if (!$element.attr("data-jqmRadio")) {
+			log(valueUnwrapped == $element.val());
+			$element.checkboxradio("refresh");
+		}
 	}
 };
 
 ko.bindingHandlers['jqmControlGroup'] = {
 	init: function (element, valueAccessor) {
-		$(element).controlgroup();
 	},
 	update: function (element, valueAccessor) {
+		//log(element.outerHTML);
+		var jqmRadio = ko.bindingHandlers['jqmRadio'];
+		$(element).trigger("create").controlgroup()
+		.find("input[type=checkbox],input[type=radio]")
+		.removeAttr("data-jqmRadio")
+		.each(function (index, element) {
+			$(element).checkboxradio("refresh");
+		});
 		//var value = valueAccessor();
 		//var valueUnwrapped = ko.utils.unwrapObservable(value);
 		//var $element = $(element);
