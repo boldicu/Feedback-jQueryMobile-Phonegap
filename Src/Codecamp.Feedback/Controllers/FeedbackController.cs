@@ -15,9 +15,14 @@ namespace Codecamp.Feedback.Controllers
 			ActionInvoker = new JsonNetActionInvoker();
 			base.Initialize(requestContext);
 		}
-		protected int Rating(FeedbackContext context, int eventId)
+		protected int FixRating(int rating)
 		{
-			return (int)(context.FeedbackEvents.Where(e => e.Rating > 0 && e.Rating < 6).Average(e => e.Rating) * 100 / 5);
+			return Math.Min(5, Math.Max(1, rating));
+		}
+		protected decimal Rating(IEnumerable<FeedbackEvent> events)
+		{
+			var rating = events.Where(e => e.Rating != 0).Average(e => (decimal?)(e.Rating < 1m ? 1m : e.Rating > 5m ? 5m : e.Rating));
+			return rating ?? 0;
 		}
 		public JsonResult Mine(int id)
 		{
@@ -25,11 +30,28 @@ namespace Codecamp.Feedback.Controllers
 			{
 				context.Configuration.LazyLoadingEnabled = false;
 				var userId = User.Id();
+				var ev = context.FeedbackEvents.Include("FeedbackUser").FirstOrDefault(e => e.FeedbackUserId == userId && e.EventId == id);
+				ev.Rating = FixRating(ev.Rating);
 				return Json(new
 				{
-					Rating = Rating(context, id),
-					Event = context.FeedbackEvents.Include("FeedbackUser").FirstOrDefault(e => e.FeedbackUserId == userId && e.EventId == id),
+					Event = ev,
 					Sessions = context.FeedbackSessions.Where(e => e.FeedbackUserId == userId && e.Session.EventId == id).ToArray(),
+				}, JsonRequestBehavior.AllowGet);
+
+			}
+		}
+		[HttpGet, ActionName("Results")]
+		public JsonResult FeedbackResults(int id)
+		{
+			using (var context = new FeedbackContext())
+			{
+				context.Configuration.LazyLoadingEnabled = false;
+				var events = context.FeedbackEvents.Where(e => e.EventId == id).ToArray();
+				return Json(new
+				{
+					Rating = Rating(events),
+					Events = context.FeedbackEvents.Where(e => e.EventId == id).ToArray(),
+					Sessions = context.FeedbackSessions.Where(e => e.Session.EventId == id).ToArray(),
 				}, JsonRequestBehavior.AllowGet);
 
 			}
@@ -64,7 +86,7 @@ namespace Codecamp.Feedback.Controllers
 							{
 								user = new FeedbackUser { Id = userId };
 								context.FeedbackUsers.Add(user);
-							} 
+							}
 							if (model.FeedbackUser != null)
 							{
 								user.Name = model.FeedbackUser.Name ?? user.Name;
@@ -78,7 +100,7 @@ namespace Codecamp.Feedback.Controllers
 							data.WantedTechnologies = model.WantedTechnologies ?? data.WantedTechnologies;
 							context.SaveChanges();
 						}
-					} 
+					}
 				}
 			}
 			catch (Exception ex)
@@ -92,7 +114,6 @@ namespace Codecamp.Feedback.Controllers
 		public JsonResult VoteEvent(int eventId, int vote)
 		{
 			int? rating = null;
-			var enableRealTimeVotingResult = false;
 			try
 			{
 				if (ModelState.IsValid)
@@ -125,20 +146,18 @@ namespace Codecamp.Feedback.Controllers
 							data.FeedbackUser = user;
 							data.Rating = vote;
 							context.SaveChanges();
-							if (enableRealTimeVotingResult)
-								rating = Rating(context, eventId);
-							else rating = vote * 100 / 5;
-						}
-					}
+							rating = vote;  
+						} 
+					} 
 				}
-			}
+			} 
 			catch (Exception ex)
 			{
 				ModelState.AddModelError("Exception", ex);
 			}
 			if (!ModelState.IsValid)
 				return Json(new { Success = false, Message = "There was an error while posting your vote!", Errors = ModelState.ToJson() }, JsonRequestBehavior.AllowGet);
-			else return Json(new { Success = true, Message = "Thanks for your vote!", Rating = rating  }, JsonRequestBehavior.AllowGet);
+			else return Json(new { Success = true, Message = "Thanks for your vote!", Rating = rating }, JsonRequestBehavior.AllowGet);
 		}
 		[HttpGet, ActionName("Session")]
 		public JsonResult SessionFeedback(FeedbackSession model)
