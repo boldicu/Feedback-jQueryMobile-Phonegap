@@ -64,7 +64,7 @@
 			//});
 
 
-			var reviewMode = 0;
+			var reviewMode = 1;
 
 			Codecamp.feedbackReviewMode(reviewMode);
 

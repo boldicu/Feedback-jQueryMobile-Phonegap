@@ -10,7 +10,6 @@
     <link href="css/rating.css" rel="stylesheet" />
     <!--    <script src="http://jsconsole.com/remote.js?BF3CD3ED-1B98-44B4-A6A1-19F3E4C22DEF"></script>-->
     <script src="js/libs/jQuery/jquery-1.8.2.js"></script>
-    <script src="js/libs/jQuery/tmpl/jquery.tmpl.js"></script>
     <script src="js/libs/jQuery/mobile/jquery.mobile-1.2.0.js"></script>
     <script src="js/libs/knockout/knockout-2.2.0rc.debug.js"></script>
     <script src="js/libs/knockout/map/knockout.mapping-latest.debug.js"></script>
@@ -44,10 +43,10 @@
                     min="0" max="40" data-theme="c" data-highlight="true" />
             </div>
             <script id="tplHomeSessionImage" type="text/html">
-                <img class="grayscale rotate" src="${$data}" />
+                <img class="grayscale rotate" data-bind="attr: {src: $data}" />
             </script>
             <script id="tplHomeSession" type="text/html">
-                <li class="session"><a href="session.html?sessionId=${Id}">
+                <li class="session"><a data-bind="attr: {href:'session.html?sessionId='+Id()}">
                     <!-- ko template: { name: 'tplHomeSessionImage', foreach: logoUrl} -->
                     <!-- /ko -->
                     <h4 data-bind="text: Title"></h4>
@@ -60,7 +59,7 @@
             <ul data-role="listview" data-inset="true" class="sessions">
                 <li data-role="list-divider" data-bind="visible:sessionsNow().length">Now<span
                     class="ui-li-count" data-bind="text: sessionsNow().length"></span></li>
-                <!-- ko jqmRefreshList: {name: 'tplHomeSession', foreach: sessionsNow(), 'theme':'c'} -->
+                <!-- ko template: {name: 'tplHomeSession', foreach: sessionsNow()} -->
                 <!-- /ko -->
                 <li data-role="list-divider" data-bind="visible:sessionsNext().length">Next...<span data-bind="text:sessionsNext() && sessionsNext()[0] && sessionsNext()[0].Start().format('HH:MM')">
                 </span><span class="ui-li-count" data-bind="text: sessionsNow().length"></span></li>

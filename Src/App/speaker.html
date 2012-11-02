@@ -9,7 +9,6 @@
     <link href="css/feedback.css" rel="stylesheet" />
     <link href="css/rating.css" rel="stylesheet" />
     <script src="js/libs/jQuery/jquery-1.8.2.js"></script>
-    <script src="js/libs/jQuery/tmpl/jquery.tmpl.js"></script>
     <script src="js/libs/jQuery/mobile/jquery.mobile-1.2.0.js"></script>
     <script src="js/libs/knockout/knockout-2.2.0rc.debug.js"></script>
     <script src="js/libs/knockout/map/knockout.mapping-latest.debug.js"></script>
@@ -47,10 +46,14 @@
                 <p data-bind="html: Bio"></p>
             </div>
             <div data-role="collapsible" data-mini="true" data-collapsed="false">
-                <h3 data-bind="template: $data">${Name}'s Presentations:</h3>
+                <h3>
+                    <div data-bind="text: Codecamp.translate($element.innerText).replace('$Name', Name())">
+                        $Name's Presentations:
+                    </div>
+                </h3>
                 <ul data-role="listview" data-inset="true"
                     data-bind="template: {foreach: sessions()}">
-                    <li><a href="session.html?sessionId=${Id}">
+                    <li><a data-bind="attr: {href:'session.html?sessionId='+Id()}">
                         <h3 data-bind="text: Title"></h3>
                         <p data-bind="text: duration"></p>
                         <p data-bind="text: trackName"></p>
@@ -61,7 +64,8 @@
         <div data-role="footer" data-position="fixed" data-id="footer">
             <div data-role="navbar" data-icon-pos="top">
                 <ul class="home">
-                    <li><a href="index.html" data-icon="home" data-direction="reverse" data-transition="slide" data-bind="jqmTheme: Codecamp.currentEvent.homeTheme"
+                    <li><a href="index.html" data-icon="home" data-direction="reverse" data-transition="slide"
+                        data-bind="jqmTheme: Codecamp.currentEvent.homeTheme"
                         data-iconshadow="false">Home</a></li>
                     <li><a href="speakers.html" data-icon="speakers" data-transition="slide" data-bind="jqmTheme: Codecamp.currentEvent.speakersTheme"
                         data-iconshadow="false">Speakers</a></li>

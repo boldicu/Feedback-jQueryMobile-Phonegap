@@ -98,14 +98,14 @@
 	var ulRegex = new RegExp("^ul$", "gi");
 	///<summary>a binding that can be applied on a &lt;ul&gt; element to refresh its &lt;li&gt; children</summmary>
 	ko.bindingHandlers['jqmRefreshList'] = {
-		'init': function (element, valueAccessor) {
-			var bindOnULTag = element.tagName == "UL";
+		'init': //function (element, valueAccessor) {
+			//var bindOnULTag = element.tagName == "UL";
 
-			if (!bindOnULTag)
-				element = element.parentNode;
-			$(element).listview();
-			ko.bindingHandlers.template.init.call(this, element, valueAccessor);
-		},
+			//if (!bindOnULTag)
+			//	element = element.parentNode;
+			//$(element).listview();
+			ko.bindingHandlers.template.init,//.apply(this, arguments);
+		//},
 		'update': function (element, valueAccessor, allBindingsAccessor, viewModel, context) {
 			trace4("jqmRefreshList updating...", ulRegex.test(element.tagName), element.tagName, element);
 

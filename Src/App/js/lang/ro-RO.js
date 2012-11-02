@@ -14,7 +14,7 @@
 	'Tracks': "Săli",
 	'Speakers': "Prezentatori",
 	'Speaker': "Prezentator",
-	"${Name}'s Presentations:": "Prezentările lui ${Name}:",
+	"$Name's Presentations:": "Prezentările lui $Name:",
 	"Loading data...": "Încărcăm datele...",
 	"Timeout while loading data. Are you connected to the internet?": "Încărcarea datelor a durat mai mult decât ne așteptam. Sunteți sigur că sunteți contectat la internet?",
 	//home:
