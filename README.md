@@ -12,3 +12,4 @@ Currently only the web version is implemented supporting these fatures
 * Session details & its speakers
 * Speakers & their sessions
 * Tracks & their sessions
+* Feedback
