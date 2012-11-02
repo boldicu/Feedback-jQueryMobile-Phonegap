@@ -70,5 +70,9 @@
 	"It's ok": "Neutru",
 	"Don't like it": "Nemulţumit",
 	"Hate it": "Foarte nemulţumit",
+	//review feedback
+	"Suggestions": "Sugestii",
+	"Wanted Technologies": "Mă interesează",
+	"Liked most": "Mi-a plăcut",
 	"": ""
 }

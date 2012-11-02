@@ -98,8 +98,14 @@
 	var ulRegex = new RegExp("^ul$", "gi");
 	///<summary>a binding that can be applied on a &lt;ul&gt; element to refresh its &lt;li&gt; children</summmary>
 	ko.bindingHandlers['jqmRefreshList'] = {
-		'init': ko.bindingHandlers.template.init,
+		'init': function (element, valueAccessor) {
+			var bindOnULTag = element.tagName == "UL";
 
+			if (!bindOnULTag)
+				element = element.parentNode;
+			$(element).listview();
+			ko.bindingHandlers.template.init.call(this, element, valueAccessor);
+		},
 		'update': function (element, valueAccessor, allBindingsAccessor, viewModel, context) {
 			trace4("jqmRefreshList updating...", ulRegex.test(element.tagName), element.tagName, element);
 
@@ -112,9 +118,10 @@
 
 
 
-			element = $(element);
+			element = $(element).trigger("create");//CREATE event will take care of any chlidren jqm markup enhancements
+
 			if (element.attr("data-autodividers")) {
-				trace3("Rebuilding autodividers");
+				trace2("Rebuilding autodividers");
 
 				// read all list items (without list-dividers) into an array
 				var lis = element.children("li").not('.ui-li-divider').get();
@@ -136,13 +143,13 @@
 				});
 			}
 			//window.setTimeout(function () {
-			try {
+			//try {
 				element.listview('refresh');
-				trace3("jqmRefreshList success", element[0]);
-			} catch (e) {
-				trace3("jqmRefreshList building for the first time");
-				element.listview().listview('refresh');
-			}
+				trace2("jqmRefreshList success", element[0]);
+			//} catch (e) {
+			//	trace2("jqmRefreshList building for the first time");
+			//	element.listview().listview('refresh');
+			//}
 			element.find(".ui-li-has-count").each(function () {
 				if ($(this).find(".ui-li-count").length > 1) {
 					var first = $(this).find(".ui-li-count:first");
@@ -154,6 +161,12 @@
 			//}, 0);
 		}
 	};
+	ko.bindingHandlers['translate'] = {
+		'update': function (element, valueAccessor) {
+			element.innerHTML = Codecamp.translate(element.innerText);
+		}
+	};
+
 	ko.virtualElements.allowedBindings['jqmRefreshList'] = true;
 	ko.bindingHandlers['class'] = {
 		'update': function (element, valueAccessor) {
@@ -161,8 +174,10 @@
 				$(element).removeClass(element['__ko__previousClassValue__']);
 			}
 			var value = ko.utils.unwrapObservable(valueAccessor());
-			$(element).addClass(value);
-			element['__ko__previousClassValue__'] = value;
+			if (value) {
+				$(element).addClass(value);
+				element['__ko__previousClassValue__'] = value;
+			}
 		}
 	};
 

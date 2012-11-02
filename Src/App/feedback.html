@@ -9,7 +9,7 @@
     <link href="css/feedback.css" rel="stylesheet" />
     <link href="css/rating.css" rel="stylesheet" />
     <script src="js/libs/jQuery/jquery-1.8.2.js"></script>
-    <script src="js/libs/jQuery/tmpl/jquery.tmpl.js"></script>
+    <!--<script src="js/libs/jQuery/tmpl/jquery.tmpl.js"></script>-->
     <script src="js/libs/jQuery/mobile/jquery.mobile-1.2.0.js"></script>
     <script src="js/libs/knockout/knockout-2.2.0rc.debug.js"></script>
     <script src="js/libs/knockout/map/knockout.mapping-latest.debug.js"></script>
@@ -31,7 +31,7 @@
     <script src="js/main.js"></script>
 </head>
 <body>
-    <div data-role="page" data-theme="a">
+    <div data-role="page" data-theme="a" within="Event">
         <div data-role="header" class="title">
             <h1 data-bind="html:'', class: 'codecamp'">Loading data...</h1>
         </div>
@@ -46,7 +46,8 @@
                         </label>
                         <div class="ui-input-search rating">
                             <ul class="star" data-bind="with: feedbackEvent()">
-                                <li class="rating" data-bind="style: { width: Rating()+'%' }"></li>
+                                <li class="rating" data-bind="style: { width: ratingPercent()+'%' }, class: Codecamp.feedbackReviewMode() && 'review'"></li>
+                                <!-- ko ifnot: Codecamp.feedbackReviewMode -->
                                 <li><a data-bind="click: function() { return vote(1)}" href="#" data-translate="title"
                                     class="s1" title="Hate it"></a></li>
                                 <li><a data-bind="click: function() { return vote(2)}" href="#" data-translate="title"
@@ -57,34 +58,60 @@
                                     class="s4" title="Like it"></a></li>
                                 <li><a data-bind="click: function() { return vote(5)}" href="#" data-translate="title"
                                     class="s5" title="Love it"></a></li>
+                                <!-- /ko -->
+
                             </ul>
                         </div>
                     </li>
-                    <!-- ko with: feedbackEvent().FeedbackUser -->
-                    <li data-role="fieldcontain">
-                        <label for="email">Name / Email</label>
-                        <input data-bind="value: Email" type="text" name="email" id="email" value="" />
-                    </li>
-                    <!--<li data-role="fieldcontain">
-                        <label for="name">Name</label>
-                        <input data-bind="value: Name" type="text" name="name" id="name" value="" />
-                    </li>-->
-                    <!-- /ko -->
-                    <script type="text/html" id="tplTechnology">
-                        <input data-bind="attr:{ value: name, id: id}, checked:$parent.PrimaryTechnology, jqmRadio: $parent.PrimaryTechnology"
-                            type="radio" name="technology" data-theme="c" data-jqmRadio="1" />
-                        <label data-bind="attr: {for: id}, text: Codecamp.translate(name)"></label>
-                    </script>
-                    <script type="text/html" id="tplPrimaryTechnology">
-                        <legend data-bind="text: Codecamp.translate($element.innerText)">What is your primary technology?</legend>
-                        <!--ko template: { name: "tplTechnology", foreach: technologies()}-->
-                        <!-- /ko -->
 
-                        <div class="otherTechnology" data-bind="visible: PrimaryTechnology() == 'Others'">
-                            <input data-bind="value: PrimaryTechnologyOther, attr: {placeholder: Codecamp.translate($element.placeholder)}"
-                                type="text" name="other" id="other" data-theme="e" placeholder="Please specify" />
+                    <!-- ko jqmRefreshList: { name: 'tplCollectFeedback', ifnot: Codecamp.feedbackReviewMode() } -->
+                    <!-- /ko -->
+
+                    <!--ko jqmRefreshList: { name: 'tplReviewFeedback', if: Codecamp.feedbackReviewMode(), foreach: feedbackReviewEvents()}-->
+                    <!-- /ko -->
+
+                </ul>
+
+
+
+                <script type="text/html" id="tplReviewFeedback">
+                    <li data-role="list-divider" style="height: 1.3em;">
+                        <h3 style="float: left" data-bind="text: PrimaryTechnology() =='Others' ? PrimaryTechnologyOther() : PrimaryTechnology()">
+                        </h3>
+                        <div class="star small" style="float: left;">
+                            <div class="rating" data-bind="style: { width: ratingPercent()+'%' }"></div>
                         </div>
-                    </script>
+                    </li>
+                    <li class="fullText" data-bind="visible:Suggestions()" data-theme="c">
+                        <p data-bind="text: Suggestions"></p>
+                        <span class="ui-li-aside ui-li-desc" data-bind="translate: 1">Suggestions</span>
+                    </li>
+                    <li class="fullText" data-bind="visible: WantedTechnologies" data-theme="d">
+                        <p data-bind="text: WantedTechnologies"></p>
+                        <span class="ui-li-aside ui-li-desc" data-bind="translate: 1">Wanted Technologies</span>
+                    </li>
+                    <li class="fullText" data-bind="visible: LikedMost" data-theme="c">
+                        <p data-bind="text: LikedMost"></p>
+                        <span class="ui-li-aside ui-li-desc" data-bind="translate: 1">Liked most</span>
+                    </li>
+                </script>
+                <script type="text/html" id="tplTechnology">
+                    <input data-bind="attr:{ value: name, id: id}, checked:$parent.PrimaryTechnology, jqmRadio: $parent.PrimaryTechnology"
+                        type="radio" name="technology" data-theme="c" data-jqmradio="1" />
+                    <label data-bind="attr: {for: id}, text: Codecamp.translate(name)"></label>
+                </script>
+                <script type="text/html" id="tplPrimaryTechnology">
+                    <legend data-bind="text: Codecamp.translate($element.innerText)">What is your primary technology?</legend>
+                    <!--ko template: { name: "tplTechnology", foreach: technologies()}-->
+                    <!-- /ko -->
+                    <div class="otherTechnology" data-bind="visible: PrimaryTechnology() == 'Others'">
+                        <input data-bind="value: PrimaryTechnologyOther, attr: {placeholder: Codecamp.translate($element.placeholder)}"
+                            type="text" name="other" id="other" data-theme="e" placeholder="Please specify" />
+                    </div>
+                </script>
+
+                <script type="text/html" id="tplCollectFeedback" within="FeedbackEvent">
+
                     <!--ko if: screenSize()> 770-->
                     <li data-role="fieldcontain" style="display: none" data-bind="visible: 1">
                         <fieldset data-type="horizontal" class="radio" data-bind="template: { name: 'tplPrimaryTechnology', foreach: [feedbackEvent()] }, jqmControlGroup: 1">
@@ -99,25 +126,32 @@
                     </li>
                     <!-- /ko -->
 
+                    
+                    <!--ko with: feedbackEvent() -->
                     <li data-role="fieldcontain">
                         <label for="comments">Comments and suggestions</label>
-                        <textarea data-bind="value: feedbackEvent().Suggestions" cols="40" rows="8" name="comments"
+                        <textarea data-bind="value: Suggestions" cols="40" rows="8" name="comments"
                             id="comments"></textarea>
                     </li>
                     <li data-role="fieldcontain">
                         <label for="techs">What technologies would you like next time?</label>
-                        <textarea data-bind="value: feedbackEvent().WantedTechnologies" cols="40" rows="8" name="techs"
+                        <textarea data-bind="value: WantedTechnologies" cols="40" rows="8" name="techs"
                             id="techs"></textarea>
                     </li>
                     <li data-role="fieldcontain">
                         <label for="likedMost">What did you like most?</label>
-                        <textarea data-bind="value: feedbackEvent().LikedMost" cols="40" rows="8" name="likedMost"
+                        <textarea data-bind="value: LikedMost" cols="40" rows="8" name="likedMost"
                             id="likedMost"></textarea>
                     </li>
+
                     <li>
-                        <button data-bind="click:feedbackEvent().saveClick" type="submit" data-theme="f">Save</button>
+                        <button data-bind="click:saveClick" type="submit" data-theme="f">Save</button>
                     </li>
-                </ul>
+                    <!-- /ko -->
+
+
+                </script>
+
             </div>
             </form>
         </div>

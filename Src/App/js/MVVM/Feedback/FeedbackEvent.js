@@ -33,7 +33,16 @@
 			});
 			ko.mapping.fromJS(data, {}, viewModel)
 			//log1("saved", data && data.saved, viewModel.saved());
+			log("created fb");
 			$.extend(viewModel, {
+				'ratingPercent': ko.computed({
+					read: function () {
+						var result = (viewModel.Rating() || 0) * 100 / 5;
+						log("ratingPercent", result);
+						return result > 100 ? 100 : result;
+					},
+					deferEvaluation: true
+				}),
 				'technologies': ko.computed({
 					read: function () {
 						return [
@@ -54,7 +63,7 @@
 					displayLoading(Codecamp.loadingTimeout);
 					var eventId = Codecamp.currentEventId;
 					//save the rating locally
-					viewModel.Rating(vote * 20);
+					viewModel.Rating(vote);
 					var model = ko.mapping.toJS(viewModel);
 					model.saved = false;
 					viewModel.saveToCookie(model);

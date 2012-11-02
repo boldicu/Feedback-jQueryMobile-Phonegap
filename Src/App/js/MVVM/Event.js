@@ -77,12 +77,17 @@
 				'now': ko.observable(new Date()),
 				//keep the current slider session
 				'sessionSliderIndex': ko.observable($.cookie("home-slider") || 0),
-				'screenSize': ko.observable(document.body.offsetWidth)
+				'screenSize': ko.observable(document.body.offsetWidth),
+				'feedbackReviewMode': ko.computed(function () {// a shortcut for shortage usage in the views
+					return Codecamp.feedbackReviewMode();
+				}),
 			});
 			$(window).on("resize", function (e) {
 				//log("resize", document.body.offsetWidth);
 				viewModel.screenSize(document.body.offsetWidth);
 			});
+			//when no feedback exists, create an empty feedback view-model, so the binding methods will exist and no errors will be thrown
+			var emptyFeedbackEvent = new viewModels.FeedbackEvent();
 			//extend the viewModel with our UI methods
 			$.extend(viewModel, {
 				'cacheSessionSliderIndexInCookie': ko.computed(function () {
@@ -93,7 +98,7 @@
 					read: function () {
 						var track = Codecamp.track(),
 							sessions = viewModel.Sessions;
-						log5('computing sessionsByTrack', track);
+						trace5('computing sessionsByTrack', track);
 						if (!isNaN(track))
 							return track || track === 0 ? viewModel.Sessions.byTrackRefId(track) : [];
 						return [];
@@ -102,7 +107,7 @@
 				}),
 				'selectedSession': ko.computed({
 					read: function () {
-						log5('computing selectedSession', Codecamp.sessionId());
+						trace5('computing selectedSession', Codecamp.sessionId());
 						return viewModel.Sessions.byId(Codecamp.sessionId()) || empty.session;
 					},
 					deferEvaluation: true
@@ -205,12 +210,20 @@
 				'feedbackEvent': ko.computed({
 					read: function () {
 						var fb = Codecamp.feedback();
-						return ko.utils.unwrapObservable(fb && fb.Event || emptyFeedbackEvent);
+						var result = ko.utils.unwrapObservable(fb && fb.Event || emptyFeedbackEvent);
+						log5("Computed feedbackEvent");
+						return result;
+					},
+					deferEvaluation: true
+				}),
+				'feedbackReviewEvents': ko.computed({
+					read: function () {
+						var fb = Codecamp.feedback();
+						return ko.utils.unwrapObservable(fb && fb.Events || []);
 					},
 					deferEvaluation: true
 				}),
 			});
-			var emptyFeedbackEvent = new viewModels.FeedbackEvent();
 			trace3('event initialized');
 			//window.setInterval(function () {
 			//	log3('Refreshing every 30 seconds:', new Date());

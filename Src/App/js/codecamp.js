@@ -3,7 +3,7 @@
 //not to poluate the golbal window namespace
 window.Codecamp = {
 	version: 1.0,
-	logLevel: 3,//0 disables all the logs, 5 = most verbose
+	logLevel: 2,//0 disables all the logs, 5 = most verbose
 	loadingTimeout: 10000,//how much to wait for ajax calls (ms)
 	successMessageTimeout: 2000,//how much to display a success message
 	errorMessageTimeout: 4000,//how much to dipslay an error message
@@ -12,7 +12,7 @@ window.Codecamp = {
 	api: {
 		json://"http://codecamp.lau.dnw.ro/"+
 		"js/data.js?callback=Codecamp.updateData",
-		feedback: "http://c.lau.dnw.ro/Feedback/"
+		feedback: "http://feedback.boldicu.dnw.ro/Feedback/"
 	},
 	themes: {
 		a: {
@@ -45,6 +45,7 @@ window.Codecamp = {
 	},
 	currentEventId: 1,
 	feedback: ko.observable(),
+	feedbackReviewMode: ko.observable(0),//1 = allows the user to review all of the ratings - OR - 0 allows the user to review the event or sessions. It will be saved in a cookie
 	viewModels: {},
 	events: {},
 	currentEvent: null,

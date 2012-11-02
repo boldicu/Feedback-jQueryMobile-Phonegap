@@ -62,32 +62,70 @@
 			//		window.setTimeout(Codecamp.hideLoadingMessage, 5000);
 			//	}
 			//});
-			
 
-			//load the last saved feedback from the cookie, if any
-			var eventFB = $.cookie("eventFB-" + eventId);
-			var sessions = $.cookie("eventSessions-" + eventId);
-			try {
-				eventFB = eventFB && $.parseJSON(eventFB);
+
+			var reviewMode = 0;
+
+			Codecamp.feedbackReviewMode(reviewMode);
+
+			if (reviewMode) {
+				//if we want to review the ratings and comments - first pull the latest data from the server
+				$.ajax({
+					url: Codecamp.api.feedback + "Results/" + Codecamp.currentEventId,
+					dataType: 'jsonp',
+					method: 'get',
+					success: function (data) {
+						data = data || {};
+						var overallRating = 0, events = data.Events,
+							ratedEvents = $.grep(events, function (ev) { return ev.Rating; });//excluded non-voted feedback events
+
+						$.each(ratedEvents, function (index, ev) {
+							index = ev.Rating;
+							overallRating += index < 0 ? 1 : (index > 5 ? 5 : index);
+						});
+						overallRating /= ratedEvents.length || 1;
+
+						Codecamp.feedback({
+							Event: new Codecamp.viewModels.FeedbackEvent({ Rating: overallRating }),
+							Events: $.map(events || [], function (ev) {
+								return new Codecamp.viewModels.FeedbackEvent(ev);
+							}),
+							Sessions: $.map(data.Sessions || [], function (session) {
+								return new Codecamp.viewModels.FeedbackSession(session);
+							})
+						});
+					},
+					error: function () {
+						$.mobile.loading('show', { theme: "a", text: Codecamp.translate("Feedback data could not be downloaded. Are you connected to the internet?"), textVisible: true, textonly: true });
+						window.setTimeout(Codecamp.hideLoadingMessage, 5000);
+					}
+				});
 			}
-			catch (e) {
-				eventFB = null;
-			}
-			eventFB = eventFB || {};
-			Codecamp.feedback({
-				Event: new Codecamp.viewModels.FeedbackEvent(eventFB),
-				Sessions: $.map(sessions || [], function (session) {
-					return new Codecamp.viewModels.FeedbackSession(session);
-				})
-			});
-			if (navigator.onLine) {
-				var fb = Codecamp.feedback();
-				fb = fb && fb.Event;
-				if (fb && !fb.saved()) {
-					Codecamp.saveFeedbackOnline();
+			else {
+				//load the last saved feedback from the cookie, if any
+				var eventFB = $.cookie("eventFB-" + eventId);
+				var sessions = $.cookie("eventSessions-" + eventId);
+				try {
+					eventFB = eventFB && $.parseJSON(eventFB);
+				}
+				catch (e) {
+					eventFB = null;
+				}
+				eventFB = eventFB || {};
+				Codecamp.feedback({
+					Event: new Codecamp.viewModels.FeedbackEvent(eventFB),
+					Sessions: $.map(sessions || [], function (session) {
+						return new Codecamp.viewModels.FeedbackSession(session);
+					})
+				});
+				if (navigator.onLine) {
+					var fb = Codecamp.feedback();
+					fb = fb && fb.Event;
+					if (fb && !fb.saved()) {
+						Codecamp.saveFeedbackOnline();
+					}
 				}
 			}
-			
 		},
 		saveFeedbackOnline: function () {
 			var feedback = Codecamp.feedback();
@@ -99,28 +137,29 @@
 		},
 		onDataUpdated: function (data) {
 			if (data && $.mobile.activePage) {
-				trace("onDataUpdated");
-				Codecamp.downloadFeedback();
-				//make sure data is an array
-				$.isArray(data) || (data = [data]);
-				//reset the events
-				Codecamp.events = {};
-				//build the new events as ViewModels
-				$.each(data, function (index, event) {
-					event.Id = event.Id || index;//default to index, if we don't get an Id
-					Codecamp.events[event.Id] = new Codecamp.viewModels.Event(event);
-				});
-				//update the current event
-				Codecamp.currentEvent = Codecamp.events[Codecamp.currentEventId];
 
 				//async apply bindings, so any errors will not be trapped by jQuery ajax load event
 				window.setTimeout(function () {
+					trace("onDataUpdated");
+					Codecamp.downloadFeedback();
+					//make sure data is an array
+					$.isArray(data) || (data = [data]);
+					//reset the events
+					Codecamp.events = {};
+					//build the new events as ViewModels
+					$.each(data, function (index, event) {
+						event.Id = event.Id || index;//default to index, if we don't get an Id
+						Codecamp.events[event.Id] = new Codecamp.viewModels.Event(event);
+					});
+					//update the current event
+					Codecamp.currentEvent = Codecamp.events[Codecamp.currentEventId];
+
 					//apply bindings with the current event
 					$.mobile.activePage[0].applyBindings = true;
 					ko.applyBindings(Codecamp.currentEvent, $.mobile.activePage[0]);
 					trace("applyBindings... done");
 					Codecamp.hideLoadingMessage();
-				}, 100);
+				}, 0);
 			}
 		},
 		onInit: function () {

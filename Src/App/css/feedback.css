@@ -157,7 +157,7 @@ li.session p {
 	margin-bottom: 0;
 }
 
-li.session h4 {
+li.session h4, .fullText, .fullText p {
 	white-space: normal;
 	overflow: visible;
 }
@@ -167,8 +167,10 @@ li.session h4, .ui-li h3.ui-li-heading {
 	margin-bottom: 0.1em;
 }
 
-li.session .ui-li-aside {
+.ui-li-aside {
 	width: auto;
+	padding-left: 3px;
+	font-style : italic;
 }
 
 /*By default don't show h1 or h2 on the footer, but only for tall resolutions*/
@@ -212,8 +214,14 @@ li.session .ui-li-aside {
 		clear: both;
 		float: left;
 	}
-	li.session .ui-li-aside {
+	.fullText p {
+		clear: both;
+	}
+
+	li.session .ui-li-aside, li.fullText .ui-li-aside {
 		/*Fix aside i.e. speaker's name to be on a separate line for smaller screens*/
+		text-align: left;
+		font-style: italic;
 		float: left;
 		clear: both;
 	}

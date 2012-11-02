@@ -55,6 +55,11 @@
                         <h4 data-bind="text: Title"></h4>
                         <p data-bind="text: duration"></p>
                         <p class="ui-li-aside" data-bind="text: speakersNames"></p>
+                        <div class="ui-li-aside ui-li-desc">
+                            <ul class="star small">
+                                <li class="rating" style="width: 72%;"></li>
+                            </ul>
+                        </div>
                         <p style="display: none" data-bind="text: Description"></p>
                     </a>
                     </li>
@@ -70,7 +75,8 @@
         <div data-role="footer" data-position="fixed" data-id="footer">
             <div data-role="navbar" data-icon-pos="top">
                 <ul class="home">
-                    <li><a href="index.html" data-icon="home" data-direction="reverse" data-transition="slide" data-bind="jqmTheme: Codecamp.currentEvent.homeTheme"
+                    <li><a href="index.html" data-icon="home" data-direction="reverse" data-transition="slide"
+                        data-bind="jqmTheme: Codecamp.currentEvent.homeTheme"
                         data-iconshadow="false">Home</a></li>
                     <li><a href="speakers.html" data-icon="speakers" data-transition="slide" data-bind="jqmTheme: Codecamp.currentEvent.speakersTheme"
                         data-iconshadow="false">Speakers</a></li>

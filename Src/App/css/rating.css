@@ -6,8 +6,9 @@
 	position: relative;
 }
 
-.star, .star li a:hover, .star li.rating {
-	background: url(../img/star16.png) center left repeat-x;
+.star, .star li a:hover, .star .rating, 
+.star.small, .star.small .rating {
+	background: transparent url(../img/star16.png) center left repeat-x;
 }
 
 .star li {
@@ -37,29 +38,42 @@
 
 
 
-.star li.rating {
-	background-position: left bottom;
+.star .rating {
+	background-position: left bottom !important;
 	position: absolute;
 	display: block;
 	text-indent: -9000px;
 	z-index: 1;
 }
 
-.star:hover li.rating {
+.star.small {
+	margin-left: 5px;
+}
+
+.star.small:hover .rating, .star:hover .rating.review {
+	display: block;
+}
+
+.star:hover .rating {
 	display: none;
 }
 /* remove halo effect in firefox & ie  */
-.star a,.star a:active, .star a:visited {
+.star a, .star a:active, .star a:visited {
 	outline: none;
 }
 
-/*
-.star, .star li, .star li a, .star li.rating, .star a.s1:hover {
+
+.star, .star li, .star li a, .star .rating, .star a.s1:hover,
+.star.small, .star.small .rating {
 	height: 16px;
 	width: 16px;
 	line-height: 16px;
 }
-
+p.ui-li-aside {
+	/* Make the aside text the same height as the ratings above*/
+	line-height: 16px;
+}
+/*
 .star a.s1 {
 	left: 0px;
 }
@@ -92,64 +106,67 @@
 	left: 64px;
 }
 
-.star, .star a.s5:hover {
+	*/
+
+.star, .star a.s5:hover,
+.star.small {
 	width: 80px;
 }
-
+/*
 @media (min-width:360px) {
 	*/
-	.star, .star li a:hover, .star li.rating {
-		background-image: url(../img/star32.png);
-	}
+.star, .star li a:hover{
+	background-image: url(../img/star32.png);
+}
 
-	.star, .star li, .star li a, .star li.rating, .star a.s1:hover {
-		height: 32px;
-		width: 32px;
-		line-height: 32px;
-	}
+.star, .star li, .star li a, .star .rating, .star a.s1:hover {
+	width: 32px;
+	height:32px;
+	line-height: 32px;
+}
 
-	.star a.s1 {
-		left: 0px;
-	}
+.star a.s1 {
+	left: 0px;
+}
 
-	.star a.s2 {
-		left: 32px;
-	}
+.star a.s2 {
+	left: 32px;
+}
 
-	.star a.s2:hover {
-		width: 64px;
-	}
+.star a.s2:hover {
+	width: 64px;
+}
 
-	.star a.s3 {
-		left: 64px;
-	}
+.star a.s3 {
+	left: 64px;
+}
 
-	.star a.s3:hover {
-		width: 96px;
-	}
+.star a.s3:hover {
+	width: 96px;
+}
 
-	.star a.s4 {
-		left: 96px;
-	}
+.star a.s4 {
+	left: 96px;
+}
 
-	.star a.s4:hover {
-		width: 128px;
-	}
+.star a.s4:hover {
+	width: 128px;
+}
 
-	.star a.s5 {
-		left: 128px;
-	}
+.star a.s5 {
+	left: 128px;
+}
 
-	.star, .star a.s5:hover {
-		width: 160px;
-	}
+.star, .star a.s5:hover {
+	width: 160px;
+}
 /*}*/
 @media (min-width:500px) {
-	.star, .star li a:hover, .star li.rating {
+	.star, .star li a:hover, .star .rating {
 		background-image: url(../img/star48.png);
 	}
 
-	.star, .star li, .star li a, .star li.rating, .star a.s1:hover {
+	.star, .star li, .star li a, .star .rating, .star a.s1:hover {
 		height: 48px;
 		width: 48px;
 		line-height: 48px;
@@ -195,23 +212,25 @@
 
 @media (min-width:680px) {
 	.rating-content {
-	float:left;
-	display: block;
-	text-align: center;
-	border-right: 1px solid #eee;
-}
-.rating-presentation {
-	display: block;
-	float: right;
-	clear: right;
-	text-align: center;
-	border-left: 1px solid #eee;
-}
-	.star, .star li a:hover, .star li.rating {
+		float: left;
+		display: block;
+		text-align: center;
+		border-right: 1px solid #eee;
+	}
+
+	.rating-presentation {
+		display: block;
+		float: right;
+		clear: right;
+		text-align: center;
+		border-left: 1px solid #eee;
+	}
+
+	.star, .star li a:hover, .star .rating {
 		background-image: url(../img/star64.png);
 	}
 
-	.star, .star li, .star li a, .star li.rating, .star a.s1:hover {
+	.star, .star li, .star li a, .star .rating, .star a.s1:hover {
 		height: 64px;
 		width: 64px;
 		line-height: 64px;
@@ -256,11 +275,11 @@
 
 
 @media (min-width:1000px) {
-	.star, .star li a:hover, .star li.rating {
+	.star, .star li a:hover, .star .rating {
 		background-image: url(../img/star96.png);
 	}
 
-	.star, .star li, .star li a, .star li.rating, .star a.s1:hover {
+	.star, .star li, .star li a, .star .rating, .star a.s1:hover {
 		height: 96px;
 		width: 96px;
 		line-height: 96px;
@@ -304,11 +323,11 @@
 }
 
 @media (min-width:1300px) {
-	.star, .star li a:hover, .star li.rating {
+	.star, .star li a:hover, .star .rating {
 		background-image: url(../img/star128.png);
 	}
 
-	.star, .star li, .star li a, .star li.rating, .star a.s1:hover {
+	.star, .star li, .star li a, .star .rating, .star a.s1:hover {
 		height: 128px;
 		width: 128px;
 		line-height: 128px;
@@ -355,10 +374,12 @@ div.rating, div.feedback {
 	clear: both;
 	width: 100%;
 }
+
 .rating-stars {
 	float: right;
 }
-.star li.rating {
+
+.star .rating {
 	/*Default to no selected stars*/
 	width: 0;
 }
