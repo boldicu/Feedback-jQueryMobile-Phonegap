@@ -1,6 +1,15 @@
 # Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
-bin
+#bin
 obj
 
 # mstest test results
 TestResults
+Src/Codecamp.Feedback.Tests/obj/*
+Src/Codecamp.Feedback.v11.suo
+Src/Codecamp.Feedback/obj/*
+Src/Codecamp.Feedback.Tests/bin/Debug/*
+Src/Codecamp.Feedback.Tests/bin/Debug/Codecamp.Feedback.Tests.dll.config
+Src/Codecamp.Feedback.Tests/bin/Debug/Codecamp.Feedback.Tests.dll
+Src/Codecamp.Feedback/App/*
+Src/Codecamp.Feedback/bin/Codecamp.Feedback.dll 
+Src/Codecamp.Feedback/bin/Codecamp.Feedback.pdb
